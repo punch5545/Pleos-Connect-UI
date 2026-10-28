@@ -3,7 +3,10 @@
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.punch5545/pleos-compose)](https://central.sonatype.com/artifact/io.github.punch5545/pleos-compose)
 [![License](https://img.shields.io/github/license/punch5545/Pleos-Connect-UI)](LICENSE)
 
-동봉된 2026-10-28 설계 스냅샷을 기반으로 구현한 Android UI 라이브러리입니다. 현대자동차그룹의 공식 배포 SDK가 아닙니다. 샘플 앱·데모 앱·카탈로그 모듈은 포함하지 않습니다.
+[Pleos Playground 디자인 가이드](https://document.pleos.ai/docs/connect/guide/docs-design/Introduction/intro)에 따라 Pleos Connect 앱 프로젝트에 사용할 수 있도록 제작된 UI Component 라이브러리 입니다.
+
+Codex, Claude를 이용해 개발되었으며, 지시사항 및 참조 에셋은 모두 [docs](./docs/)에 들어 있습니다.
+
 
 | 모듈 | 용도 | Maven Central |
 | --- | --- | --- |
