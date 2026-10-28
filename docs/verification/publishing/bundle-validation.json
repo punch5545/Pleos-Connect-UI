@@ -1,0 +1,75 @@
+{
+  "group": "io.github.punch5545",
+  "version": "0.1.0",
+  "signed": true,
+  "signingFingerprint": "A0AE9325F7CFEEFC9D0B51BC10DF12AE2F577B76",
+  "modules": [
+    "pleos-tokens",
+    "pleos-compose",
+    "pleos-aaos"
+  ],
+  "artifactCount": 15,
+  "artifacts": [
+    {
+      "path": "io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0.aar",
+      "sha256": "9d67d73aaddb7eee86d2c5ffe583f8d7271d963c3d33a2635a9b7c19c6f529e2"
+    },
+    {
+      "path": "io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0.pom",
+      "sha256": "b26ac06926c72a8b84499bfc2d92454ff04d2b2659482b627d571be0c307d6b5"
+    },
+    {
+      "path": "io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0.module",
+      "sha256": "de9baddde8a08bb1945bb252afa7d599741f27bb590a5074adf93cae5ebe6ae0"
+    },
+    {
+      "path": "io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0-sources.jar",
+      "sha256": "84aac24344adc3023fd8097ce61be6771705d22a9d320c0350fb52ff32ce7bf5"
+    },
+    {
+      "path": "io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0-javadoc.jar",
+      "sha256": "a4020a80ec23e2a1ec9dae9cac053cd88740e483a929466f85794cc6474cb629"
+    },
+    {
+      "path": "io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0.aar",
+      "sha256": "4204cf2efb5626d6780fcc79a9684ff978a7aafcda3ddbabae4f8da4472e3c9d"
+    },
+    {
+      "path": "io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0.pom",
+      "sha256": "9300bf821e7208e95b6cb2c95fad4a51995d490a6a38321a560e019b67f2397e"
+    },
+    {
+      "path": "io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0.module",
+      "sha256": "f697da3a8afc2724902e37b1202a01fafdaa7ebf7cb5af467f9233332275c675"
+    },
+    {
+      "path": "io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0-sources.jar",
+      "sha256": "2e6522b469130353536d8bced63e9c97df0eff890b61a5ac2bd2f99902d3ae72"
+    },
+    {
+      "path": "io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0-javadoc.jar",
+      "sha256": "0581452bc25f30289ad17b0f677fb6419533b61e94dc5925cdfe806ad06ff03b"
+    },
+    {
+      "path": "io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0.aar",
+      "sha256": "5e906da3acfe6c875eec355c7799bcfd488e891e5a6367de0db4436e166d2277"
+    },
+    {
+      "path": "io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0.pom",
+      "sha256": "3bc1d020d2e4df25be3a7865f8e1c26485980b754eb5ee244206b02eb80188f1"
+    },
+    {
+      "path": "io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0.module",
+      "sha256": "279f5a89105b70d684538070407c934f24c9ea6e94e6e0a99d0bd985761b562f"
+    },
+    {
+      "path": "io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0-sources.jar",
+      "sha256": "45ad05a36125ac10554e8028b17f3192f682a2e94579933098aaa620d9786eef"
+    },
+    {
+      "path": "io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0-javadoc.jar",
+      "sha256": "58b416cb1fa4b43203c4d24bdbb82fc1fb54b101c148dd04a1e4304349f740e7"
+    }
+  ],
+  "bundleSha256": "c846631f782ea448c7c0687d0397a41a1544345c7e10fe4cccacb43662d15398"
+}

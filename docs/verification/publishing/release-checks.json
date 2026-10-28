@@ -1,0 +1,40 @@
+{
+  "bundleEntries": 90,
+  "signaturesVerified": 15,
+  "checksumsVerified": 60,
+  "modules": {
+    "pleos-tokens": {
+      "aarSha256": "9d67d73aaddb7eee86d2c5ffe583f8d7271d963c3d33a2635a9b7c19c6f529e2",
+      "runtimeClassesMatchUiTestedBuild": true,
+      "runtimeClassesSha256": "4991772d7a6f2f5f932857bc83664af8f8f0ab8b7bc1f2e2a48c828e7fff2dde",
+      "unitTests": 6,
+      "unitFailures": 0,
+      "unitResultsReused": true,
+      "lintErrors": 0,
+      "lintWarnings": 6
+    },
+    "pleos-compose": {
+      "aarSha256": "4204cf2efb5626d6780fcc79a9684ff978a7aafcda3ddbabae4f8da4472e3c9d",
+      "runtimeClassesMatchUiTestedBuild": true,
+      "runtimeClassesSha256": "3c5aebfd49da8c94275adb845869cdf908e45f91233c7f21b822ec0f9cce559a",
+      "unitTests": 9,
+      "unitFailures": 0,
+      "unitResultsReused": true,
+      "lintErrors": 0,
+      "lintWarnings": 5
+    },
+    "pleos-aaos": {
+      "aarSha256": "5e906da3acfe6c875eec355c7799bcfd488e891e5a6367de0db4436e166d2277",
+      "runtimeClassesMatchUiTestedBuild": true,
+      "runtimeClassesSha256": "e689118f9497a551ecde869129dfe0f06e496cbabab7deffca75f12b656ec90d",
+      "unitTests": 1,
+      "unitFailures": 0,
+      "unitResultsReused": true,
+      "lintErrors": 0,
+      "lintWarnings": 2
+    }
+  },
+  "uiTestsRerun": false,
+  "previousUiTests": 45,
+  "license": "Apache-2.0"
+}

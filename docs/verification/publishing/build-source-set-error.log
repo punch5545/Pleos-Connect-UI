@@ -1,0 +1,18 @@
+Calculating task graph as configuration cache cannot be reused because file 'settings.gradle.kts' has changed.
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Build file '/Users/jade/AndroidStudioProjects/PleosConnectUI/pleos-aaos/build.gradle.kts' line: 20
+
+* What went wrong:
+class com.android.build.gradle.internal.api.DefaultAndroidLibrarySourceSet_Decorated cannot be cast to class com.android.build.gradle.api.AndroidLibrarySourceSet (com.android.build.gradle.internal.api.DefaultAndroidLibrarySourceSet_Decorated and com.android.build.gradle.api.AndroidLibrarySourceSet are in unnamed module of loader org.gradle.internal.classloader.VisitableURLClassLoader$InstrumentingVisitableURLClassLoader @7e0c8536)
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 4s
+Configuration cache entry stored.

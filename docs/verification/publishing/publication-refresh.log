@@ -1,0 +1,114 @@
+Calculating task graph as no cached configuration is available for tasks: publishAllPublicationsToProjectLocalRepository
+> Task :pleos-aaos:generateReleaseAssets UP-TO-DATE
+> Task :pleos-compose:generateReleaseAssets UP-TO-DATE
+> Task :pleos-aaos:prepareLintJarForPublish UP-TO-DATE
+> Task :pleos-tokens:prepareLintJarForPublish UP-TO-DATE
+> Task :pleos-compose:prepareLintJarForPublish UP-TO-DATE
+> Task :pleos-tokens:generateReleaseAssets UP-TO-DATE
+> Task :generateApiDocumentation UP-TO-DATE
+> Task :prepareLicenseAssets UP-TO-DATE
+> Task :pleos-aaos:preBuild UP-TO-DATE
+> Task :pleos-compose:preBuild UP-TO-DATE
+> Task :pleos-aaos:preReleaseBuild UP-TO-DATE
+> Task :pleos-compose:preReleaseBuild UP-TO-DATE
+> Task :pleos-aaos:generateReleaseResources UP-TO-DATE
+> Task :pleos-tokens:preBuild UP-TO-DATE
+> Task :pleos-tokens:preReleaseBuild UP-TO-DATE
+> Task :pleos-aaos:extractDeepLinksForAarRelease UP-TO-DATE
+> Task :pleos-compose:generatePomFileForReleasePublication
+> Task :pleos-compose:generateReleaseResources UP-TO-DATE
+> Task :pleos-compose:writeReleaseAarMetadata UP-TO-DATE
+> Task :pleos-aaos:generatePomFileForReleasePublication
+> Task :pleos-tokens:generatePomFileForReleasePublication
+> Task :pleos-tokens:writeReleaseAarMetadata UP-TO-DATE
+> Task :pleos-aaos:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :pleos-tokens:generateReleaseResources UP-TO-DATE
+> Task :pleos-tokens:javaPreCompileRelease UP-TO-DATE
+> Task :pleos-aaos:processReleaseNavigationResources UP-TO-DATE
+> Task :pleos-aaos:javaPreCompileRelease UP-TO-DATE
+> Task :pleos-aaos:prepareReleaseArtProfile UP-TO-DATE
+> Task :pleos-aaos:mergeReleaseNativeLibs NO-SOURCE
+> Task :pleos-aaos:mergeReleaseAssets UP-TO-DATE
+> Task :pleos-aaos:stripReleaseDebugSymbols NO-SOURCE
+> Task :pleos-compose:processReleaseNavigationResources UP-TO-DATE
+> Task :pleos-tokens:processReleaseNavigationResources UP-TO-DATE
+> Task :pleos-compose:javaPreCompileRelease UP-TO-DATE
+> Task :pleos-compose:extractDeepLinksForAarRelease UP-TO-DATE
+> Task :pleos-aaos:writeReleaseAarMetadata UP-TO-DATE
+> Task :pleos-aaos:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :pleos-compose:prepareReleaseArtProfile UP-TO-DATE
+> Task :pleos-compose:mergeReleaseAssets UP-TO-DATE
+> Task :pleos-compose:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :pleos-aaos:sourceReleaseJar UP-TO-DATE
+> Task :pleos-tokens:packageReleaseResources UP-TO-DATE
+> Task :pleos-aaos:packageReleaseResources UP-TO-DATE
+> Task :pleos-compose:checkReleaseAarMetadata UP-TO-DATE
+> Task :pleos-aaos:processReleaseManifest UP-TO-DATE
+> Task :pleos-aaos:checkReleaseAarMetadata UP-TO-DATE
+> Task :pleos-compose:processReleaseManifest UP-TO-DATE
+> Task :pleos-compose:packageReleaseResources UP-TO-DATE
+> Task :pleos-tokens:processReleaseManifest UP-TO-DATE
+> Task :pleos-tokens:mergeReleaseAssets UP-TO-DATE
+> Task :pleos-compose:mergeReleaseNativeLibs NO-SOURCE
+> Task :pleos-tokens:extractDeepLinksForAarRelease UP-TO-DATE
+> Task :pleos-tokens:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :pleos-aaos:parseReleaseLocalResources UP-TO-DATE
+> Task :pleos-tokens:prepareReleaseArtProfile UP-TO-DATE
+> Task :pleos-tokens:parseReleaseLocalResources UP-TO-DATE
+> Task :pleos-compose:sourceReleaseJar UP-TO-DATE
+> Task :pleos-compose:stripReleaseDebugSymbols NO-SOURCE
+> Task :pleos-tokens:mergeReleaseNativeLibs NO-SOURCE
+> Task :pleos-compose:parseReleaseLocalResources UP-TO-DATE
+> Task :pleos-tokens:stripReleaseDebugSymbols NO-SOURCE
+> Task :pleos-tokens:sourceReleaseJar UP-TO-DATE
+> Task :pleos-tokens:checkReleaseAarMetadata UP-TO-DATE
+> Task :pleos-aaos:apiDocumentationJar
+> Task :pleos-compose:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :pleos-tokens:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :pleos-aaos:generateReleaseRFile UP-TO-DATE
+> Task :pleos-tokens:generateReleaseRFile UP-TO-DATE
+> Task :pleos-compose:apiDocumentationJar
+> Task :pleos-compose:generateReleaseRFile UP-TO-DATE
+> Task :pleos-tokens:apiDocumentationJar
+> Task :pleos-tokens:extractReleaseAnnotations UP-TO-DATE
+> Task :pleos-tokens:compileReleaseKotlin UP-TO-DATE
+> Task :pleos-tokens:compileReleaseJavaWithJavac NO-SOURCE
+> Task :pleos-tokens:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :pleos-tokens:processReleaseJavaRes UP-TO-DATE
+> Task :pleos-tokens:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :pleos-tokens:mergeReleaseJavaResource UP-TO-DATE
+> Task :pleos-tokens:mergeReleaseConsumerProguardFiles UP-TO-DATE
+> Task :pleos-tokens:syncReleaseLibJars UP-TO-DATE
+> Task :pleos-tokens:bundleReleaseAar UP-TO-DATE
+> Task :pleos-compose:extractReleaseAnnotations UP-TO-DATE
+> Task :pleos-tokens:generateMetadataFileForReleasePublication
+> Task :pleos-compose:compileReleaseKotlin UP-TO-DATE
+> Task :pleos-compose:compileReleaseJavaWithJavac NO-SOURCE
+> Task :pleos-compose:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :pleos-compose:processReleaseJavaRes UP-TO-DATE
+> Task :pleos-compose:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :pleos-compose:mergeReleaseJavaResource UP-TO-DATE
+> Task :pleos-compose:syncReleaseLibJars UP-TO-DATE
+> Task :pleos-compose:mergeReleaseConsumerProguardFiles UP-TO-DATE
+> Task :pleos-aaos:extractReleaseAnnotations UP-TO-DATE
+> Task :pleos-compose:bundleReleaseAar UP-TO-DATE
+> Task :pleos-aaos:compileReleaseKotlin UP-TO-DATE
+> Task :pleos-compose:generateMetadataFileForReleasePublication
+> Task :pleos-aaos:compileReleaseJavaWithJavac NO-SOURCE
+> Task :pleos-aaos:processReleaseJavaRes UP-TO-DATE
+> Task :pleos-aaos:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :pleos-aaos:mergeReleaseJavaResource UP-TO-DATE
+> Task :pleos-aaos:syncReleaseLibJars UP-TO-DATE
+> Task :pleos-aaos:mergeReleaseConsumerProguardFiles UP-TO-DATE
+> Task :pleos-aaos:bundleReleaseAar UP-TO-DATE
+> Task :pleos-aaos:generateMetadataFileForReleasePublication
+> Task :pleos-aaos:publishReleasePublicationToProjectLocalRepository
+> Task :pleos-aaos:publishAllPublicationsToProjectLocalRepository
+> Task :pleos-tokens:publishReleasePublicationToProjectLocalRepository
+> Task :pleos-compose:publishReleasePublicationToProjectLocalRepository
+> Task :pleos-compose:publishAllPublicationsToProjectLocalRepository
+> Task :pleos-tokens:publishAllPublicationsToProjectLocalRepository
+
+BUILD SUCCESSFUL in 1s
+88 actionable tasks: 12 executed, 76 up-to-date
+Configuration cache entry stored.

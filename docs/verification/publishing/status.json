@@ -9,14 +9,18 @@
   "centralUploaded": false,
   "centralPublished": false,
   "pending": [
-    "code_license_choice",
-    "existing_gpg_key_unlock"
+    "central_upload_and_publication"
   ],
   "privateKeyExported": false,
   "centralTokenCreated": false,
-  "runtimeAarsIdenticalToUiTestedBuild": true,
+  "runtimeAarsIdenticalToUiTestedBuild": false,
   "unitTests": 16,
   "lintErrors": 0,
   "existingUiTests": 45,
-  "uiTestsRerunForPublishing": false
+  "uiTestsRerunForPublishing": false,
+  "codeLicense": "Apache-2.0",
+  "signingUnlocked": true,
+  "signedBundleReady": true,
+  "bundleSha256": "c846631f782ea448c7c0687d0397a41a1544345c7e10fe4cccacb43662d15398",
+  "runtimeClassesIdenticalToUiTestedBuild": true
 }

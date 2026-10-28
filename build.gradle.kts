@@ -8,6 +8,11 @@ allprojects {
     version = "0.1.0"
 }
 
+tasks.register<Sync>("prepareLicenseAssets") {
+    from("LICENSE", "NOTICE", "THIRD_PARTY_NOTICES.md")
+    into(layout.buildDirectory.dir("license-assets/pleos/licenses"))
+}
+
 tasks.register<Exec>("generateApiDocumentation") {
     inputs.file("tools/generate_api_docs.py")
     inputs.file("build.gradle.kts")

@@ -63,13 +63,20 @@ def build_bundle(sign_key=None):
             if not file.is_file():
                 raise FileNotFoundError(file)
         validate_pom(source / (base + ".pom"), group, module, version)
+        with zipfile.ZipFile(source / (base + ".aar")) as aar:
+            for name in ("LICENSE", "NOTICE", "THIRD_PARTY_NOTICES.md"):
+                if aar.read("assets/pleos/licenses/" + name) != (ROOT / name).read_bytes():
+                    raise ValueError(f"AAR 라이선스 문서가 다릅니다: {module}/{name}")
         with zipfile.ZipFile(source / (base + "-sources.jar")) as jar:
             if not any(name.endswith(".kt") for name in jar.namelist()):
                 raise ValueError(f"Kotlin 소스가 없는 source JAR: {module}")
+            for name in ("LICENSE", "NOTICE", "THIRD_PARTY_NOTICES.md"):
+                if jar.read(name) != (ROOT / name).read_bytes():
+                    raise ValueError(f"소스 JAR 라이선스 문서가 다릅니다: {module}/{name}")
         with zipfile.ZipFile(source / (base + "-javadoc.jar")) as jar:
             if len(jar.read("index.html")) < 1000 or "PUBLIC_API.md" not in jar.namelist():
                 raise ValueError(f"API 문서가 없는 Javadoc JAR: {module}")
-            for name in ("LICENSE", "THIRD_PARTY_NOTICES.md"):
+            for name in ("LICENSE", "NOTICE", "THIRD_PARTY_NOTICES.md"):
                 if jar.read(name) != (ROOT / name).read_bytes():
                     raise ValueError(f"배포 라이선스 문서가 다릅니다: {module}/{name}")
         for file in files:

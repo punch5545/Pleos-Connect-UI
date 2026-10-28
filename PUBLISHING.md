@@ -2,7 +2,7 @@
 
 배포 대상은 Sonatype Central Portal이며 인증된 네임스페이스는 `io.github.punch5545`입니다. GitHub Pages 또는 GitHub Packages를 대체 저장소로 사용하지 않습니다.
 
-현재 상태: 소스의 `main` 푸시는 완료했습니다. Central 업로드·게시는 아직 실행하지 않았습니다. 코드 라이선스 선택과 기존 GPG 키의 사용자 잠금 해제를 기다리고 있습니다. 아래 좌표는 게시할 대상 좌표입니다.
+최신 게시 상태와 공개 저장소 확인 결과는 [배포 상태 기록](https://github.com/punch5545/Pleos-Connect-UI/blob/main/docs/verification/publishing/status.json)에 기록합니다. 아래 좌표를 Maven Central 배포에 사용합니다.
 
 | 모듈 | 공개 좌표 |
 | --- | --- |
@@ -18,7 +18,7 @@
 
 API 문서 JAR은 Maven의 `javadoc` classifier로 제공합니다. 별도 Gradle documentation variant는 추가하지 않습니다.
 
-POM은 프로젝트 URL·SCM·개발자·선택한 코드 라이선스를 포함합니다. 폰트와 동봉 디자인 자산의 권리는 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)에 별도로 유지합니다.
+POM은 프로젝트 URL·SCM·개발자·Apache-2.0 코드 라이선스를 포함합니다. AAR·sources/API 문서 JAR에 LICENSE·NOTICE·THIRD_PARTY_NOTICES.md도 넣습니다. 폰트와 동봉 디자인 자산의 권리는 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)에 별도로 유지합니다.
 
 ## 재현
 

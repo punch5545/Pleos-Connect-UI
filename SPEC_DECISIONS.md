@@ -73,3 +73,7 @@
 - 빈 Toast 메시지는 같은 ID의 항목을 이벤트 없이 제거합니다. `icon` 람다의 재구성만으로 generation과 timer를 다시 시작하지 않습니다. `PleosToast(message, ...)`는 공유 surface를 직접 제공합니다.
 
 검증 상태와 남은 플랫폼·시각 검증은 VERIFICATION.md에 별도로 기록합니다. 미검증 항목을 원본 일치나 실차 호환으로 표현하지 않습니다.
+
+## 공개 Maven 배포
+
+사용자가 Maven Central 배포와 Apache-2.0 적용을 승인했습니다. 인증된 네임스페이스 `io.github.punch5545`와 고정 버전 `0.1.0`을 공개 좌표로 사용합니다. 기존 Kotlin 패키지는 유지합니다. AGP·Gradle·Kotlin·Compose 버전은 변경하지 않았습니다. 라이선스 자산 경로는 로컬 AGP 9.4.1 소스에서 확인한 공개 `LibraryExtension` 타입을 사용하여 legacy SourceSet bridge의 타입 불일치를 피합니다. 동봉 원본 자산에는 코드 라이선스를 새로 부여하지 않습니다.

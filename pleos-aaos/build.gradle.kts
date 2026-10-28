@@ -17,6 +17,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     publishing { singleVariant("release") { withSourcesJar() } }
+    // AGP 9.4.1의 공개 DSL 타입으로 조회하여 legacy SourceSet bridge를 피합니다.
+    (this as com.android.build.api.dsl.LibraryExtension).sourceSets.getByName("main")
+        .assets.srcDir(rootProject.layout.buildDirectory.dir("license-assets").get().asFile)
 }
 
 kotlin { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11) } }

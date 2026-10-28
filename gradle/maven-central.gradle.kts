@@ -2,6 +2,16 @@ import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.jvm.tasks.Jar
 
+tasks.named("preBuild") {
+    dependsOn(rootProject.tasks.named("prepareLicenseAssets"))
+}
+
+tasks.withType<Jar>().matching { it.name == "sourceReleaseJar" }.configureEach {
+    from(rootProject.file("LICENSE"))
+    from(rootProject.file("NOTICE"))
+    from(rootProject.file("THIRD_PARTY_NOTICES.md"))
+}
+
 // Kotlin API 선언과 실제 소스 문서를 포함합니다. 빈 Javadoc 대체물이 아닙니다.
 val apiDocumentationJar = tasks.register<Jar>("apiDocumentationJar") {
     dependsOn(rootProject.tasks.named("generateApiDocumentation"))
@@ -11,6 +21,7 @@ val apiDocumentationJar = tasks.register<Jar>("apiDocumentationJar") {
     from(rootProject.file("AAOS_INTEGRATION.md"))
     from(rootProject.file("SPEC_DECISIONS.md"))
     from(rootProject.file("LICENSE"))
+    from(rootProject.file("NOTICE"))
     from(rootProject.file("THIRD_PARTY_NOTICES.md"))
     from(rootProject.layout.buildDirectory.dir("api-docs/${project.name}"))
 }
@@ -29,6 +40,11 @@ configure<PublishingExtension> {
                     name.set(providers.gradleProperty("pomLicenseName"))
                     url.set(providers.gradleProperty("pomLicenseUrl"))
                     distribution.set("repo")
+                    comments.set(
+                        "Applies to the authored implementation, build configuration and tools. " +
+                            "Bundled original design assets and fonts retain their separate rights; see " +
+                            "https://github.com/punch5545/Pleos-Connect-UI/blob/v${project.version}/THIRD_PARTY_NOTICES.md"
+                    )
                 }
                 if (project.name == "pleos-tokens") {
                     license {

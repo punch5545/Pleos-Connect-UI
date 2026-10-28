@@ -80,3 +80,9 @@ python3 tools/package_release.py
 API 28 실제 기기, 실제 한글 IME 조합·음성 인식, TalkBack 사용자 흐름·timeout 통합, Toast의 실제 OS 백그라운드 복구, OEM RotaryService·nudge·FocusArea/FocusParkingView, 실차 다중 디스플레이·시스템 창 제어, 실제 Car UX manager의 성공 연결과 정책 전환, OS 알림 채널/권한 승인 후 실제 제출은 검증하지 않았습니다. 소프트웨어 키보드 재요청 검사는 controller 호출 횟수 확인이며 실제 IME 표시 검사는 아닙니다. 소비 앱 전체 Activity 재생성·상태 복원도 별도 검증이 필요합니다. Widget은 인앱 카드로 OS AppWidget 배포 범위가 아닙니다.
 
 이번 재대조에 생성한 `PleosSpecAudit` 임시 AVD는 증거 회수 후 종료·삭제했습니다. 사용자 기존 AVD 데이터는 변경하지 않았습니다.
+
+## Maven Central 릴리스 검증
+
+Apache-2.0 LICENSE·NOTICE와 별도 자산 고지를 세 AAR·sources/API 문서 JAR에 포함했습니다. `io.github.punch5545`의 0.1.0 배포 파일 15개에 기존 GPG 키로 서명하고 전체 fingerprint를 검증했습니다. 서명 15개·체크섬 60개를 포함한 90개 bundle 항목을 확인했습니다. 결과는 [release-checks.json](docs/verification/publishing/release-checks.json), [bundle-validation.json](docs/verification/publishing/bundle-validation.json), [release-build.log](docs/verification/publishing/release-build.log)에 있습니다.
+
+런타임 classes.jar는 UI 45개를 통과한 기존 AAR와 바이트가 같습니다. 이번 변경은 라이선스 자산과 배포 메타데이터이며 UI 계측은 재실행하지 않았습니다. 단위 16개 결과는 Gradle의 UP-TO-DATE로 재사용했고 lintRelease는 오류 0입니다. 초기 SourceSet 타입 실패는 `build-source-set-error.log`에 보존했으며 현재 AGP의 공개 DSL 타입으로 보정한 뒤 최종 빌드가 성공했습니다. Central의 실제 게시 여부는 [배포 상태 기록](https://github.com/punch5545/Pleos-Connect-UI/blob/main/docs/verification/publishing/status.json)을 기준으로 확인합니다.

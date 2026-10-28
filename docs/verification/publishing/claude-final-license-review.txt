@@ -1,0 +1,65 @@
+# 검토 결과
+
+파일은 읽기만 했습니다. 코드 수정, 빌드, Git, 외부 게시는 하지 않았습니다.
+
+## 고쳐야 할 결함
+
+### 1. 지금 설정으로는 Gradle 구성 단계에서 빌드가 실패합니다
+- `docs/verification/publishing/final-build.log:6-9`에 아래 오류가 기록되어 있습니다.
+  - 위치: `pleos-aaos/build.gradle.kts` line 20
+  - 내용: `DefaultAndroidLibrarySourceSet_Decorated cannot be cast to ... com.android.build.gradle.api.AndroidLibrarySourceSet`
+  - 결과: `BUILD FAILED`
+- 원인 코드는 `sourceSets["main"].assets.srcDir(...)`입니다.
+  - `pleos-aaos/build.gradle.kts:20`, `pleos-compose/build.gradle.kts:21`, `pleos-tokens/build.gradle.kts:21` 세 곳에 같은 줄이 있습니다.
+  - 이 Kotlin DSL 인덱스 접근이 AGP 9.4.1(`gradle/libs.versions.toml:2`)에서 이전 API 타입으로 형변환되다가 실패합니다.
+  - `pleos-aaos`는 알파벳순으로 가장 먼저 평가될 뿐이고, 나머지 두 모듈도 같은 문제를 갖고 있습니다.
+- 그 결과 이번 변경의 핵심인 "AAR에 라이선스 자산 포함"이 한 번도 실제로 만들어지지 않았습니다.
+- `build/maven/io/github/punch5545/*/0.1.0/`에 있는 산출물은 이 실패 이전에 만든 것으로 봐야 합니다. 이번 변경의 근거로 쓸 수 없습니다.
+  - 다만 `tools/central_bundle.py:66-69`가 AAR 안의 `assets/pleos/licenses/*`를 원문과 바이트 단위로 비교합니다. 그래서 오래된 산출물이 bundle에 들어갈 가능성은 낮습니다. 라이선스 자산이 없으면 `KeyError`로, 내용이 다르면 `ValueError`로 중단됩니다.
+- 고치는 방법:
+  - 권장안은 `androidComponents.onVariants`에서 `variant.sources.assets`에 생성 디렉터리를 등록하는 것입니다. 디렉터리 출력 속성을 가진 작업과 `addGeneratedSourceDirectory`를 함께 쓰면, 작업 의존성도 산출물 기준으로 연결됩니다.
+  - 그러면 `gradle/maven-central.gradle.kts:5-7`의 `preBuild` 의존 우회도 없앨 수 있습니다.
+  - 어떤 방법이든 다시 빌드한 뒤 세 AAR의 `assets/pleos/licenses/` 목록을 확인해야 합니다.
+
+### 2. POM의 라이선스 표기가 NOTICE에 적은 범위보다 넓습니다
+- `NOTICE:4-7`과 `THIRD_PARTY_NOTICES.md:3,6`은 Apache-2.0을 "직접 작성한 Kotlin 구현, 빌드 설정, 도구"로 한정합니다. 원본 설계, 토큰, SVG에서 생성한 VectorDrawable과 토큰 데이터는 "원래 권리자의 권리를 유지"하며 별도 오픈소스 라이선스를 붙이지 않는다고 적었습니다. `docs/assets/README.md:17`도 같은 내용입니다.
+- 그런데 실제로 배포되는 산출물은 다음과 같습니다.
+  - `pleos-compose` AAR에는 원본에서 생성한 `res/drawable/pleos_ic_*.xml` 80개가 들어갑니다.
+  - `pleos-tokens` AAR에는 `assets/pleos/source/figma_*_tokens.json` 같은 원본 토큰 데이터가 들어갑니다.
+- 반면 `gradle/maven-central.gradle.kts:38-51`의 POM은 산출물 전체에 Apache-2.0을 선언합니다. `pleos-tokens`에는 OFL만 추가로 붙습니다. 두 모듈의 POM 어디에도 "원래 권리자의 권리를 유지하는 자산이 들어 있다"는 표시가 없습니다.
+- Maven 메타데이터만 보는 소비자나 라이선스 스캐너는 아이콘과 토큰까지 Apache-2.0으로 판정하게 됩니다.
+- 고치는 방법:
+  - 최소한 POM `<license>`의 `comments`에 적용 범위를 적고, `THIRD_PARTY_NOTICES.md`를 가리키는 것이 좋습니다.
+  - 그와 별개로, 원본 설계 자산을 Central에 공개 재배포할 권리가 있는지는 Apache-2.0 승인과 다른 문제입니다. 이 부분은 사용자께서 직접 확인하셔야 합니다.
+
+## 영향이 작은 사항
+- **`prepareLicenseAssets`가 `Copy`라 이전 파일이 남습니다** (`build.gradle.kts:11`)
+  - 나중에 고지 파일 이름을 바꾸거나 지우면, 이전 파일이 `build/license-assets`에 남은 채 AAR에 들어갑니다.
+  - `central_bundle.py`는 정해진 세 파일만 확인하므로 이 경우를 잡지 못합니다. `Sync`를 쓰면 막을 수 있습니다.
+- **`pleos-compose`와 `pleos-aaos`의 `THIRD_PARTY_NOTICES.md`가 해당 AAR에 없는 경로를 안내합니다**
+  - 이 파일은 "AAR의 `assets/pleos/licenses/`에 OFL 원문을 보존"한다고 적고 있습니다(`THIRD_PARTY_NOTICES.md:5`).
+  - 실제로 `OFL.txt`는 `pleos-tokens`에만 있습니다(`pleos-tokens/src/main/assets/pleos/licenses/OFL.txt`).
+  - 폰트도 `pleos-tokens`에만 있으므로 라이선스 의무 위반은 아닙니다. 다만 문구는 "pleos-tokens AAR"로 한정하는 것이 정확합니다.
+
+## 문제없음을 확인한 부분
+- **직전 검토의 지적 1~3은 모두 보정되었습니다.**
+  - `LICENSE`가 추가되었고, javadoc JAR에 대한 검증(`central_bundle.py:79-81`)도 들어갔습니다.
+  - `generateApiDocumentation`의 입력에 `build.gradle.kts`가 추가되었습니다(`build.gradle.kts:18`).
+  - VALIDSIG 비교가 추가되었습니다(아래 서명 항목 참조).
+- **서명 fingerprint 검증이 맞게 동작합니다.**
+  - `central_bundle.py:46`이 40자 또는 64자 hex만 받습니다.
+  - `:91-92`의 `fields[2]`는 실제 서명 키, `fields[-1]`은 주 키 fingerprint입니다. 하위 키로 서명하는 경우까지 올바르게 비교합니다.
+  - `check=True`이므로 서명이 잘못되면 그 자리에서 중단됩니다.
+- **sources JAR와 javadoc JAR 구성에 문제가 없습니다.**
+  - `sourceReleaseJar`라는 이름 매칭과, 루트 파일을 직접 `from`하는 방식은 별도 작업 의존성이 필요 없습니다.
+  - javadoc JAR 쪽 `api-docs/<module>`에는 `index.html`만 생성되므로(`tools/generate_api_docs.py:77-79`) 중복 항목 오류가 나지 않습니다.
+- **체크섬과 bundle 구성이 Central 요구에 맞습니다.**
+  - 다섯 산출물 각각에 md5, sha1, sha256, sha512를 만듭니다.
+  - `.asc`와 체크섬 파일에는 다시 체크섬을 만들지 않습니다.
+  - staging 디렉터리를 매번 비우고 Maven 경로 구조로 압축합니다.
+- **POM 라이선스 속성 값이 정상입니다.** `gradle.properties:23-24`의 값이 Apache-2.0 원문 URL과 맞고, `license-check.json`의 sha256과 바이트 수 기록과도 일치합니다.
+- **`pleos-tokens` 안에서 파일 이름 충돌이 없습니다.** `license-assets`의 파일 세 개와 `src/main/assets/pleos/licenses/`의 `OFL.txt`, `source.json`의 이름이 겹치지 않습니다.
+
+참고로 `claude-final-license-review.txt`는 현재 빈 파일입니다.
+
+**정리하면, 1번 빌드 실패를 먼저 고쳐야 나머지 라이선스 포함 경로를 실제로 검증할 수 있습니다.** 고친 뒤에는 세 모듈을 다시 publish하고 `central_bundle.py --unsigned`로 bundle 검증을 다시 돌려야 합니다.

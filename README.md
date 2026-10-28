@@ -39,7 +39,7 @@ dependencies {
 
 Central 배포 절차·서명·POM·bundle 검증은 [PUBLISHING.md](PUBLISHING.md)에 기록합니다.
 
-현재 Central 게시는 라이선스 확정과 GPG 서명을 기다리는 상태입니다. 게시 완료 전에는 위 Maven 의존성이 Central에서 조회되지 않습니다.
+게시 상태와 공개 저장소 확인 결과는 [PUBLISHING.md](PUBLISHING.md)에 기록합니다.
 
 ## 사용 예제
 
@@ -114,3 +114,7 @@ Continuous Slider의 앞/뒤 icon 슬롯은 track 내부에 배치하며 양 끝
 - [검증 결과와 한계](VERIFICATION.md)
 
 동봉 원본 문서는 `docs/`에 보존합니다. 웹/Figma 접속 없이 `python3 tools/generate_spec.py`로 토큰·벡터·원본 master 목록을 재생성할 수 있습니다. `python3 tools/verify_spec.py`는 원본 무결성과 토큰 참조·벡터 경로·폰트·라이브러리 경계를 검사합니다. 생성 재현성은 생성기 실행 전후의 파일 해시를 비교하여 별도로 검증했습니다.
+
+## 라이선스
+
+직접 작성한 Kotlin 구현·빌드 설정·도구는 [Apache License 2.0](LICENSE)으로 배포합니다. [NOTICE](NOTICE)와 [외부 자산 고지](THIRD_PARTY_NOTICES.md)에 동봉 폰트·원본 설계·토큰·아이콘의 별도 권리를 보존합니다. 라이선스 원문과 고지는 세 AAR 및 sources/API 문서 JAR에도 포함합니다.
