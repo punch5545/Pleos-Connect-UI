@@ -1,0 +1,110 @@
+[
+  {
+    "file": "pleos-compose/src/androidTest/java/com/jade/pleos/compose/PleosLibraryUiTest.kt",
+    "beforeSha256": "5d2c4c6b4da2c84bd59cb3db71c8ef4bb0a7532eac652cc5222589e093f3b04c",
+    "afterSha256": "e8f4a6b1b25f18021da02fa9bf48364522ae78c5956e5789f8f7478d86e8bccc",
+    "added": false
+  },
+  {
+    "file": "pleos-compose/src/androidTest/java/com/jade/pleos/compose/PleosSpecRegressionTest.kt",
+    "beforeSha256": null,
+    "afterSha256": "775905ca63fdd8e28833d03c86451070fcec9e4ca743be63137b482eed1a7e70",
+    "added": true
+  },
+  {
+    "file": "pleos-compose/src/androidTest/java/com/jade/pleos/compose/PleosVariantCoverageTest.kt",
+    "beforeSha256": "345bf801cccf54849ab13583333ec6348d89df3d171e5d089762dfbd05fd2c57",
+    "afterSha256": "18cb0e0d7f317cd41c04d6765f9a2ed95aa78a6e19156399c24befaa13ff9421",
+    "added": false
+  },
+  {
+    "file": "pleos-compose/src/main/java/com/jade/pleos/compose/Actions.kt",
+    "beforeSha256": "9568d5a7985cce7fe58ee46d339c6b57f3ea82c3ca16f2154d269e30c138752f",
+    "afterSha256": "93f53265e3582e2573d66ece139c1891b5dec512c92af81ae51ec6f9c8b3ea4f",
+    "added": false
+  },
+  {
+    "file": "pleos-compose/src/main/java/com/jade/pleos/compose/Bars.kt",
+    "beforeSha256": "6de7158e4b483873f2543c2c611b8cf59910147c076a0bd707fe54b57dbbf430",
+    "afterSha256": "d94ff67324bc548b89934189f32cbbebb4f0acc4fe7012e9829513e87305a417",
+    "added": false
+  },
+  {
+    "file": "pleos-compose/src/main/java/com/jade/pleos/compose/Controllers.kt",
+    "beforeSha256": "8bf18463a6c5d5455890995ced5448125c423a2939e0d5b521a7068cae235c00",
+    "afterSha256": "31fe5f4db00cb87b509b2587ca6262f39e4554fb7520b3cbc9e40d8eb8b32708",
+    "added": false
+  },
+  {
+    "file": "pleos-compose/src/main/java/com/jade/pleos/compose/Dropdown.kt",
+    "beforeSha256": "a7f0998aad276909aecce268c3207b5683ec28c33c63f156ea38633c3fd0f90e",
+    "afterSha256": "4749705761ff8de168b5095344806a786f991c2c8fcc520ff6ab7616316215fa",
+    "added": false
+  },
+  {
+    "file": "pleos-compose/src/main/java/com/jade/pleos/compose/Fields.kt",
+    "beforeSha256": "605bd65d57e4e34a2c67980533f67d21b4c95e4e3b3b9985309a911902ee84c2",
+    "afterSha256": "2df826baf5b523070d888379f4293535a62b11442ce362477d2a5f6dcf5429c8",
+    "added": false
+  },
+  {
+    "file": "pleos-compose/src/main/java/com/jade/pleos/compose/Foundation.kt",
+    "beforeSha256": "1547e2e709985d86557a70730b04b010db8dbdabec863bda870aea8057e23cb9",
+    "afterSha256": "c36f199098a9b41a70f18638f637ee0a19781a5dce19e7672d7561ae89e9bed5",
+    "added": false
+  },
+  {
+    "file": "pleos-compose/src/main/java/com/jade/pleos/compose/Keypads.kt",
+    "beforeSha256": "36839e2ea45c7db6f394262624c4d5e69a3ad275e3b74ec5da6b161d5509c6db",
+    "afterSha256": "884945d0d46c3e8875e994e9befee75e47b34901af0104e10d1ffb6ff7fea185",
+    "added": false
+  },
+  {
+    "file": "pleos-compose/src/main/java/com/jade/pleos/compose/Navigation.kt",
+    "beforeSha256": "5aac5527e9a3446ab395bbf50c03f83a0816575e4905b8477d0b0d5e5c70cd94",
+    "afterSha256": "15f57a0992b20abc6a0dafc864821f6a78e0d7fe0b74484eb85fb910a901cbfa",
+    "added": false
+  },
+  {
+    "file": "pleos-compose/src/main/java/com/jade/pleos/compose/NotificationsWidgets.kt",
+    "beforeSha256": "f408e334decd641dd040161e51cb47cd95285b92c569617b363c2d637300c977",
+    "afterSha256": "71d41c163ff2f111ce16214c0dbf1a7922624e8d7be3266b9a7f726d0e49a24d",
+    "added": false
+  },
+  {
+    "file": "pleos-compose/src/main/java/com/jade/pleos/compose/Overlays.kt",
+    "beforeSha256": "c617f17da1fb51971bf21905a40f5fc6f6e6a3410634c354aa5cfcd121b1bc14",
+    "afterSha256": "a23090288fbfbfac324b52b621126dc04cd9fbee86c0c5a70512bf2498a0d731",
+    "added": false
+  },
+  {
+    "file": "pleos-compose/src/main/java/com/jade/pleos/compose/Selections.kt",
+    "beforeSha256": "1658f00b549c1f052cbb1f773b6a145b611eac2a537734c7368fffdb78d75581",
+    "afterSha256": "00bfa2250fd6171c244345eac3d2a5fe02ae686d41f36bc32baf703b8f5cd4d0",
+    "added": false
+  },
+  {
+    "file": "pleos-compose/src/main/java/com/jade/pleos/compose/Spinners.kt",
+    "beforeSha256": "b0887866823157e44299d96420b744c5ac2771b720c5b3636441cc0e672f0308",
+    "afterSha256": "0f215a64d04d10efd8db99a090b9ef55ab257ffad556316def738fe5a673728d",
+    "added": false
+  },
+  {
+    "file": "pleos-compose/src/test/java/com/jade/pleos/compose/StateContractTest.kt",
+    "beforeSha256": "fd5b38bbbcb0192460a8685c54ccf159f0627a699838a347ba9c034294e8d8a8",
+    "afterSha256": "84b509005d6ddb9deef6d21113b14c40a0e4e15457badab63d5221c454bff810",
+    "added": false
+  },
+  {
+    "file": "pleos-tokens/src/main/java/com/jade/pleos/tokens/PleosTokens.kt",
+    "beforeSha256": "ccf57f8099e5f9fd72e9493e48bbe036d05f8b17ee6ef504dbd8b97a325c6928",
+    "afterSha256": "5fd18ab6ce17e9f370c50b3a19af3fed09690f38c452be41198892ada0fb44ff",
+    "added": false
+  },
+  {
+    "file": "pleos-tokens/src/test/java/com/jade/pleos/tokens/TokenContractTest.kt",
+    "beforeSha256": "59708968176b64087ce0cb2f59bd7123be8fa1436b591ef19a4d2e072947908f",
+    "afterSha256": "75dd5fd82faf2f98834188a27393f1a0a6f8533dbb9b7d81d55dc207b267d1ee",
+    "added": false
+  }
+]

@@ -1,0 +1,43 @@
+{
+  "pleos-tokens": {
+    "unitTests": 6,
+    "unitFailures": 0,
+    "lintErrors": 0,
+    "lintWarnings": 6,
+    "lintIds": [
+      "AndroidGradlePluginVersion",
+      "GradleDependency",
+      "NewerVersionAvailable"
+    ],
+    "aarClassCount": 46,
+    "aarSha256": "1dd746d52c8ff0e2c076b282e60c451c0850de7f88b4e57d5ba630286c8dc8e1",
+    "aarPublishedIdentical": true
+  },
+  "pleos-compose": {
+    "unitTests": 9,
+    "unitFailures": 0,
+    "lintErrors": 0,
+    "lintWarnings": 5,
+    "lintIds": [
+      "GradleDependency",
+      "ModifierFactoryExtensionFunction",
+      "UseTomlInstead"
+    ],
+    "aarClassCount": 166,
+    "aarSha256": "2f8a27354313829a3cd23abf9da6c37317a3add677058a9d4e293aa0414b5545",
+    "aarPublishedIdentical": true
+  },
+  "pleos-aaos": {
+    "unitTests": 1,
+    "unitFailures": 0,
+    "lintErrors": 0,
+    "lintWarnings": 2,
+    "lintIds": [
+      "GradleDependency",
+      "UseTomlInstead"
+    ],
+    "aarClassCount": 18,
+    "aarSha256": "caa38b25a3b0dff1c2e8de0685a06ef2dd13781fcdc6b3de25d345362be39035",
+    "aarPublishedIdentical": true
+  }
+}

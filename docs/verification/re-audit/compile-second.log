@@ -1,0 +1,24 @@
+Reusing configuration cache.
+> Task :pleos-tokens:preBuild UP-TO-DATE
+> Task :pleos-tokens:preDebugBuild UP-TO-DATE
+> Task :pleos-compose:preBuild UP-TO-DATE
+> Task :pleos-compose:preDebugBuild UP-TO-DATE
+> Task :pleos-tokens:javaPreCompileDebug UP-TO-DATE
+> Task :pleos-tokens:processDebugNavigationResources UP-TO-DATE
+> Task :pleos-compose:generateDebugResources UP-TO-DATE
+> Task :pleos-compose:processDebugNavigationResources UP-TO-DATE
+> Task :pleos-tokens:generateDebugResources UP-TO-DATE
+> Task :pleos-tokens:packageDebugResources UP-TO-DATE
+> Task :pleos-compose:packageDebugResources UP-TO-DATE
+> Task :pleos-compose:parseDebugLocalResources UP-TO-DATE
+> Task :pleos-tokens:parseDebugLocalResources UP-TO-DATE
+> Task :pleos-compose:generateDebugRFile UP-TO-DATE
+> Task :pleos-tokens:generateDebugRFile UP-TO-DATE
+> Task :pleos-tokens:compileDebugKotlin
+> Task :pleos-tokens:compileDebugJavaWithJavac NO-SOURCE
+> Task :pleos-tokens:bundleLibCompileToJarDebug
+> Task :pleos-compose:compileDebugKotlin
+
+BUILD SUCCESSFUL in 8s
+14 actionable tasks: 3 executed, 11 up-to-date
+Configuration cache entry reused.

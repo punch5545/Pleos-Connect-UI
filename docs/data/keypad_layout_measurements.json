@@ -1,0 +1,84 @@
+{
+  "source_url": "https://document.pleos.ai/docs/connect/guide/docs-design/components/actions/keypad",
+  "source_web_ref": "turn3view3",
+  "asset": "keypad_keyboard-0959fbeb50fcdc44d487bc6324129e82.svg",
+  "measurement_type": "SVG path coordinates, visually checked rendered PNG",
+  "qwerty": {
+    "source_scale_to_connect_s": 0.8,
+    "outer": [
+      428.801,
+      186,
+      1014.399,
+      416
+    ],
+    "primary_key": [
+      448,
+      230.801,
+      80,
+      64
+    ],
+    "next_key_x": 536,
+    "next_row_y": 302.801,
+    "last_key_bottom": 582.801,
+    "last_key_right": 1424,
+    "space": [
+      656,
+      518.801,
+      392,
+      64
+    ],
+    "handle": [
+      879.801,
+      198.801,
+      112,
+      6.4
+    ],
+    "normalized": {
+      "column_gap": 10,
+      "row_gap": 10,
+      "padding_left_right_bottom": 24,
+      "padding_top": 56,
+      "outer_width": 1268,
+      "outer_height": 520,
+      "space_width": 490,
+      "handle_width": 140,
+      "handle_height": 8,
+      "handle_top": 16,
+      "container_radius": 50
+    }
+  },
+  "numeric": {
+    "source_scale_from_key_height": 0.63,
+    "outer_x": 681,
+    "outer_width": 509.04,
+    "key_1": [
+      711.24,
+      955.762,
+      139.44,
+      68.04
+    ],
+    "key_2_x": 865.801,
+    "row_2_y": 1047.8,
+    "column_gap": 15.121,
+    "row_gap_source_approx": 24,
+    "outer_side_padding": 30.24,
+    "outer_bottom_padding": 30.24,
+    "field_to_key_gap": 30.241,
+    "normalized_measured": {
+      "column_gap": 24,
+      "side_bottom_padding": 48,
+      "field_to_key_gap": 48,
+      "row_gap_approx": 38.095238095238095,
+      "example_outer_width": 808,
+      "key_width_flexible": 221.33333333333334
+    },
+    "implementation_decisions": {
+      "row_gap": 40,
+      "standalone_padding_top": 48,
+      "intrinsic_width": 744,
+      "intrinsic_height": 648
+    }
+  },
+  "no_figma_gap_variable_found": true,
+  "mode_policy": "Reuse these u gap/padding metrics for all four assets modes; per-key dimensions use actual mode tokens; documented implementation choice"
+}

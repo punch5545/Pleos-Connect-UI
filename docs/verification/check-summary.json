@@ -1,0 +1,34 @@
+{
+  "pleos-tokens": {
+    "unitTests": 5,
+    "unitFailures": 0,
+    "lintErrors": 0,
+    "lintWarnings": 6,
+    "lintIds": [
+      "AndroidGradlePluginVersion",
+      "GradleDependency",
+      "NewerVersionAvailable"
+    ]
+  },
+  "pleos-compose": {
+    "unitTests": 6,
+    "unitFailures": 0,
+    "lintErrors": 0,
+    "lintWarnings": 5,
+    "lintIds": [
+      "GradleDependency",
+      "ModifierFactoryExtensionFunction",
+      "UseTomlInstead"
+    ]
+  },
+  "pleos-aaos": {
+    "unitTests": 1,
+    "unitFailures": 0,
+    "lintErrors": 0,
+    "lintWarnings": 2,
+    "lintIds": [
+      "GradleDependency",
+      "UseTomlInstead"
+    ]
+  }
+}

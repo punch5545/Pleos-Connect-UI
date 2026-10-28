@@ -1,0 +1,84 @@
+# Pleos Connect 후속 재검토 결과 (읽기 전용)
+
+새 P0와 P1은 없습니다. 이전 P1 5건은 모두 해결됐습니다. P2는 회귀 3건과 이전 지적 중 남은 4건이 있습니다. 빌드, lint, UI 테스트, 계측은 실행하지 않았고 정적 소스와 명세 문서만 대조했습니다.
+
+## 우선 확인 항목
+
+**Popup 좁은 constraints**
+- 정상 범위에서는 맞습니다. 액션을 먼저 측정하고(`Overlays.kt:116-118`), header 다음에 body를 측정하며(`:122-145`), 높이 상한은 창 높이와 `max_height` 토큰 중 작은 값입니다(`:106-108`). body는 최소 96까지 공간을 남기고 header가 먼저 줄어듭니다. 03 §4.3의 "body 우선 스크롤"에 맞습니다.
+- `bodyScroll=false`일 때도 body에 유한한 `bodyLimit`이 전달되므로 LazyColumn을 넣어도 안전합니다.
+- 다만 극단적으로 낮은 높이에서는 문제가 있습니다(아래 P2-1).
+
+**UI 콜백 단일 실행**: 확인한 경로에서 모두 한 번만 실행됩니다.
+- Popup의 Escape는 KeyDown과 KeyUp을 모두 소비하고 KeyUp에서만 dismiss합니다. Dialog의 Back과 겹치지 않습니다.
+- Dropdown의 Back/Escape(`Dropdown.kt:541-547`)와 선택 후 dismiss(`:518-521`)도 한 번씩입니다.
+- `actionModifier`는 키 처리와 click이 하나의 focus target을 공유합니다(`Foundation.kt:320-322`).
+- Toast timeout은 generation이 맞는지 검사한 뒤에만 처리합니다(`Overlays.kt:465`, `:329`).
+
+**Widget gesture 캡처**
+- Handle은 카드의 자식이라 Main pass에서 먼저 drag를 받고, slop을 넘는 순간 이벤트를 소비합니다. 그래서 카드의 수평 drag는 취소되고, 숨김은 Handle의 수직 drag로만 일어납니다(`NotificationsWidgets.kt:522-539`).
+- Show Handle은 탭에 반응하지 않습니다(clickable 없음). 대체 수단으로 키 입력과 접근성 action만 남아 있습니다.
+- 방향키는 루트가 직접 focused이고 실제로 상태가 바뀔 때만 소비합니다. 끝 페이지이거나 이미 같은 상태면 포커스가 밖으로 이동합니다(`:456`).
+
+**Search focus**: 03 §3에는 진입 시 자동 포커스에 대한 규정이 없어 결함으로 보지 않았습니다. 다만 아래 P2-6과 같은 API 공백이 있습니다.
+
+**Toast lifecycle**: 규격에 맞습니다.
+- STARTED 이상에서만 시간을 소모하고, 남은 시간을 보존합니다(`Overlays.kt:426-437`).
+- 재구성이나 콜백·아이콘 람다가 바뀌어도 timer가 다시 시작되지 않습니다(`:582-586`).
+- 빈 메시지는 표시하지 않습니다(`:300`, `:361`).
+
+## 이전 지적 해결 여부
+
+| 이전 항목 | 결과 |
+| --- | --- |
+| P1-1·5 Dropdown Footer | 해결. 구분선 inset, 세로 padding 0, circle 높이, gap 20, 반경 토큰(`Dropdown.kt:133-198`) |
+| P1-2 Navigation Search·메뉴 | 해결. Search 타입, `PleosNavigationMenu`(좌우16·상하8·반경16·화살표28·간격8, 닫힐 때 focus 복구), `PleosNavigationDropdown` |
+| P1-3 Popup header/body | 해결. 형제 배치, gap 40, header 하단 16 |
+| P1-4 Widget D-pad | 해결(단, Hidden 상태는 P2-2) |
+| Popup 반경/최대높이/close 48/Large 32 | 해결 |
+| Toast 키 오기·icon 토큰 | 해결. 792 webOverride, `popup/toast/icon` |
+| Widget 전체 영역 drag·Handle 탭·pitch·이중 소스 | 해결 |
+| Dropdown 메뉴 폭·토큰 | 메뉴 폭은 anchor를 따르도록 해결. trigger 600 상한은 남음(P2-4) |
+| Spinner 주입점 | Large 쪽은 해결. Medium fade는 남음(P2-5) |
+| Selections overlay 3건 | 해결 |
+| Controllers 5건 | 해결. 반경 20/16, gradient 파생 토큰, track 아이콘 slot, Volume 5단계, stepper 토큰. 화살표는 `autoMirrored`라 RTL도 맞습니다 |
+| Keypad Static 아이콘 | 해결. 새로 쓴 색 키가 모두 GeneratedColors에 있어 `error()` 위험이 없습니다 |
+| TextField 최소 target | 해결. 외형 40, hit 영역 48 |
+| Bar handle 길이 | 해결 |
+
+## 새로 생기거나 남은 P2
+
+1. **(회귀) 아주 낮은 높이에서 Popup 액션 하단이 잘립니다** — 03 §4.3 "confirm/cancel을 접근 가능하게 유지"
+   - 남은 높이가 0이어도 header와 body는 높이 0인 자식으로 목록에 남습니다. 그래도 간격은 `spacing × (n-1)`만큼 더해집니다(`Overlays.kt:146-150`).
+   - 결과적으로 액션이 최대 80만큼 아래로 밀리고, Surface의 clip에 잘립니다. 세로 버튼 배치에 IME까지 열린 경우에 생길 수 있습니다.
+   - 수정 방향: 높이가 0인 자식은 간격 계산에서 빼고, 액션은 항상 하단 기준으로 배치합니다.
+
+2. **(회귀, 이전 P1-4의 잔여) Hidden 상태에서 좌우 키와 이전/다음 접근성 action이 보이지 않는 페이지를 넘깁니다** — 03 §13.2 "Hidden에서 currentKey를 보존"
+   - `canPage`가 visibility를 검사하지 않습니다(`NotificationsWidgets.kt:427,438-440,456`).
+   - 그래서 Hidden 상태에서는 끝 페이지에 닿을 때까지 좌우 D-pad를 소비합니다.
+
+3. **(회귀) 카드 drag가 세로 slop 이벤트까지 소비합니다** — 03 §13.2 "수평 drag와 수직 drag의 방향 잠금"
+   - 카드에 `detectDragGestures`를 쓰고 있어(`:489`) slop 시점의 이벤트가 방향과 관계없이 소비됩니다.
+   - 위젯이 세로 스크롤 부모 안에 있으면 위젯 위에서 시작한 세로 스크롤이 시작되지 않습니다.
+   - 수정 방향: 카드에는 `detectHorizontalDragGestures`를 씁니다.
+
+4. **(잔여) Dropdown trigger의 600 상한** — `Dropdown.kt:357`의 `widthIn(max = 600.dp)`
+   - 메뉴 폭이 anchor 폭을 따르므로 메뉴도 함께 600으로 묶입니다. 02 §10은 responsive 폭입니다.
+
+5. **(잔여) Spinner Medium fade가 60으로 고정됩니다**
+   - `spinner/list_mask_height`가 webOverride에 들어가 있습니다(`PleosTokens.kt:242`). 그래서 Medium에서도 원래 모드값(connect-l 53 등)이 아니라 60이 적용됩니다(`Spinners.kt:310`).
+   - 말씀하신 웹 고정 대상(Large 384/88, WEB 폭·열·간격)에 fade는 없고, "Medium height/row는 모드값 유지" 원칙과도 맞지 않습니다. 의도한 것이면 문서화가 필요합니다.
+
+6. **(API 공백) Search 입력에 focus 주입점이 없습니다**
+   - `PleosSearchNavigation`(`Navigation.kt:470-490`)에는 TextField용 `FocusRequester`나 modifier 인자가 없습니다.
+   - 호스트가 Search 진입 시 입력란에 포커스를 주거나 IME를 열 방법이 없습니다. 명세 위반은 아닙니다.
+
+7. **(잔여) "모든 치수에 PleosMetrics 주입점"이 아직 완전하지 않습니다**
+   - Toast 텍스트 최대폭 `712.dp`와 아이콘 간격 `16.dp`(`Overlays.kt:381,389`): `popup/toast/max_width`를 override해도 텍스트 폭은 712에 고정됩니다.
+   - Spinner focus 반경 `24.dp`(`Spinners.kt:206`), Continuous 아이콘 행 padding 20/16(`Controllers.kt:300`), Number 높이 76(`:545`), stepper 구분선 높이 64(`:656,665`).
+
+## 참고와 한계
+- 빌드, lint, UI 테스트, 계측은 하나도 실행하지 않았습니다. 위 판단은 모두 정적 대조 결과이며, Compose pointer pass와 focus 동작은 프레임워크 동작에 대한 지식으로 추론했습니다.
+- Toast 792, Spinner 384/88과 WEB 폭, 새 gradient 파생 토큰은 말씀하신 01 §2.1 정책대로 결함으로 세지 않았습니다.
+- 빈 메시지로 `show()`를 호출하면 같은 id의 현재 toast가 `onDismiss` 없이 제거됩니다(`Overlays.kt:300`). 명세상 허용되지만, 호스트의 `visible` 상태와 어긋날 수 있다는 점만 적어 둡니다.
+- 계획 파일 작성과 ExitPlanMode는 사용할 수 있는 도구가 없어 하지 않았고, 이 답변으로 보고를 대신합니다.

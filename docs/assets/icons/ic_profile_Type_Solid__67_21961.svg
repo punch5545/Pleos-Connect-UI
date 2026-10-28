@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+<title>ic_profile/Type=Solid</title>
+<g >
+
+<g transform="matrix(1,0,0,1,7,8)">
+<path fill="#131417" fill-opacity="1" fill-rule="nonzero" data-pleos-token="icon/dark/primary" d="M24.25233 7.2 C24.25233 11.172 21.02433 14.4 17.05233 14.4 C13.08033 14.4 9.85233 11.172 9.85233 7.2 C9.85233 3.228 13.08033 0 17.05233 0 C21.02433 0 24.25233 3.228 24.25233 7.2 Z"/>
+<path fill="#131417" fill-opacity="1" fill-rule="nonzero" data-pleos-token="icon/dark/primary" d="M34.00523 29.64323 C34.4223 30.83646 33.47086 32 32.20684 32 L1.89783 32 C0.63381 32 -0.31763 30.83646 0.09944 29.64323 C2.55195 22.62675 9.21296 17.6 17.05233 17.6 C24.89171 17.6 31.55272 22.62675 34.00523 29.64323 Z"/>
+</g>
+
+</g>
+</svg>

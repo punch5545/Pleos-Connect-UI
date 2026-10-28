@@ -1,0 +1,139 @@
+Calculating task graph as no cached configuration is available for tasks: testDebugUnitTest :pleos-compose:assembleDebugAndroidTest
+> Task :pleos-tokens:preBuild UP-TO-DATE
+> Task :pleos-tokens:generateDebugAssets UP-TO-DATE
+> Task :pleos-compose:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :pleos-compose:generateDebugAssets UP-TO-DATE
+> Task :pleos-aaos:preBuild UP-TO-DATE
+> Task :pleos-compose:preBuild UP-TO-DATE
+> Task :pleos-aaos:preDebugBuild UP-TO-DATE
+> Task :pleos-compose:preDebugBuild UP-TO-DATE
+> Task :pleos-compose:preDebugUnitTestBuild UP-TO-DATE
+> Task :pleos-tokens:preDebugUnitTestBuild UP-TO-DATE
+> Task :pleos-tokens:preDebugBuild UP-TO-DATE
+> Task :pleos-aaos:preDebugUnitTestBuild UP-TO-DATE
+> Task :pleos-compose:preDebugAndroidTestBuild UP-TO-DATE
+> Task :pleos-tokens:processDebugNavigationResources UP-TO-DATE
+> Task :pleos-aaos:processDebugNavigationResources UP-TO-DATE
+> Task :pleos-tokens:generateDebugResources UP-TO-DATE
+> Task :pleos-compose:generateDebugResources UP-TO-DATE
+> Task :pleos-aaos:generateDebugResources UP-TO-DATE
+> Task :pleos-tokens:javaPreCompileDebug UP-TO-DATE
+> Task :pleos-compose:processDebugNavigationResources UP-TO-DATE
+> Task :pleos-compose:javaPreCompileDebug UP-TO-DATE
+> Task :pleos-aaos:packageDebugResources UP-TO-DATE
+> Task :pleos-compose:packageDebugResources UP-TO-DATE
+> Task :pleos-tokens:packageDebugResources UP-TO-DATE
+> Task :pleos-aaos:parseDebugLocalResources UP-TO-DATE
+> Task :pleos-tokens:parseDebugLocalResources UP-TO-DATE
+> Task :pleos-compose:parseDebugLocalResources UP-TO-DATE
+> Task :pleos-aaos:generateDebugRFile UP-TO-DATE
+> Task :pleos-compose:generateDebugRFile UP-TO-DATE
+> Task :pleos-tokens:generateDebugRFile UP-TO-DATE
+> Task :pleos-compose:generateDebugAndroidTestResources
+> Task :pleos-compose:javaPreCompileDebugAndroidTest
+> Task :pleos-tokens:javaPreCompileDebugUnitTest
+> Task :pleos-aaos:javaPreCompileDebugUnitTest
+> Task :pleos-compose:mergeDebugAssets
+> Task :pleos-tokens:compileDebugKotlin UP-TO-DATE
+> Task :pleos-tokens:compileDebugJavaWithJavac NO-SOURCE
+> Task :pleos-compose:javaPreCompileDebugUnitTest
+> Task :pleos-compose:processDebugAndroidTestNavigationResources
+> Task :pleos-compose:writeDebugAarMetadata
+> Task :pleos-tokens:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :pleos-compose:desugarDebugAndroidTestFileDependencies
+> Task :pleos-compose:compileDebugKotlin UP-TO-DATE
+> Task :pleos-compose:compileDebugJavaWithJavac NO-SOURCE
+> Task :pleos-compose:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :pleos-compose:mapDebugAndroidTestSourceSetPaths
+> Task :pleos-compose:packageDebugAndroidTestResources
+> Task :pleos-aaos:compileDebugKotlin UP-TO-DATE
+> Task :pleos-tokens:bundleLibRuntimeToJarDebug
+> Task :pleos-tokens:processDebugJavaRes
+> Task :pleos-tokens:writeDebugAarMetadata
+> Task :pleos-compose:processDebugJavaRes
+> Task :pleos-aaos:processDebugJavaRes
+> Task :pleos-compose:mapDebugSourceSetPaths
+> Task :pleos-tokens:mergeDebugAssets
+> Task :pleos-compose:compileDebugAndroidTestNavigationResources
+> Task :pleos-aaos:javaPreCompileDebug
+> Task :pleos-compose:bundleLibRuntimeToJarDebug
+> Task :pleos-aaos:compileDebugJavaWithJavac NO-SOURCE
+> Task :pleos-compose:extractDeepLinksDebug
+> Task :pleos-aaos:bundleLibRuntimeToJarDebug
+> Task :pleos-aaos:bundleLibCompileToJarDebug
+> Task :pleos-tokens:extractDeepLinksDebug
+> Task :pleos-tokens:bundleLibRuntimeToDirDebug
+> Task :pleos-compose:processDebugManifest
+> Task :pleos-tokens:mapDebugSourceSetPaths
+> Task :pleos-compose:parseDebugAndroidTestLocalResources
+> Task :pleos-compose:generateDebugAndroidTestRFile
+> Task :pleos-tokens:processDebugManifest
+> Task :pleos-tokens:compileDebugLibraryResources
+> Task :pleos-compose:bundleLibRuntimeToDirDebug
+> Task :pleos-compose:mergeDebugJniLibFolders
+> Task :pleos-compose:mergeDebugNativeLibs NO-SOURCE
+> Task :pleos-compose:copyDebugJniLibsProjectOnly
+> Task :pleos-tokens:generateDebugUnitTestStubRFile
+> Task :pleos-compose:generateDebugUnitTestStubRFile
+> Task :pleos-aaos:generateDebugUnitTestStubRFile
+> Task :pleos-compose:compileDebugLibraryResources
+> Task :pleos-compose:mergeDebugAndroidTestJniLibFolders
+> Task :pleos-compose:validateSigningDebugAndroidTest
+> Task :pleos-compose:writeDebugAndroidTestSigningConfigVersions
+> Task :pleos-tokens:mergeDebugJniLibFolders
+> Task :pleos-compose:checkDebugAndroidTestAarMetadata
+> Task :pleos-tokens:mergeDebugNativeLibs NO-SOURCE
+> Task :pleos-tokens:copyDebugJniLibsProjectOnly
+> Task :pleos-compose:mergeDebugAndroidTestAssets
+> Task :pleos-compose:compressDebugAndroidTestAssets
+> Task :pleos-compose:checkDebugAndroidTestDuplicateClasses
+> Task :pleos-compose:mergeDebugAndroidTestNativeLibs
+
+> Task :pleos-compose:stripDebugAndroidTestDebugSymbols
+Unable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so. Run with --info option to learn more.
+
+> Task :pleos-compose:mergeDebugAndroidTestManifest
+> Task :pleos-compose:processDebugAndroidTestManifest
+> Task :pleos-aaos:compileDebugUnitTestKotlin
+> Task :pleos-aaos:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :pleos-aaos:processDebugUnitTestJavaRes
+> Task :pleos-tokens:compileDebugUnitTestKotlin
+> Task :pleos-tokens:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :pleos-tokens:processDebugUnitTestJavaRes
+> Task :pleos-compose:compileDebugUnitTestKotlin
+> Task :pleos-compose:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :pleos-compose:processDebugUnitTestJavaRes
+> Task :pleos-compose:generateDebugAndroidTestGlobalSynthetics
+> Task :pleos-compose:mergeDebugAndroidTestResources
+> Task :pleos-compose:compileDebugAndroidTestKotlin
+> Task :pleos-compose:compileDebugAndroidTestJavaWithJavac NO-SOURCE
+> Task :pleos-compose:processDebugAndroidTestJavaRes
+> Task :pleos-compose:processDebugAndroidTestResources
+> Task :pleos-compose:mergeDebugAndroidTestJavaResource
+> Task :pleos-compose:dexBuilderDebugAndroidTest
+> Task :pleos-compose:mergeProjectDexDebugAndroidTest
+
+> Task :pleos-tokens:testDebugUnitTest
+
+TokenContractTest > sourceNamesAndAlphaAreResolvedExactlyOnce FAILED
+    java.lang.AssertionError at TokenContractTest.kt:28
+
+4 tests completed, 1 failed
+
+> Task :pleos-aaos:testDebugUnitTest
+> Task :pleos-compose:testDebugUnitTest
+> Task :pleos-tokens:testDebugUnitTest FAILED
+> Task :pleos-compose:mergeExtDexDebugAndroidTest
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':pleos-tokens:testDebugUnitTest'.
+> There were failing tests. See the report at: file:///Users/jade/AndroidStudioProjects/PleosConnectUI/pleos-tokens/build/reports/tests/testDebugUnitTest/index.html
+
+* Try:
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 27s
+92 actionable tasks: 70 executed, 22 up-to-date
+Configuration cache entry stored.

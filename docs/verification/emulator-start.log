@@ -1,0 +1,1187 @@
+INFO         | Android emulator version 37.2.12.0 (build_id 16428233) (CL:N/A)
+INFO         | Graphics backend: gfxstream
+INFO         | Found systemPath /Users/jade/LingoRing/.toolchains/android-sdk/system-images/android-34/pleos_car_emulator/arm64-v8a/
+INFO         | Guest GLES Driver: Auto (ext controls)
+INFO         | emuglConfig_init: vulkan_mode_selected:lavapipe gles_mode_selected:swangle
+INFO         | Checking system compatibility:
+INFO         |   Checking: hasSufficientDiskSpace
+INFO         |      Ok: Disk space requirements to run avd: `Pleos_Connect_v2.1.0` are met
+INFO         |   Checking: hasSufficientHwGpu
+INFO         |      Ok: Hardware GPU compatibility checks are not required
+INFO         |   Checking: hasSufficientSystem
+INFO         |      Ok: System requirements to run avd: `Pleos_Connect_v2.1.0` are met
+INFO         | Storing crashdata in: /tmp/android-jade/emu-crash-37.2.12.db, detection is enabled for process: 43618
+INFO         | No consent for crashreport 487a3eb3-dcac-49d2-82bf-3c3f88d6fe96, deleting.
+INFO         | Initializing gfxstream backend
+INFO         | startOpenglesRendererImpl: gpu info
+INFO         | 
+INFO         | initIcdPaths: ICD set to 'lavapipe', using Lavapipe ICD
+INFO         | Setting ICD filenames for the loader = /Users/jade/LingoRing/.toolchains/android-sdk/emulator/lib64/vulkan/lvp_icd.json
+INFO         | SharedLibrary::open for [/Users/jade/LingoRing/.toolchains/android-sdk/emulator/qemu/darwin-aarch64/lib64/vulkan/libvulkan.dylib]
+INFO         | Added library: /Users/jade/LingoRing/.toolchains/android-sdk/emulator/qemu/darwin-aarch64/lib64/vulkan/libvulkan.dylib
+INFO         | Enabling Vulkan portability.
+INFO         | Selecting Vulkan device: llvmpipe (LLVM 21.1.4, 128 bits), Version: 1.4.330
+INFO         | Using Vulkan externalMemoryMode: OpaqueFd for VkEmulation
+INFO         | Format VK_FORMAT_G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16 does not support YCbCr sampler conversion
+INFO         | Initializing VkEmulation features:
+INFO         |     glInteropSupported: false
+INFO         |     useDeferredCommands: true
+INFO         |     createResourceWithRequirements: true
+INFO         |     useVulkanComposition: false
+INFO         |     useVulkanNativeSwapchain: false
+INFO         |     enable guestRenderDoc: false
+INFO         |     ASTC LDR emulation mode: Gpu
+INFO         |     enable ETC2 emulation: true
+INFO         |     enable Ycbcr emulation: false
+INFO         |     guestVulkanOnly: false
+INFO         |     useDedicatedAllocations: false
+INFO         |     guestVulkanMaxApiVersion: 1.3.0
+INFO         |     enableProtectedMemoryEmulation: false
+INFO         | Graphics Adapter Vendor Google (Google Inc. (Google))
+INFO         | Graphics Adapter Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver-5.0.0))
+INFO         | Graphics API Version OpenGL ES 3.0 (OpenGL ES 3.1.0 (ANGLE 2.1.1 git hash: fbf66f49c7cc))
+INFO         | Graphics API Extensions GL_OES_EGL_sync GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_depth24 GL_OES_depth32 GL_OES_element_index_uint GL_OES_texture_float GL_OES_texture_float_linear GL_OES_compressed_paletted_texture GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth_texture GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_packed_depth_stencil GL_OES_vertex_half_float GL_OES_standard_derivatives GL_OES_texture_npot GL_OES_rgb8_rgba8 GL_OVR_multiview2 GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_texture_format_BGRA8888 GL_APPLE_texture_format_BGRA8888 GL_EXT_draw_buffers_indexed GL_EXT_clip_cull_distance 
+INFO         | Graphics Device Extensions N/A
+INFO         | Disabling sparse binding feature support
+INFO         | Sending adb public key [QAAAAL+QDafBINJgS2EY946eT5a1sY+uRXthxPo5GqFZ+TfippjgOnayuJrv99kBEfhiF4drlqR0KlnI277hF1AD48Ma92z6Loc9SEvNGBHh/TLYgz2IE+I9P7e+V9EnAS7QX2IPkT1fgPf/kTGbmUKezLys1Rhxa2FYMoT5gVOvcDDpmpJOEUj5z++njb2lymzm0SbeAv0ekwlCJTkcOqMJRkset0SsCZf0ikMUPOY24sVp4qtW4hmu2ggAVQhbhbzUN9BlJ8A6jc47Bk0IR/dyehs76LOpZboNuIdYa8lynx1Cd9EV2nJLHrjMHcPgN45VS0fKn8nCEoBV1fcVZaSkqnelLdGihBaCEoVtk3nbPtDmXktk8InQnnQJtXQMV4gR8qcqpTy19McgMYO9T1628dRgNb8ChHav26h2NEkT+c9YCyKZ/0+9W/H0ZXymRCxVUvmI3tlRjOzTMQtcyJToKb1R97Y5kMw+tbgvw12ePLu5WTtT8vuJIY1JAkIH1/M5SSDVNVSeFjDECCZkeVwt+vZrLioSeSm6/TogFaUJTNQhip07ngNRv1mNctMWzH1nRZq6cb+J4psxp+AuHzfIULavNCm6SvwDZgGKfh6VMC+rZooxlLkB7EDEgdp3OUI0zK/hVlvowPFfXnVJtiFAUa88yIL65jJVoGtsKwChDoaniSHzUwEAAQA= jade@unknown]
+INFO         | Userspace boot properties:
+INFO         |   androidboot.boot_devices=a003600.virtio_mmio
+INFO         |   androidboot.dalvik.vm.heapsize=576m
+INFO         |   androidboot.debug.hwui.renderer=skiagl
+INFO         |   androidboot.hardware=ranchu
+INFO         |   androidboot.hardware.gltransport=pipe
+INFO         |   androidboot.hardware.vulkan=ranchu
+INFO         |   androidboot.logcat=*:V
+INFO         |   androidboot.opengles.version=196609
+INFO         |   androidboot.qemu=1
+INFO         |   androidboot.qemu.adb.pubkey=QAAAAL+QDafBINJgS2EY946eT5a1sY+uRXthxPo5GqFZ+TfippjgOnayuJrv99kBEfhiF4drlqR0KlnI277hF1AD48Ma92z6Loc9SEvNGBHh/TLYgz2IE+I9P7e+V9EnAS7QX2IPkT1fgPf/kTGbmUKezLys1Rhxa2FYMoT5gVOvcDDpmpJOEUj5z++njb2lymzm0SbeAv0ekwlCJTkcOqMJRkset0SsCZf0ikMUPOY24sVp4qtW4hmu2ggAVQhbhbzUN9BlJ8A6jc47Bk0IR/dyehs76LOpZboNuIdYa8lynx1Cd9EV2nJLHrjMHcPgN45VS0fKn8nCEoBV1fcVZaSkqnelLdGihBaCEoVtk3nbPtDmXktk8InQnnQJtXQMV4gR8qcqpTy19McgMYO9T1628dRgNb8ChHav26h2NEkT+c9YCyKZ/0+9W/H0ZXymRCxVUvmI3tlRjOzTMQtcyJToKb1R97Y5kMw+tbgvw12ePLu5WTtT8vuJIY1JAkIH1/M5SSDVNVSeFjDECCZkeVwt+vZrLioSeSm6/TogFaUJTNQhip07ngNRv1mNctMWzH1nRZq6cb+J4psxp+AuHzfIULavNCm6SvwDZgGKfh6VMC+rZooxlLkB7EDEgdp3OUI0zK/hVlvowPFfXnVJtiFAUa88yIL65jJVoGtsKwChDoaniSHzUwEAAQA= jade@unknown
+INFO         |   androidboot.qemu.avd_name=Pleos_Connect_v2.1.0
+INFO         |   androidboot.qemu.camera_hq_edge_processing=0
+INFO         |   androidboot.qemu.camera_protocol_ver=1
+INFO         |   androidboot.qemu.cpuvulkan.version=4206592
+INFO         |   androidboot.qemu.gltransport.drawFlushInterval=800
+INFO         |   androidboot.qemu.gltransport.name=pipe
+INFO         |   androidboot.qemu.hwcodec.avcdec=2
+INFO         |   androidboot.qemu.hwcodec.hevcdec=2
+INFO         |   androidboot.qemu.hwcodec.vpxdec=2
+INFO         |   androidboot.qemu.settings.system.screen_off_timeout=2147483647
+INFO         |   androidboot.qemu.skin=2560x1440
+INFO         |   androidboot.qemu.virtiowifi=1
+INFO         |   androidboot.qemu.vsync=60
+INFO         |   androidboot.serialno=EMULATOR37X2X12X0
+INFO         |   androidboot.vbmeta.digest=9d0e652c65c432d17fa0980161e5fed6fb5272da3a44e6cf4aba087742bb13dc
+INFO         |   androidboot.vbmeta.hash_alg=sha256
+INFO         |   androidboot.vbmeta.size=6784
+INFO         |   androidboot.veritymode=enforcing
+INFO         | Monitoring duration of emulator setup.
+WARNING      | The emulator now requires a signed jwt token for gRPC access! Use the -grpc flag if you really want an open unprotected grpc port
+INFO         | Using security allow list from: /Users/jade/LingoRing/.toolchains/android-sdk/emulator/lib/emulator_access.json
+INFO         | The active JSON Web Key Sets can be found here: /Users/jade/Library/Caches/TemporaryItems/avd/running/43618/jwks/94897cf7-c27a-4932-b5e1-850240bcddab/active.jwk
+INFO         | Scanning /Users/jade/Library/Caches/TemporaryItems/avd/running/43618/jwks/94897cf7-c27a-4932-b5e1-850240bcddab for jwk keys.
+INFO         | Started GRPC server at 127.0.0.1:8554, security: Local, auth: +token
+INFO         | Advertising in: /Users/jade/Library/Caches/TemporaryItems/avd/running/pid_43618.ini
+INFO         | Activated packet streamer for bluetooth emulation
+INFO         | Successfully initialized netsim WiFi
+INFO         | Setting display: 0 configuration to: 2560x1440, dpi: 160x160 
+INFO         | setDisplayActiveConfig: id:0, 2560x1440
+INFO         | emulatorSetupEnvironment: Environment scene is not required
+INFO         | Boot completed in 16155 ms
+INFO         | Increasing screen off timeout, logcat buffer size to 2M.
+[h264 @ 0x1355aba00] no frame!
+[h264 @ 0x1355aba00] no frame!
+[h264 @ 0x1122c7c00] no frame!
+[h264 @ 0x1122c7c00] no frame!
+[h264 @ 0x1373cf200] no frame!
+[h264 @ 0x1373cf200] no frame!
+[h264 @ 0x136954e00] no frame!
+[h264 @ 0x136954e00] no frame!
+[h264 @ 0x131818800] no frame!
+[h264 @ 0x131818800] no frame!
+[h264 @ 0x1122d3800] no frame!
+[h264 @ 0x1122d3800] no frame!
+[h264 @ 0x14cbeb200] no frame!
+[h264 @ 0x14cbeb200] no frame!
+[h264 @ 0x1356f9e00] no frame!
+[h264 @ 0x1356f9e00] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x1314b08b8
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x42b07f688
+ERROR        | Failed to restore previous context: 12297
+ERROR        | Failed to restore previous context: 12297
+[h264 @ 0x131825000] no frame!
+[h264 @ 0x131825000] no frame!
+[h264 @ 0x1682c0000] no frame!
+[h264 @ 0x1682c0000] no frame!
+[h264 @ 0x14d009200] no frame!
+[h264 @ 0x14d009200] no frame!
+[h264 @ 0x137be1c00] no frame!
+[h264 @ 0x137be1c00] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x106ed8fb8
+ERROR        | Failed to restore previous context: 12297
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x40bbf54d8
+ERROR        | Failed to restore previous context: 12297
+[h264 @ 0x137b86e00] no frame!
+[h264 @ 0x137b86e00] no frame!
+[h264 @ 0x137b86e00] no frame!
+[h264 @ 0x137b86e00] no frame!
+[h264 @ 0x13790fe00] no frame!
+[h264 @ 0x13790fe00] no frame!
+[h264 @ 0x14ccdfc00] no frame!
+[h264 @ 0x14ccdfc00] no frame!
+[h264 @ 0x11265f400] no frame!
+[h264 @ 0x11265f400] no frame!
+[h264 @ 0x11265f400] no frame!
+[h264 @ 0x11265f400] no frame!
+[h264 @ 0x11264ee00] no frame!
+[h264 @ 0x11264ee00] no frame!
+[h264 @ 0x132487c00] no frame!
+[h264 @ 0x132487c00] no frame!
+[h264 @ 0x137a07c00] no frame!
+[h264 @ 0x137a07c00] no frame!
+[h264 @ 0x137a07c00] no frame!
+[h264 @ 0x137a07c00] no frame!
+[h264 @ 0x137cd5000] no frame!
+[h264 @ 0x137cd5000] no frame!
+[h264 @ 0x132598400] no frame!
+[h264 @ 0x132598400] no frame!
+[h264 @ 0x16849ae00] no frame!
+[h264 @ 0x16849ae00] no frame!
+[h264 @ 0x14ccdfc00] no frame!
+[h264 @ 0x14ccdfc00] no frame!
+[h264 @ 0x13657f800] no frame!
+[h264 @ 0x13657f800] no frame!
+[h264 @ 0x1127de800] no frame!
+[h264 @ 0x1127de800] no frame!
+[h264 @ 0x11dce9200] no frame!
+[h264 @ 0x11dce9200] no frame!
+[h264 @ 0x11dce9200] no frame!
+[h264 @ 0x11dce9200] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x17885df98
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x40baf3a28
+ERROR        | Failed to restore previous context: 12297
+ERROR        | Failed to restore previous context: 12297
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x40baf3a28
+ERROR        | Failed to restore previous context: 12297
+[h264 @ 0x1365cb800] no frame!
+[h264 @ 0x1365cb800] no frame!
+[h264 @ 0x1365cb800] no frame!
+[h264 @ 0x1365cb800] no frame!
+[h264 @ 0x1325afa00] no frame!
+[h264 @ 0x1325afa00] no frame!
+[h264 @ 0x1325afa00] no frame!
+[h264 @ 0x1325afa00] no frame!
+[h264 @ 0x11278a400] no frame!
+[h264 @ 0x11278a400] no frame!
+[h264 @ 0x135726e00] no frame!
+[h264 @ 0x135726e00] no frame!
+[h264 @ 0x11dda6e00] no frame!
+[h264 @ 0x11dda6e00] no frame!
+[h264 @ 0x1375fa200] no frame!
+[h264 @ 0x1375fa200] no frame!
+ERROR        | Failed to find ColorBuffer: 830
+ERROR        | Failed to bind to texture: invalid color buffer.
+[h264 @ 0x16850c400] no frame!
+[h264 @ 0x16850c400] no frame!
+[h264 @ 0x13181a800] no frame!
+[h264 @ 0x13181a800] no frame!
+[h264 @ 0x137b1be00] no frame!
+[h264 @ 0x137b1be00] no frame!
+[h264 @ 0x137b1be00] no frame!
+[h264 @ 0x137b1be00] no frame!
+[h264 @ 0x1126e5200] no frame!
+[h264 @ 0x1126e5200] no frame!
+[h264 @ 0x1126e5200] no frame!
+[h264 @ 0x1126e5200] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x178751628
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x48ba634a8
+ERROR        | Failed to restore previous context: 12297
+ERROR        | Failed to restore previous context: 12297
+ERROR        | Failed to find ColorBuffer: 966
+ERROR        | Failed to bind to texture: invalid color buffer.
+[h264 @ 0x135616a00] no frame!
+[h264 @ 0x135616a00] no frame!
+[h264 @ 0x168589400] no frame!
+[h264 @ 0x168589400] no frame!
+ERROR        | Failed to find ColorBuffer: 1019
+ERROR        | Failed to bind to texture: invalid color buffer.
+[h264 @ 0x48b06c800] no frame!
+[h264 @ 0x48b06c800] no frame!
+[h264 @ 0x4890ee400] no frame!
+[h264 @ 0x4890ee400] no frame!
+[h264 @ 0x13269b200] no frame!
+[h264 @ 0x13269b200] no frame!
+[h264 @ 0x13660d400] no frame!
+[h264 @ 0x13660d400] no frame!
+[h264 @ 0x137d82200] no frame!
+[h264 @ 0x137d82200] no frame!
+[h264 @ 0x137d82200] no frame!
+[h264 @ 0x137d82200] no frame!
+[h264 @ 0x1685e9400] no frame!
+[h264 @ 0x1685e9400] no frame!
+[h264 @ 0x1685e9400] no frame!
+[h264 @ 0x1685e9400] no frame!
+[h264 @ 0x168575800] no frame!
+[h264 @ 0x168575800] no frame!
+[h264 @ 0x1122f4e00] no frame!
+[h264 @ 0x1122f4e00] no frame!
+[h264 @ 0x14cfe4000] no frame!
+[h264 @ 0x14cfe4000] no frame!
+[h264 @ 0x13776a000] no frame!
+[h264 @ 0x13776a000] no frame!
+[h264 @ 0x1356d1400] no frame!
+[h264 @ 0x1356d1400] no frame!
+[h264 @ 0x1356d1400] no frame!
+[h264 @ 0x1356d1400] no frame!
+[h264 @ 0x47fa88400] no frame!
+[h264 @ 0x47fa88400] no frame!
+[h264 @ 0x13679c400] no frame!
+[h264 @ 0x13679c400] no frame!
+[h264 @ 0x13690a600] no frame!
+[h264 @ 0x13690a600] no frame!
+[h264 @ 0x13181a800] no frame!
+[h264 @ 0x13181a800] no frame!
+[h264 @ 0x13690a600] no frame!
+[h264 @ 0x13690a600] no frame!
+[h264 @ 0x13690a600] no frame!
+[h264 @ 0x13690a600] no frame!
+ERROR        | Failed to find ColorBuffer: 1503
+ERROR        | Failed to bind to texture: invalid color buffer.
+[h264 @ 0x137e44a00] no frame!
+[h264 @ 0x137e44a00] no frame!
+[h264 @ 0x137e44a00] no frame!
+[h264 @ 0x137e44a00] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x4c332ccd8
+ERROR        | Failed to restore previous context: 12297
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x40a2eea68
+ERROR        | Failed to restore previous context: 12297
+[h264 @ 0x137e63e00] no frame!
+[h264 @ 0x137e63e00] no frame!
+[h264 @ 0x137e63e00] no frame!
+[h264 @ 0x137e63e00] no frame!
+[h264 @ 0x112639c00] no frame!
+[h264 @ 0x112639c00] no frame!
+[h264 @ 0x1686aee00] no frame!
+[h264 @ 0x1686aee00] no frame!
+[h264 @ 0x112639c00] no frame!
+[h264 @ 0x112639c00] no frame!
+[h264 @ 0x47f9c8800] no frame!
+[h264 @ 0x47f9c8800] no frame!
+[h264 @ 0x489258e00] no frame!
+[h264 @ 0x489258e00] no frame!
+[h264 @ 0x11dfc3800] no frame!
+[h264 @ 0x11dfc3800] no frame!
+[h264 @ 0x48b133000] no frame!
+[h264 @ 0x48b133000] no frame!
+[h264 @ 0x48b133000] no frame!
+[h264 @ 0x48b133000] no frame!
+[h264 @ 0x1362df600] no frame!
+[h264 @ 0x1362df600] no frame!
+[h264 @ 0x1362df600] no frame!
+[h264 @ 0x1362df600] no frame!
+[h264 @ 0x489303200] no frame!
+[h264 @ 0x489303200] no frame!
+[h264 @ 0x4c1821a00] no frame!
+[h264 @ 0x4c1821a00] no frame!
+[h264 @ 0x168733a00] no frame!
+[h264 @ 0x168733a00] no frame!
+[h264 @ 0x137f36a00] no frame!
+[h264 @ 0x137f36a00] no frame!
+[h264 @ 0x489290800] no frame!
+[h264 @ 0x489290800] no frame!
+[h264 @ 0x47fae0000] no frame!
+[h264 @ 0x47fae0000] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x46b8f6d68
+ERROR        | Failed to restore previous context: 12297
+[h264 @ 0x137579600] no frame!
+[h264 @ 0x137579600] no frame!
+[h264 @ 0x137579600] no frame!
+[h264 @ 0x137579600] no frame!
+[h264 @ 0x14d052200] no frame!
+[h264 @ 0x14d052200] no frame!
+[h264 @ 0x11f868800] no frame!
+[h264 @ 0x11f868800] no frame!
+[h264 @ 0x14d052200] no frame!
+[h264 @ 0x14d052200] no frame!
+[h264 @ 0x4c18b6c00] no frame!
+[h264 @ 0x4c18b6c00] no frame!
+[h264 @ 0x4c18b6c00] no frame!
+[h264 @ 0x4c18b6c00] no frame!
+[h264 @ 0x4c18b6c00] no frame!
+[h264 @ 0x4c18b6c00] no frame!
+[h264 @ 0x137f8bc00] no frame!
+[h264 @ 0x137f8bc00] no frame!
+[h264 @ 0x13181a800] no frame!
+[h264 @ 0x13181a800] no frame!
+[h264 @ 0x168641a00] no frame!
+[h264 @ 0x168641a00] no frame!
+[h264 @ 0x11da3c600] no frame!
+[h264 @ 0x11da3c600] no frame!
+[h264 @ 0x168585000] no frame!
+[h264 @ 0x168585000] no frame!
+[h264 @ 0x11da3ba00] no frame!
+[h264 @ 0x11da3ba00] no frame!
+[h264 @ 0x136a5a200] no frame!
+[h264 @ 0x136a5a200] no frame!
+[h264 @ 0x136a5a200] no frame!
+[h264 @ 0x136a5a200] no frame!
+[h264 @ 0x4c3839a00] no frame!
+[h264 @ 0x4c3839a00] no frame!
+[h264 @ 0x47fae0000] no frame!
+[h264 @ 0x47fae0000] no frame!
+[h264 @ 0x14cf3f400] no frame!
+[h264 @ 0x14cf3f400] no frame!
+[h264 @ 0x14cf3f400] no frame!
+[h264 @ 0x14cf3f400] no frame!
+[h264 @ 0x48f8ca600] no frame!
+[h264 @ 0x48f8ca600] no frame!
+[h264 @ 0x48f8ca600] no frame!
+[h264 @ 0x48f8ca600] no frame!
+[h264 @ 0x48f85fe00] no frame!
+[h264 @ 0x48f85fe00] no frame!
+[h264 @ 0x4c3854000] no frame!
+[h264 @ 0x4c3854000] no frame!
+[h264 @ 0x48c236c00] no frame!
+[h264 @ 0x48c236c00] no frame!
+[h264 @ 0x48c236c00] no frame!
+[h264 @ 0x48c236c00] no frame!
+[h264 @ 0x48c1ddc00] no frame!
+[h264 @ 0x48c1ddc00] no frame!
+[h264 @ 0x48c1ddc00] no frame!
+[h264 @ 0x48c1ddc00] no frame!
+[h264 @ 0x48fa87000] no frame!
+[h264 @ 0x48fa87000] no frame!
+[h264 @ 0x168055600] no frame!
+[h264 @ 0x168055600] no frame!
+[h264 @ 0x4c192ac00] no frame!
+[h264 @ 0x4c192ac00] no frame!
+[h264 @ 0x4c192ac00] no frame!
+[h264 @ 0x4c192ac00] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x40e68cb58
+ERROR        | Failed to restore previous context: 12297
+[h264 @ 0x137732e00] no frame!
+[h264 @ 0x137732e00] no frame!
+[h264 @ 0x14d052200] no frame!
+[h264 @ 0x14d052200] no frame!
+[h264 @ 0x47fc3e400] no frame!
+[h264 @ 0x47fc3e400] no frame!
+[h264 @ 0x47fc3e400] no frame!
+[h264 @ 0x47fc3e400] no frame!
+[h264 @ 0x168672600] no frame!
+[h264 @ 0x168672600] no frame!
+[h264 @ 0x48b309200] no frame!
+[h264 @ 0x48b309200] no frame!
+ERROR        | Failed to find ColorBuffer: 2705
+ERROR        | Failed to bind to texture: invalid color buffer.
+[h264 @ 0x489397e00] no frame!
+[h264 @ 0x489397e00] no frame!
+[h264 @ 0x48b315800] no frame!
+[h264 @ 0x48b315800] no frame!
+[h264 @ 0x4c50e8200] no frame!
+[h264 @ 0x4c50e8200] no frame!
+[h264 @ 0x4c39df800] no frame!
+[h264 @ 0x4c39df800] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x174f481b8
+ERROR        | Failed to restore previous context: 12297
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x106c41108
+ERROR        | Failed to restore previous context: 12297
+[h264 @ 0x4c19f5c00] no frame!
+[h264 @ 0x4c19f5c00] no frame!
+[h264 @ 0x1326f0600] no frame!
+[h264 @ 0x1326f0600] no frame!
+[h264 @ 0x11f868800] no frame!
+[h264 @ 0x11f868800] no frame!
+[h264 @ 0x131808200] no frame!
+[h264 @ 0x131808200] no frame!
+[h264 @ 0x4c512ec00] no frame!
+[h264 @ 0x4c512ec00] no frame!
+[h264 @ 0x4c391b400] no frame!
+[h264 @ 0x4c391b400] no frame!
+[h264 @ 0x4c4014e00] no frame!
+[h264 @ 0x4c4014e00] no frame!
+[h264 @ 0x4c4014e00] no frame!
+[h264 @ 0x4c4014e00] no frame!
+[h264 @ 0x4c1a2f800] no frame!
+[h264 @ 0x4c1a2f800] no frame!
+[h264 @ 0x4c1a2f800] no frame!
+[h264 @ 0x4c1a2f800] no frame!
+[h264 @ 0x48c3b0200] no frame!
+[h264 @ 0x48c3b0200] no frame!
+[h264 @ 0x489509000] no frame!
+[h264 @ 0x489509000] no frame!
+[h264 @ 0x4c50c3200] no frame!
+[h264 @ 0x4c50c3200] no frame!
+[h264 @ 0x4c50c3200] no frame!
+[h264 @ 0x4c50c3200] no frame!
+[h264 @ 0x48c3f6c00] no frame!
+[h264 @ 0x48c3f6c00] no frame!
+[h264 @ 0x137209200] no frame!
+[h264 @ 0x137209200] no frame!
+[h264 @ 0x4c3ab1e00] no frame!
+[h264 @ 0x4c3ab1e00] no frame!
+[h264 @ 0x4c3ab1e00] no frame!
+[h264 @ 0x4c3ab1e00] no frame!
+[h264 @ 0x489509000] no frame!
+[h264 @ 0x489509000] no frame!
+[h264 @ 0x4c20a7a00] no frame!
+[h264 @ 0x4c20a7a00] no frame!
+[h264 @ 0x11f868800] no frame!
+[h264 @ 0x11f868800] no frame!
+[h264 @ 0x4c514e600] no frame!
+[h264 @ 0x4c514e600] no frame!
+[h264 @ 0x4c1a7ca00] no frame!
+[h264 @ 0x4c1a7ca00] no frame!
+[h264 @ 0x4c3af2000] no frame!
+[h264 @ 0x4c3af2000] no frame!
+[h264 @ 0x489509000] no frame!
+[h264 @ 0x489509000] no frame!
+[h264 @ 0x4c1a4be00] no frame!
+[h264 @ 0x4c1a4be00] no frame!
+[h264 @ 0x14d05a200] no frame!
+[h264 @ 0x14d05a200] no frame!
+[h264 @ 0x14d842200] no frame!
+[h264 @ 0x14d842200] no frame!
+[h264 @ 0x4c1ae2600] no frame!
+[h264 @ 0x4c1ae2600] no frame!
+[h264 @ 0x48fc72800] no frame!
+[h264 @ 0x48fc72800] no frame!
+[h264 @ 0x4c1af8200] no frame!
+[h264 @ 0x4c1af8200] no frame!
+[h264 @ 0x47fe3ea00] no frame!
+[h264 @ 0x47fe3ea00] no frame!
+[h264 @ 0x48b440200] no frame!
+[h264 @ 0x48b440200] no frame!
+[h264 @ 0x4c1b24400] no frame!
+[h264 @ 0x4c1b24400] no frame!
+[h264 @ 0x4c39eac00] no frame!
+[h264 @ 0x4c39eac00] no frame!
+[h264 @ 0x48951d600] no frame!
+[h264 @ 0x48951d600] no frame!
+[h264 @ 0x48b48b200] no frame!
+[h264 @ 0x48b48b200] no frame!
+[h264 @ 0x4c1bcfe00] no frame!
+[h264 @ 0x4c1bcfe00] no frame!
+[h264 @ 0x4c1b8aa00] no frame!
+[h264 @ 0x4c1b8aa00] no frame!
+[h264 @ 0x47fde0800] no frame!
+[h264 @ 0x47fde0800] no frame!
+[h264 @ 0x4895aa600] no frame!
+[h264 @ 0x4895aa600] no frame!
+[h264 @ 0x4895aa600] no frame!
+[h264 @ 0x4895aa600] no frame!
+[h264 @ 0x48fc95a00] no frame!
+[h264 @ 0x48fc95a00] no frame!
+[h264 @ 0x4c218a000] no frame!
+[h264 @ 0x4c218a000] no frame!
+[h264 @ 0x47fd93600] no frame!
+[h264 @ 0x47fd93600] no frame!
+[h264 @ 0x4c3bbe600] no frame!
+[h264 @ 0x4c3bbe600] no frame!
+[h264 @ 0x47fe14a00] no frame!
+[h264 @ 0x47fe14a00] no frame!
+[h264 @ 0x48fcbbc00] no frame!
+[h264 @ 0x48fcbbc00] no frame!
+[h264 @ 0x1318c9000] no frame!
+[h264 @ 0x1318c9000] no frame!
+[h264 @ 0x48965fe00] no frame!
+[h264 @ 0x48965fe00] no frame!
+[h264 @ 0x4c3b79400] no frame!
+[h264 @ 0x4c3b79400] no frame!
+[h264 @ 0x48b49e800] no frame!
+[h264 @ 0x48b49e800] no frame!
+[h264 @ 0x4c1ba8600] no frame!
+[h264 @ 0x4c1ba8600] no frame!
+[h264 @ 0x47fe64e00] no frame!
+[h264 @ 0x47fe64e00] no frame!
+[h264 @ 0x47ff03200] no frame!
+[h264 @ 0x47ff03200] no frame!
+[h264 @ 0x47ff03200] no frame!
+[h264 @ 0x47ff03200] no frame!
+[h264 @ 0x4c1c52a00] no frame!
+[h264 @ 0x4c1c52a00] no frame!
+[h264 @ 0x4c1c52a00] no frame!
+[h264 @ 0x4c1c52a00] no frame!
+[h264 @ 0x4c3c13e00] no frame!
+[h264 @ 0x4c3c13e00] no frame!
+[h264 @ 0x48c579800] no frame!
+[h264 @ 0x48c579800] no frame!
+[h264 @ 0x48fd5cc00] no frame!
+[h264 @ 0x48fd5cc00] no frame!
+[h264 @ 0x48fd5cc00] no frame!
+[h264 @ 0x48fd5cc00] no frame!
+[h264 @ 0x4c41fe000] no frame!
+[h264 @ 0x4c41fe000] no frame!
+[h264 @ 0x4c41fe000] no frame!
+[h264 @ 0x4c41fe000] no frame!
+[h264 @ 0x16861d600] no frame!
+[h264 @ 0x16861d600] no frame!
+[h264 @ 0x48c56ba00] no frame!
+[h264 @ 0x48c56ba00] no frame!
+[h264 @ 0x4897a4800] no frame!
+[h264 @ 0x4897a4800] no frame!
+[h264 @ 0x48fe01800] no frame!
+[h264 @ 0x48fe01800] no frame!
+[h264 @ 0x14d866600] no frame!
+[h264 @ 0x14d866600] no frame!
+[h264 @ 0x11f83b000] no frame!
+[h264 @ 0x11f83b000] no frame!
+[h264 @ 0x4c2109400] no frame!
+[h264 @ 0x4c2109400] no frame!
+[h264 @ 0x4c1d29e00] no frame!
+[h264 @ 0x4c1d29e00] no frame!
+[h264 @ 0x4c429c200] no frame!
+[h264 @ 0x4c429c200] no frame!
+[h264 @ 0x4c22fda00] no frame!
+[h264 @ 0x4c22fda00] no frame!
+[h264 @ 0x4c3c62200] no frame!
+[h264 @ 0x4c3c62200] no frame!
+[h264 @ 0x4c1d29e00] no frame!
+[h264 @ 0x4c1d29e00] no frame!
+[h264 @ 0x48b594200] no frame!
+[h264 @ 0x48b594200] no frame!
+[h264 @ 0x48b594200] no frame!
+[h264 @ 0x48b594200] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x42f9b7f98
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x42f99bfa8
+ERROR        | Failed to restore previous context: 12297
+ERROR        | Failed to restore previous context: 12297
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x42f99bfa8
+ERROR        | Failed to restore previous context: 12297
+[h264 @ 0x4c0017000] no frame!
+[h264 @ 0x4c0017000] no frame!
+[h264 @ 0x48b55b000] no frame!
+[h264 @ 0x48b55b000] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x106c2eaa8
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x13453cd38
+ERROR        | Failed to restore previous context: 12297
+[h264 @ 0x48c5ece00] no frame!
+[h264 @ 0x48c5ece00] no frame!
+[h264 @ 0x48c5ece00] no frame!
+[h264 @ 0x48c5ece00] no frame!
+[h264 @ 0x47ffd5200] no frame!
+[h264 @ 0x47ffd5200] no frame!
+[h264 @ 0x11f86e000] no frame!
+[h264 @ 0x11f86e000] no frame!
+[h264 @ 0x4c433ea00] no frame!
+[h264 @ 0x4c433ea00] no frame!
+[h264 @ 0x4c433ea00] no frame!
+[h264 @ 0x4c433ea00] no frame!
+[h264 @ 0x4c42fa200] no frame!
+[h264 @ 0x4c42fa200] no frame!
+[h264 @ 0x4c42fa200] no frame!
+[h264 @ 0x4c42fa200] no frame!
+[h264 @ 0x14d090400] no frame!
+[h264 @ 0x14d090400] no frame!
+[h264 @ 0x4c0034400] no frame!
+[h264 @ 0x4c0034400] no frame!
+[h264 @ 0x4c5354800] no frame!
+[h264 @ 0x4c5354800] no frame!
+[h264 @ 0x4c42ce200] no frame!
+[h264 @ 0x4c42ce200] no frame!
+[h264 @ 0x4c53e7200] no frame!
+[h264 @ 0x4c53e7200] no frame!
+[h264 @ 0x4c00b8e00] no frame!
+[h264 @ 0x4c00b8e00] no frame!
+[h264 @ 0x4c437a600] no frame!
+[h264 @ 0x4c437a600] no frame!
+[h264 @ 0x48ff06e00] no frame!
+[h264 @ 0x48ff06e00] no frame!
+[h264 @ 0x48b54f200] no frame!
+[h264 @ 0x48b54f200] no frame!
+[h264 @ 0x48b54f200] no frame!
+[h264 @ 0x48b54f200] no frame!
+[h264 @ 0x4c437a600] no frame!
+[h264 @ 0x4c437a600] no frame!
+[h264 @ 0x4c437a600] no frame!
+[h264 @ 0x4c437a600] no frame!
+[h264 @ 0x4c240ac00] no frame!
+[h264 @ 0x4c240ac00] no frame!
+[h264 @ 0x48c657e00] no frame!
+[h264 @ 0x48c657e00] no frame!
+[h264 @ 0x4c3d8bc00] no frame!
+[h264 @ 0x4c3d8bc00] no frame!
+[h264 @ 0x48c700800] no frame!
+[h264 @ 0x48c700800] no frame!
+[h264 @ 0x48ff9a600] no frame!
+[h264 @ 0x48ff9a600] no frame!
+[h264 @ 0x48c719e00] no frame!
+[h264 @ 0x48c719e00] no frame!
+[h264 @ 0x4c5829000] no frame!
+[h264 @ 0x4c5829000] no frame!
+[h264 @ 0x4c0141e00] no frame!
+[h264 @ 0x4c0141e00] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x106c4ec88
+ERROR        | Failed to restore previous context: 12297
+[h264 @ 0x14d090400] no frame!
+[h264 @ 0x14d090400] no frame!
+[h264 @ 0x4c0149e00] no frame!
+[h264 @ 0x4c0149e00] no frame!
+[h264 @ 0x4c2432800] no frame!
+[h264 @ 0x4c2432800] no frame!
+[h264 @ 0x4c4436400] no frame!
+[h264 @ 0x4c4436400] no frame!
+[h264 @ 0x48c77d000] no frame!
+[h264 @ 0x48c77d000] no frame!
+[h264 @ 0x4c1ef1200] no frame!
+[h264 @ 0x4c1ef1200] no frame!
+[h264 @ 0x48b6f3e00] no frame!
+[h264 @ 0x48b6f3e00] no frame!
+[h264 @ 0x48b6f3e00] no frame!
+[h264 @ 0x48b6f3e00] no frame!
+[h264 @ 0x48c6d6000] no frame!
+[h264 @ 0x48c6d6000] no frame!
+[h264 @ 0x4c58ffc00] no frame!
+[h264 @ 0x4c58ffc00] no frame!
+[h264 @ 0x14d0d0c00] no frame!
+[h264 @ 0x14d0d0c00] no frame!
+[h264 @ 0x4c5949600] no frame!
+[h264 @ 0x4c5949600] no frame!
+[h264 @ 0x4c3e47000] no frame!
+[h264 @ 0x4c3e47000] no frame!
+[h264 @ 0x4c54c8400] no frame!
+[h264 @ 0x4c54c8400] no frame!
+[h264 @ 0x4c2560600] no frame!
+[h264 @ 0x4c2560600] no frame!
+[h264 @ 0x48fee6800] no frame!
+[h264 @ 0x48fee6800] no frame!
+[h264 @ 0x4c01e0600] no frame!
+[h264 @ 0x4c01e0600] no frame!
+[h264 @ 0x48c6b1600] no frame!
+[h264 @ 0x48c6b1600] no frame!
+[h264 @ 0x4c0229000] no frame!
+[h264 @ 0x4c0229000] no frame!
+[h264 @ 0x4c43a0a00] no frame!
+[h264 @ 0x4c43a0a00] no frame!
+[h264 @ 0x4c43a0a00] no frame!
+[h264 @ 0x4c43a0a00] no frame!
+[h264 @ 0x4c43a0a00] no frame!
+[h264 @ 0x4c43a0a00] no frame!
+[h264 @ 0x4c4497000] no frame!
+[h264 @ 0x4c4497000] no frame!
+[h264 @ 0x4c4497000] no frame!
+[h264 @ 0x4c4497000] no frame!
+[h264 @ 0x4c3eae000] no frame!
+[h264 @ 0x4c3eae000] no frame!
+[h264 @ 0x4c3eae000] no frame!
+[h264 @ 0x4c3eae000] no frame!
+[h264 @ 0x14d819200] no frame!
+[h264 @ 0x14d819200] no frame!
+[h264 @ 0x4c597a400] no frame!
+[h264 @ 0x4c597a400] no frame!
+[h264 @ 0x11f8c1000] no frame!
+[h264 @ 0x11f8c1000] no frame!
+[h264 @ 0x4c4519e00] no frame!
+[h264 @ 0x4c4519e00] no frame!
+[h264 @ 0x11f833200] no frame!
+[h264 @ 0x11f833200] no frame!
+[h264 @ 0x4c027a400] no frame!
+[h264 @ 0x4c027a400] no frame!
+ERROR        | Failed to find ColorBuffer: 5487
+ERROR        | Failed to bind to texture: invalid color buffer.
+[h264 @ 0x4c1f50000] no frame!
+[h264 @ 0x4c1f50000] no frame!
+[h264 @ 0x4c555cc00] no frame!
+[h264 @ 0x4c555cc00] no frame!
+[h264 @ 0x4c01b5000] no frame!
+[h264 @ 0x4c01b5000] no frame!
+[h264 @ 0x4c44fe800] no frame!
+[h264 @ 0x4c44fe800] no frame!
+[h264 @ 0x4c1fece00] no frame!
+[h264 @ 0x4c1fece00] no frame!
+[h264 @ 0x4c1fece00] no frame!
+[h264 @ 0x4c1fece00] no frame!
+[h264 @ 0x4c45b3000] no frame!
+[h264 @ 0x4c45b3000] no frame!
+[h264 @ 0x4c45b3000] no frame!
+[h264 @ 0x4c45b3000] no frame!
+[h264 @ 0x4c45b3000] no frame!
+[h264 @ 0x4c45b3000] no frame!
+[h264 @ 0x4c59dc200] no frame!
+[h264 @ 0x4c59dc200] no frame!
+[h264 @ 0x4e9987c00] no frame!
+[h264 @ 0x4e9987c00] no frame!
+[h264 @ 0x4c1fcdc00] no frame!
+[h264 @ 0x4c1fcdc00] no frame!
+[h264 @ 0x4e98b1a00] no frame!
+[h264 @ 0x4e98b1a00] no frame!
+[h264 @ 0x4c59eee00] no frame!
+[h264 @ 0x4c59eee00] no frame!
+ERROR        | Failed to find ColorBuffer: 5803
+ERROR        | Failed to bind to texture: invalid color buffer.
+[h264 @ 0x4c017ca00] no frame!
+[h264 @ 0x4c017ca00] no frame!
+[h264 @ 0x4e989d200] no frame!
+[h264 @ 0x4e989d200] no frame!
+[h264 @ 0x4c4526800] no frame!
+[h264 @ 0x4c4526800] no frame!
+[h264 @ 0x4ea0a3e00] no frame!
+[h264 @ 0x4ea0a3e00] no frame!
+[h264 @ 0x4e9923a00] no frame!
+[h264 @ 0x4e9923a00] no frame!
+[h264 @ 0x4e9923a00] no frame!
+[h264 @ 0x4e9923a00] no frame!
+[h264 @ 0x4c5ad8a00] no frame!
+[h264 @ 0x4c5ad8a00] no frame!
+[h264 @ 0x13195fa00] no frame!
+[h264 @ 0x13195fa00] no frame!
+[h264 @ 0x4ea037e00] no frame!
+[h264 @ 0x4ea037e00] no frame!
+[h264 @ 0x4ea037e00] no frame!
+[h264 @ 0x4ea037e00] no frame!
+[h264 @ 0x4c48c6000] no frame!
+[h264 @ 0x4c48c6000] no frame!
+[h264 @ 0x4c5505000] no frame!
+[h264 @ 0x4c5505000] no frame!
+[h264 @ 0x4c03e3e00] no frame!
+[h264 @ 0x4c03e3e00] no frame!
+[h264 @ 0x4c5a8ea00] no frame!
+[h264 @ 0x4c5a8ea00] no frame!
+[h264 @ 0x14d8d2400] no frame!
+[h264 @ 0x14d8d2400] no frame!
+[h264 @ 0x131956600] no frame!
+[h264 @ 0x131956600] no frame!
+[h264 @ 0x4c1096800] no frame!
+[h264 @ 0x4c1096800] no frame!
+[h264 @ 0x4c03eb400] no frame!
+[h264 @ 0x4c03eb400] no frame!
+ERROR        | Failed to find ColorBuffer: 6141
+ERROR        | Failed to bind to texture: invalid color buffer.
+[h264 @ 0x4c03eb400] no frame!
+[h264 @ 0x4c03eb400] no frame!
+[h264 @ 0x4c03eb400] no frame!
+[h264 @ 0x4c03eb400] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x4430ac038
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x42ac95b58
+ERROR        | Failed to restore previous context: 12297
+ERROR        | Failed to restore previous context: 12297
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x4430ac038
+ERROR        | Failed to restore previous context: 12297
+[h264 @ 0x14d08d200] no frame!
+[h264 @ 0x14d08d200] no frame!
+[h264 @ 0x4ea0fae00] no frame!
+[h264 @ 0x4ea0fae00] no frame!
+[h264 @ 0x4c4567e00] no frame!
+[h264 @ 0x4c4567e00] no frame!
+[h264 @ 0x4c1195a00] no frame!
+[h264 @ 0x4c1195a00] no frame!
+[h264 @ 0x4c1116200] no frame!
+[h264 @ 0x4c1116200] no frame!
+[h264 @ 0x4c1116200] no frame!
+[h264 @ 0x4c1116200] no frame!
+[h264 @ 0x4c1189e00] no frame!
+[h264 @ 0x4c1189e00] no frame!
+[h264 @ 0x4c5625000] no frame!
+[h264 @ 0x4c5625000] no frame!
+[h264 @ 0x14d114200] no frame!
+[h264 @ 0x14d114200] no frame!
+[h264 @ 0x4ea1a1200] no frame!
+[h264 @ 0x4ea1a1200] no frame!
+[h264 @ 0x4c048bc00] no frame!
+[h264 @ 0x4c048bc00] no frame!
+[h264 @ 0x4c4547200] no frame!
+[h264 @ 0x4c4547200] no frame!
+[h264 @ 0x4ec016a00] no frame!
+[h264 @ 0x4ec016a00] no frame!
+[h264 @ 0x4c11fc800] no frame!
+[h264 @ 0x4c11fc800] no frame!
+ERROR        | Failed to find ColorBuffer: 6442
+ERROR        | Failed to bind to texture: invalid color buffer.
+[h264 @ 0x4c574ca00] no frame!
+[h264 @ 0x4c574ca00] no frame!
+[h264 @ 0x4c2753000] no frame!
+[h264 @ 0x4c2753000] no frame!
+[h264 @ 0x4ea1e4000] no frame!
+[h264 @ 0x4ea1e4000] no frame!
+[h264 @ 0x4c11f1000] no frame!
+[h264 @ 0x4c11f1000] no frame!
+[h264 @ 0x4e9a4b600] no frame!
+[h264 @ 0x4e9a4b600] no frame!
+[h264 @ 0x4ea20fc00] no frame!
+[h264 @ 0x4ea20fc00] no frame!
+[h264 @ 0x4ea20fc00] no frame!
+[h264 @ 0x4ea20fc00] no frame!
+[h264 @ 0x14d8d2400] no frame!
+[h264 @ 0x14d8d2400] no frame!
+ERROR        | Failed to find ColorBuffer: 6594
+ERROR        | Failed to bind to texture: invalid color buffer.
+[h264 @ 0x131956600] no frame!
+[h264 @ 0x131956600] no frame!
+[h264 @ 0x4c0471600] no frame!
+[h264 @ 0x4c0471600] no frame!
+[h264 @ 0x4c5bda000] no frame!
+[h264 @ 0x4c5bda000] no frame!
+[h264 @ 0x4c0471600] no frame!
+[h264 @ 0x4c0471600] no frame!
+[h264 @ 0x4c5babc00] no frame!
+[h264 @ 0x4c5babc00] no frame!
+[h264 @ 0x4c46d3c00] no frame!
+[h264 @ 0x4c46d3c00] no frame!
+[h264 @ 0x4c49ad200] no frame!
+[h264 @ 0x4c49ad200] no frame!
+[h264 @ 0x4c49ad200] no frame!
+[h264 @ 0x4c49ad200] no frame!
+[h264 @ 0x4ec12b600] no frame!
+[h264 @ 0x4ec12b600] no frame!
+[h264 @ 0x14d8d2400] no frame!
+[h264 @ 0x14d8d2400] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x178647288
+ERROR        | Failed to restore previous context: 12297
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x14c70c718
+ERROR        | Failed to restore previous context: 12297
+[h264 @ 0x4c4636600] no frame!
+[h264 @ 0x4c4636600] no frame!
+[h264 @ 0x4c11ab800] no frame!
+[h264 @ 0x4c11ab800] no frame!
+[h264 @ 0x4e902ea00] no frame!
+[h264 @ 0x4e902ea00] no frame!
+[h264 @ 0x14d121600] no frame!
+[h264 @ 0x14d121600] no frame!
+[h264 @ 0x14d146200] no frame!
+[h264 @ 0x14d146200] no frame!
+[h264 @ 0x4ea21de00] no frame!
+[h264 @ 0x4ea21de00] no frame!
+[h264 @ 0x4c4ad7200] no frame!
+[h264 @ 0x4c4ad7200] no frame!
+[h264 @ 0x4c4ad7200] no frame!
+[h264 @ 0x4c4ad7200] no frame!
+[h264 @ 0x4ea2e8800] no frame!
+[h264 @ 0x4ea2e8800] no frame!
+[h264 @ 0x4c054c000] no frame!
+[h264 @ 0x4c054c000] no frame!
+[h264 @ 0x4c5cdb600] no frame!
+[h264 @ 0x4c5cdb600] no frame!
+[h264 @ 0x4c5cdb600] no frame!
+[h264 @ 0x4c5cdb600] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x40b458018
+ERROR        | Failed to restore previous context: 12297
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x178699878
+ERROR        | Failed to restore previous context: 12297
+[h264 @ 0x4c466ee00] no frame!
+[h264 @ 0x4c466ee00] no frame!
+[h264 @ 0x4c0a5a400] no frame!
+[h264 @ 0x4c0a5a400] no frame!
+[h264 @ 0x4ea2c3200] no frame!
+[h264 @ 0x4ea2c3200] no frame!
+[h264 @ 0x4ea2c3200] no frame!
+[h264 @ 0x4ea2c3200] no frame!
+[h264 @ 0x4e905fc00] no frame!
+[h264 @ 0x4e905fc00] no frame!
+[h264 @ 0x4ea353c00] no frame!
+[h264 @ 0x4ea353c00] no frame!
+[h264 @ 0x4c5c21800] no frame!
+[h264 @ 0x4c5c21800] no frame!
+[h264 @ 0x4c12e2400] no frame!
+[h264 @ 0x4c12e2400] no frame!
+ERROR        | Failed to find ColorBuffer: 7160
+ERROR        | Failed to bind to texture: invalid color buffer.
+[h264 @ 0x4e9b66a00] no frame!
+[h264 @ 0x4e9b66a00] no frame!
+[h264 @ 0x4ec22f600] no frame!
+[h264 @ 0x4ec22f600] no frame!
+[h264 @ 0x4c0a6b800] no frame!
+[h264 @ 0x4c0a6b800] no frame!
+[h264 @ 0x4c0a6b800] no frame!
+[h264 @ 0x4c0a6b800] no frame!
+[h264 @ 0x4e9b0b000] no frame!
+[h264 @ 0x4e9b0b000] no frame!
+[h264 @ 0x4e9b0b000] no frame!
+[h264 @ 0x4e9b0b000] no frame!
+[h264 @ 0x14d114200] no frame!
+[h264 @ 0x14d114200] no frame!
+[h264 @ 0x14d114200] no frame!
+[h264 @ 0x14d114200] no frame!
+[h264 @ 0x4c4739400] no frame!
+[h264 @ 0x4c4739400] no frame!
+[h264 @ 0x11f833200] no frame!
+[h264 @ 0x11f833200] no frame!
+[h264 @ 0x4c0ab0e00] no frame!
+[h264 @ 0x4c0ab0e00] no frame!
+[h264 @ 0x4c5d2ae00] no frame!
+[h264 @ 0x4c5d2ae00] no frame!
+[h264 @ 0x4c4bad200] no frame!
+[h264 @ 0x4c4bad200] no frame!
+[h264 @ 0x4ea3cae00] no frame!
+[h264 @ 0x4ea3cae00] no frame!
+[h264 @ 0x1319b2c00] no frame!
+[h264 @ 0x1319b2c00] no frame!
+[h264 @ 0x4e9153600] no frame!
+[h264 @ 0x4e9153600] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x42a2acbf8
+ERROR        | Failed to restore previous context: 12297
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x11ce55d88
+ERROR        | Failed to restore previous context: 12297
+[h264 @ 0x4ea424600] no frame!
+[h264 @ 0x4ea424600] no frame!
+[h264 @ 0x4c5c6ac00] no frame!
+[h264 @ 0x4c5c6ac00] no frame!
+[h264 @ 0x4c4c12000] no frame!
+[h264 @ 0x4c4c12000] no frame!
+[h264 @ 0x4c4c12000] no frame!
+[h264 @ 0x4c4c12000] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x44b2f9d08
+ERROR        | Failed to restore previous context: 12297
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x44b2e2cd8
+ERROR        | Failed to restore previous context: 12297
+[h264 @ 0x4c4762600] no frame!
+[h264 @ 0x4c4762600] no frame!
+[h264 @ 0x1319db400] no frame!
+[h264 @ 0x1319db400] no frame!
+[h264 @ 0x4e91f0c00] no frame!
+[h264 @ 0x4e91f0c00] no frame!
+[h264 @ 0x4c4b86000] no frame!
+[h264 @ 0x4c4b86000] no frame!
+[h264 @ 0x4c5d8ba00] no frame!
+[h264 @ 0x4c5d8ba00] no frame!
+[h264 @ 0x4ea855800] no frame!
+[h264 @ 0x4ea855800] no frame!
+[h264 @ 0x4ec318800] no frame!
+[h264 @ 0x4ec318800] no frame!
+[h264 @ 0x4e9206c00] no frame!
+[h264 @ 0x4e9206c00] no frame!
+[h264 @ 0x4ec317200] no frame!
+[h264 @ 0x4ec317200] no frame!
+[h264 @ 0x4e9182200] no frame!
+[h264 @ 0x4e9182200] no frame!
+[h264 @ 0x4c0b02a00] no frame!
+[h264 @ 0x4c0b02a00] no frame!
+[h264 @ 0x4e9c4da00] no frame!
+[h264 @ 0x4e9c4da00] no frame!
+[h264 @ 0x14d8ee200] no frame!
+[h264 @ 0x14d8ee200] no frame!
+[h264 @ 0x1319eae00] no frame!
+[h264 @ 0x1319eae00] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x169975b28
+ERROR        | Failed to restore previous context: 12297
+[h264 @ 0x4ea81e200] no frame!
+[h264 @ 0x4ea81e200] no frame!
+[h264 @ 0x4c06c7600] no frame!
+[h264 @ 0x4c06c7600] no frame!
+[h264 @ 0x4c4bc3000] no frame!
+[h264 @ 0x4c4bc3000] no frame!
+[h264 @ 0x4ea4a4200] no frame!
+[h264 @ 0x4ea4a4200] no frame!
+[h264 @ 0x4ea3ab400] no frame!
+[h264 @ 0x4ea3ab400] no frame!
+[h264 @ 0x4e9c62400] no frame!
+[h264 @ 0x4e9c62400] no frame!
+[h264 @ 0x4c4c9b200] no frame!
+[h264 @ 0x4c4c9b200] no frame!
+[h264 @ 0x14d94ba00] no frame!
+[h264 @ 0x14d94ba00] no frame!
+[h264 @ 0x4ea86a000] no frame!
+[h264 @ 0x4ea86a000] no frame!
+[h264 @ 0x4c147c400] no frame!
+[h264 @ 0x4c147c400] no frame!
+[h264 @ 0x14d114200] no frame!
+[h264 @ 0x14d114200] no frame!
+[h264 @ 0x4c148f000] no frame!
+[h264 @ 0x4c148f000] no frame!
+[h264 @ 0x4c07fb200] no frame!
+[h264 @ 0x4c07fb200] no frame!
+[h264 @ 0x4ea442600] no frame!
+[h264 @ 0x4ea442600] no frame!
+[h264 @ 0x11f833200] no frame!
+[h264 @ 0x11f833200] no frame!
+[h264 @ 0x11f833200] no frame!
+[h264 @ 0x11f833200] no frame!
+[h264 @ 0x14d114200] no frame!
+[h264 @ 0x14d114200] no frame!
+[h264 @ 0x4e924ce00] no frame!
+[h264 @ 0x4e924ce00] no frame!
+[h264 @ 0x4ea572000] no frame!
+[h264 @ 0x4ea572000] no frame!
+[h264 @ 0x4c0cace00] no frame!
+[h264 @ 0x4c0cace00] no frame!
+[h264 @ 0x14d146200] no frame!
+[h264 @ 0x14d146200] no frame!
+[h264 @ 0x4c1582600] no frame!
+[h264 @ 0x4c1582600] no frame!
+[h264 @ 0x4c1581a00] no frame!
+[h264 @ 0x4c1581a00] no frame!
+[h264 @ 0x4c0ccf000] no frame!
+[h264 @ 0x4c0ccf000] no frame!
+[h264 @ 0x14d146200] no frame!
+[h264 @ 0x14d146200] no frame!
+[h264 @ 0x4c4c9cc00] no frame!
+[h264 @ 0x4c4c9cc00] no frame!
+[h264 @ 0x4ef0b7e00] no frame!
+[h264 @ 0x4ef0b7e00] no frame!
+[h264 @ 0x4c4cc3a00] no frame!
+[h264 @ 0x4c4cc3a00] no frame!
+[h264 @ 0x4e9251c00] no frame!
+[h264 @ 0x4e9251c00] no frame!
+[h264 @ 0x4e9251c00] no frame!
+[h264 @ 0x4e9251c00] no frame!
+[h264 @ 0x4ea565800] no frame!
+[h264 @ 0x4ea565800] no frame!
+[h264 @ 0x4e9ba7e00] no frame!
+[h264 @ 0x4e9ba7e00] no frame!
+[h264 @ 0x1319b2c00] no frame!
+[h264 @ 0x1319b2c00] no frame!
+[h264 @ 0x4c4d72e00] no frame!
+[h264 @ 0x4c4d72e00] no frame!
+[h264 @ 0x4eaa42000] no frame!
+[h264 @ 0x4eaa42000] no frame!
+[h264 @ 0x4eaa42000] no frame!
+[h264 @ 0x4eaa42000] no frame!
+[h264 @ 0x4ea5c7600] no frame!
+[h264 @ 0x4ea5c7600] no frame!
+[h264 @ 0x4ea5c7600] no frame!
+[h264 @ 0x4ea5c7600] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x4c3219058
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x4c328ae18
+ERROR        | Failed to restore previous context: 12297
+ERROR        | Failed to restore previous context: 12297
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x4c3219058
+ERROR        | Failed to restore previous context: 12297
+[h264 @ 0x4e9285000] no frame!
+[h264 @ 0x4e9285000] no frame!
+[h264 @ 0x1319b2c00] no frame!
+[h264 @ 0x1319b2c00] no frame!
+[h264 @ 0x4ec35c800] no frame!
+[h264 @ 0x4ec35c800] no frame!
+[h264 @ 0x4ec35c800] no frame!
+[h264 @ 0x4ec35c800] no frame!
+[h264 @ 0x4eaa85400] no frame!
+[h264 @ 0x4eaa85400] no frame!
+[h264 @ 0x4eaa85400] no frame!
+[h264 @ 0x4eaa85400] no frame!
+[h264 @ 0x4ea58b400] no frame!
+[h264 @ 0x4ea58b400] no frame!
+[h264 @ 0x14d146200] no frame!
+[h264 @ 0x14d146200] no frame!
+[h264 @ 0x4c1690000] no frame!
+[h264 @ 0x4c1690000] no frame!
+[h264 @ 0x4ea4e4c00] no frame!
+[h264 @ 0x4ea4e4c00] no frame!
+[h264 @ 0x4e9364400] no frame!
+[h264 @ 0x4e9364400] no frame!
+[h264 @ 0x131a30800] no frame!
+[h264 @ 0x131a30800] no frame!
+[h264 @ 0x4ef13d600] no frame!
+[h264 @ 0x4ef13d600] no frame!
+[h264 @ 0x4ec462200] no frame!
+[h264 @ 0x4ec462200] no frame!
+[h264 @ 0x4ef191c00] no frame!
+[h264 @ 0x4ef191c00] no frame!
+[h264 @ 0x4e9352e00] no frame!
+[h264 @ 0x4e9352e00] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x46eb21008
+ERROR        | Failed to restore previous context: 12297
+[h264 @ 0x11f8fc200] no frame!
+[h264 @ 0x11f8fc200] no frame!
+[h264 @ 0x4ea9bfe00] no frame!
+[h264 @ 0x4ea9bfe00] no frame!
+[h264 @ 0x14d923800] no frame!
+[h264 @ 0x14d923800] no frame!
+[h264 @ 0x4ef1f1c00] no frame!
+[h264 @ 0x4ef1f1c00] no frame!
+[h264 @ 0x4ec355400] no frame!
+[h264 @ 0x4ec355400] no frame!
+[h264 @ 0x4e9369400] no frame!
+[h264 @ 0x4e9369400] no frame!
+[h264 @ 0x4c1695600] no frame!
+[h264 @ 0x4c1695600] no frame!
+[h264 @ 0x4c0e7ac00] no frame!
+[h264 @ 0x4c0e7ac00] no frame!
+[h264 @ 0x4c165f400] no frame!
+[h264 @ 0x4c165f400] no frame!
+[h264 @ 0x4c4e67000] no frame!
+[h264 @ 0x4c4e67000] no frame!
+[h264 @ 0x4c1721800] no frame!
+[h264 @ 0x4c1721800] no frame!
+[h264 @ 0x4c1721800] no frame!
+[h264 @ 0x4c1721800] no frame!
+[h264 @ 0x4c0f0a000] no frame!
+[h264 @ 0x4c0f0a000] no frame!
+[h264 @ 0x4ea534c00] no frame!
+[h264 @ 0x4ea534c00] no frame!
+[h264 @ 0x4c0ed7a00] no frame!
+[h264 @ 0x4c0ed7a00] no frame!
+[h264 @ 0x14d8f9a00] no frame!
+[h264 @ 0x14d8f9a00] no frame!
+[h264 @ 0x4c176ce00] no frame!
+[h264 @ 0x4c176ce00] no frame!
+[h264 @ 0x4c0f0ba00] no frame!
+[h264 @ 0x4c0f0ba00] no frame!
+[h264 @ 0x4ec48b400] no frame!
+[h264 @ 0x4ec48b400] no frame!
+[h264 @ 0x4c176d000] no frame!
+[h264 @ 0x4c176d000] no frame!
+[h264 @ 0x4e9dc0600] no frame!
+[h264 @ 0x4e9dc0600] no frame!
+[h264 @ 0x4c169fe00] no frame!
+[h264 @ 0x4c169fe00] no frame!
+[h264 @ 0x4c16d8a00] no frame!
+[h264 @ 0x4c16d8a00] no frame!
+[h264 @ 0x4e9de7c00] no frame!
+[h264 @ 0x4e9de7c00] no frame!
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+[h264 @ 0x4e941d000] no frame!
+[h264 @ 0x4e941d000] no frame!
+[h264 @ 0x4e941d000] no frame!
+[h264 @ 0x4e941d000] no frame!
+ERROR        | DisplaySurfaceGlContextHelper context was preempted by others, current=0x3, needed=0x3, thread=0x46eb710f8
+ERROR        | Failed to restore previous context: 12297
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+[h264 @ 0x4e94adc00] no frame!
+[h264 @ 0x4e94adc00] no frame!
+[h264 @ 0x4ea6de200] no frame!
+[h264 @ 0x4ea6de200] no frame!
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+[h264 @ 0x4e9448e00] no frame!
+[h264 @ 0x4e9448e00] no frame!
+[h264 @ 0x4ea7cc800] no frame!
+[h264 @ 0x4ea7cc800] no frame!
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+[h264 @ 0x4c174aa00] no frame!
+[h264 @ 0x4c174aa00] no frame!
+[h264 @ 0x4e9dd8c00] no frame!
+[h264 @ 0x4e9dd8c00] no frame!
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+[h264 @ 0x6810f2c00] no frame!
+[h264 @ 0x6810f2c00] no frame!
+[h264 @ 0x14d97f600] no frame!
+[h264 @ 0x14d97f600] no frame!
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | Failed to find ColorBuffer: 9469
+ERROR        | Failed to bind to texture: invalid color buffer.
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+ERROR        | flushEmulatedEglWindowSurfaceColorBuffer: window handle 0x41 not found
+[h264 @ 0x4ea7b7200] no frame!
+[h264 @ 0x4ea7b7200] no frame!
+[h264 @ 0x4e9e7ce00] no frame!
+[h264 @ 0x4e9e7ce00] no frame!
+INFO         | Wait for emulator (pid 43618) 20 seconds to shutdown gracefully before kill;you can set environment variable ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL(in seconds) to change the default value (20 seconds)
+
+USER_INFO    | Snapshots have been disabled by the user, save request is ignored.
+INFO         | Saving snapshot 'default_boot' took 0 ms
+INFO         | removeAll

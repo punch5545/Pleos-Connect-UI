@@ -1,0 +1,882 @@
+[
+  {
+    "id": "67:4946",
+    "name": "ic_charging",
+    "file": "ic_charging__67_4946.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:14514",
+    "name": "ic_steering/Type=A",
+    "file": "ic_steering_Type_A__67_14514.svg",
+    "size": {
+      "x": 40,
+      "y": 40
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:14521",
+    "name": "ic_steering/Type=B",
+    "file": "ic_steering_Type_B__67_14521.svg",
+    "size": {
+      "x": 40,
+      "y": 40
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:14526",
+    "name": "ic_steering/Type=C",
+    "file": "ic_steering_Type_C__67_14526.svg",
+    "size": {
+      "x": 40,
+      "y": 40
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:14539",
+    "name": "ic_call/State=Accept, Disable=false",
+    "file": "ic_call_State_Accept_Disable_false__67_14539.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:14542",
+    "name": "ic_call/State=Accept, Disable=true",
+    "file": "ic_call_State_Accept_Disable_true__67_14542.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 2,
+    "warnings": []
+  },
+  {
+    "id": "67:14549",
+    "name": "ic_call/State=Absence, Disable=false",
+    "file": "ic_call_State_Absence_Disable_false__67_14549.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 2,
+    "warnings": []
+  },
+  {
+    "id": "67:14556",
+    "name": "ic_call/State=Outgoing, Disable=false",
+    "file": "ic_call_State_Outgoing_Disable_false__67_14556.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 2,
+    "warnings": []
+  },
+  {
+    "id": "67:14563",
+    "name": "ic_call/State=Receipt, Disable=false",
+    "file": "ic_call_State_Receipt_Disable_false__67_14563.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 2,
+    "warnings": []
+  },
+  {
+    "id": "67:14570",
+    "name": "ic_call/State=Decline, Disable=false",
+    "file": "ic_call_State_Decline_Disable_false__67_14570.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:14573",
+    "name": "ic_call/State=Decline, Disable=true",
+    "file": "ic_call_State_Decline_Disable_true__67_14573.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 2,
+    "warnings": []
+  },
+  {
+    "id": "67:14582",
+    "name": "ic_seat_heat_3/Position=Driver, State=Normal",
+    "file": "ic_seat_heat_3_Position_Driver_State_Normal__67_14582.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 4,
+    "warnings": []
+  },
+  {
+    "id": "67:14591",
+    "name": "ic_seat_heat_3/Position=Driver, State=Step1",
+    "file": "ic_seat_heat_3_Position_Driver_State_Step1__67_14591.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 4,
+    "warnings": []
+  },
+  {
+    "id": "67:14600",
+    "name": "ic_seat_heat_3/Position=Driver, State=Step2",
+    "file": "ic_seat_heat_3_Position_Driver_State_Step2__67_14600.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 4,
+    "warnings": []
+  },
+  {
+    "id": "67:14609",
+    "name": "ic_seat_heat_3/Position=Driver, State=Step3",
+    "file": "ic_seat_heat_3_Position_Driver_State_Step3__67_14609.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 4,
+    "warnings": []
+  },
+  {
+    "id": "67:14618",
+    "name": "ic_seat_heat_3/Position=Passenger, State=Normal",
+    "file": "ic_seat_heat_3_Position_Passenger_State_Normal__67_14618.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 4,
+    "warnings": []
+  },
+  {
+    "id": "67:14627",
+    "name": "ic_seat_heat_3/Position=Passenger, State=Step1",
+    "file": "ic_seat_heat_3_Position_Passenger_State_Step1__67_14627.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 4,
+    "warnings": []
+  },
+  {
+    "id": "67:14636",
+    "name": "ic_seat_heat_3/Position=Passenger, State=Step2",
+    "file": "ic_seat_heat_3_Position_Passenger_State_Step2__67_14636.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 4,
+    "warnings": []
+  },
+  {
+    "id": "67:14645",
+    "name": "ic_seat_heat_3/Position=Passenger, State=Step3",
+    "file": "ic_seat_heat_3_Position_Passenger_State_Step3__67_14645.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 4,
+    "warnings": []
+  },
+  {
+    "id": "67:15002",
+    "name": "ic_bluetooth/Connected=True",
+    "file": "ic_bluetooth_Connected_True__67_15002.svg",
+    "size": {
+      "x": 47.999996185302734,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:15005",
+    "name": "ic_bluetooth/Connected=False",
+    "file": "ic_bluetooth_Connected_False__67_15005.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:15014",
+    "name": "ic_grid/Property 1=44",
+    "file": "ic_grid_Property_1_44__67_15014.svg",
+    "size": {
+      "x": 44,
+      "y": 44
+    },
+    "pathCount": 14,
+    "warnings": []
+  },
+  {
+    "id": "67:15030",
+    "name": "ic_grid/Property 1=64",
+    "file": "ic_grid_Property_1_64__67_15030.svg",
+    "size": {
+      "x": 64,
+      "y": 64
+    },
+    "pathCount": 14,
+    "warnings": []
+  },
+  {
+    "id": "67:15046",
+    "name": "ic_grid/Property 1=100",
+    "file": "ic_grid_Property_1_100__67_15046.svg",
+    "size": {
+      "x": 100,
+      "y": 100
+    },
+    "pathCount": 14,
+    "warnings": []
+  },
+  {
+    "id": "67:15063",
+    "name": "ic_vehicle/l",
+    "file": "ic_vehicle_l__67_15063.svg",
+    "size": {
+      "x": 64,
+      "y": 64
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:21961",
+    "name": "ic_profile/Type=Solid",
+    "file": "ic_profile_Type_Solid__67_21961.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 2,
+    "warnings": []
+  },
+  {
+    "id": "67:21967",
+    "name": "ic_profile/Type=Line",
+    "file": "ic_profile_Type_Line__67_21967.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 2,
+    "warnings": []
+  },
+  {
+    "id": "67:22040",
+    "name": "ic_beam/type=Auto High Beam",
+    "file": "ic_beam_type_Auto_High_Beam__67_22040.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 7,
+    "warnings": []
+  },
+  {
+    "id": "67:22053",
+    "name": "ic_beam/type=low beam",
+    "file": "ic_beam_type_low_beam__67_22053.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 6,
+    "warnings": []
+  },
+  {
+    "id": "67:22065",
+    "name": "ic_beam/type=tailight",
+    "file": "ic_beam_type_tailight__67_22065.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 8,
+    "warnings": []
+  },
+  {
+    "id": "67:22083",
+    "name": "ic_beam/type=foglight",
+    "file": "ic_beam_type_foglight__67_22083.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 5,
+    "warnings": []
+  },
+  {
+    "id": "67:22096",
+    "name": "ic_arrow/Direction=left",
+    "file": "ic_arrow_Direction_left__67_22096.svg",
+    "size": {
+      "x": 47.999996185302734,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:22099",
+    "name": "ic_arrow/Direction=right",
+    "file": "ic_arrow_Direction_right__67_22099.svg",
+    "size": {
+      "x": 47.999996185302734,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:22102",
+    "name": "ic_arrow/Direction=up",
+    "file": "ic_arrow_Direction_up__67_22102.svg",
+    "size": {
+      "x": 47.999996185302734,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:22105",
+    "name": "ic_arrow/Direction=down",
+    "file": "ic_arrow_Direction_down__67_22105.svg",
+    "size": {
+      "x": 47.999996185302734,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:22174",
+    "name": "ic_plus",
+    "file": "ic_plus__67_22174.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:22337",
+    "name": "ic_mic/On=on",
+    "file": "ic_mic_On_on__67_22337.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 2,
+    "warnings": []
+  },
+  {
+    "id": "67:22344",
+    "name": "ic_mic/On=off",
+    "file": "ic_mic_On_off__67_22344.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 3,
+    "warnings": []
+  },
+  {
+    "id": "67:22389",
+    "name": "ic_more/Type=Horizontal",
+    "file": "ic_more_Type_Horizontal__67_22389.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:22398",
+    "name": "ic_more/Type=Vertical",
+    "file": "ic_more_Type_Vertical__67_22398.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:22415",
+    "name": "ic_close/Type=Basic",
+    "file": "ic_close_Type_Basic__67_22415.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:22420",
+    "name": "ic_close/Type=Circle",
+    "file": "ic_close_Type_Circle__67_22420.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:22427",
+    "name": "ic_close/Type=Delete",
+    "file": "ic_close_Type_Delete__67_22427.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:22445",
+    "name": "ic_keyboard/Type=Delete",
+    "file": "ic_keyboard_Type_Delete__67_22445.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 2,
+    "warnings": []
+  },
+  {
+    "id": "67:22452",
+    "name": "ic_keyboard/Type=Shift",
+    "file": "ic_keyboard_Type_Shift__67_22452.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:22457",
+    "name": "ic_keyboard/Type=Shift-Active",
+    "file": "ic_keyboard_Type_Shift-Active__67_22457.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:22460",
+    "name": "ic_keyboard/Type=Enter",
+    "file": "ic_keyboard_Type_Enter__67_22460.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:22465",
+    "name": "ic_keyboard/Type=Hidden",
+    "file": "ic_keyboard_Type_Hidden__67_22465.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 7,
+    "warnings": []
+  },
+  {
+    "id": "67:24418",
+    "name": "ic_sound/volume=high",
+    "file": "ic_sound_volume_high__67_24418.svg",
+    "size": {
+      "x": 48,
+      "y": 48.000003814697266
+    },
+    "pathCount": 3,
+    "warnings": []
+  },
+  {
+    "id": "67:24424",
+    "name": "ic_sound/volume=mid",
+    "file": "ic_sound_volume_mid__67_24424.svg",
+    "size": {
+      "x": 48,
+      "y": 48.000003814697266
+    },
+    "pathCount": 3,
+    "warnings": []
+  },
+  {
+    "id": "67:24431",
+    "name": "ic_sound/volume=low",
+    "file": "ic_sound_volume_low__67_24431.svg",
+    "size": {
+      "x": 48,
+      "y": 48.000003814697266
+    },
+    "pathCount": 3,
+    "warnings": []
+  },
+  {
+    "id": "67:24437",
+    "name": "ic_sound/volume=mute",
+    "file": "ic_sound_volume_mute__67_24437.svg",
+    "size": {
+      "x": 48,
+      "y": 48.000003814697266
+    },
+    "pathCount": 6,
+    "warnings": []
+  },
+  {
+    "id": "67:24447",
+    "name": "ic_sound/volume=up",
+    "file": "ic_sound_volume_up__67_24447.svg",
+    "size": {
+      "x": 48,
+      "y": 48.000003814697266
+    },
+    "pathCount": 2,
+    "warnings": []
+  },
+  {
+    "id": "67:24453",
+    "name": "ic_sound/volume=down",
+    "file": "ic_sound_volume_down__67_24453.svg",
+    "size": {
+      "x": 48,
+      "y": 48.000003814697266
+    },
+    "pathCount": 2,
+    "warnings": []
+  },
+  {
+    "id": "67:24458",
+    "name": "ic_sound/volume=warning",
+    "file": "ic_sound_volume_warning__67_24458.svg",
+    "size": {
+      "x": 47.999996185302734,
+      "y": 48
+    },
+    "pathCount": 3,
+    "warnings": []
+  },
+  {
+    "id": "67:25150",
+    "name": "ic_minus",
+    "file": "ic_minus__67_25150.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:25574",
+    "name": "ic_annotation/Type=info",
+    "file": "ic_annotation_Type_info__67_25574.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:25581",
+    "name": "ic_annotation/Type=info_line",
+    "file": "ic_annotation_Type_info_line__67_25581.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 3,
+    "warnings": []
+  },
+  {
+    "id": "67:25588",
+    "name": "ic_annotation/Type=app_info",
+    "file": "ic_annotation_Type_app_info__67_25588.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:25595",
+    "name": "ic_annotation/Type=alert",
+    "file": "ic_annotation_Type_alert__67_25595.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:25601",
+    "name": "ic_annotation/Type=alert_line",
+    "file": "ic_annotation_Type_alert_line__67_25601.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 3,
+    "warnings": []
+  },
+  {
+    "id": "67:25607",
+    "name": "ic_annotation/Type=alert_tri",
+    "file": "ic_annotation_Type_alert_tri__67_25607.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:25618",
+    "name": "ic_check/Type=basic",
+    "file": "ic_check_Type_basic__67_25618.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:25621",
+    "name": "ic_check/Type=basic_bold",
+    "file": "ic_check_Type_basic_bold__67_25621.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:25624",
+    "name": "ic_check/Type=Round",
+    "file": "ic_check_Type_Round__67_25624.svg",
+    "size": {
+      "x": 47.999996185302734,
+      "y": 48
+    },
+    "pathCount": 2,
+    "warnings": []
+  },
+  {
+    "id": "67:25629",
+    "name": "ic_check/Type=Fill",
+    "file": "ic_check_Type_Fill__67_25629.svg",
+    "size": {
+      "x": 47.999996185302734,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:26985",
+    "name": "ic_eye/On=false",
+    "file": "ic_eye_On_false__67_26985.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 2,
+    "warnings": []
+  },
+  {
+    "id": "67:26988",
+    "name": "ic_eye/On=true",
+    "file": "ic_eye_On_true__67_26988.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 2,
+    "warnings": []
+  },
+  {
+    "id": "67:27433",
+    "name": "ic_dropdown/Direction=Down",
+    "file": "ic_dropdown_Direction_Down__67_27433.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:27436",
+    "name": "ic_dropdown/Direction=Up",
+    "file": "ic_dropdown_Direction_Up__67_27436.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:28909",
+    "name": "ic_menu/Type=2",
+    "file": "ic_menu_Type_2__67_28909.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 2,
+    "warnings": []
+  },
+  {
+    "id": "67:28914",
+    "name": "ic_menu/Type=3",
+    "file": "ic_menu_Type_3__67_28914.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 3,
+    "warnings": []
+  },
+  {
+    "id": "67:28922",
+    "name": "ic_trash",
+    "file": "ic_trash__67_28922.svg",
+    "size": {
+      "x": 44,
+      "y": 44
+    },
+    "pathCount": 2,
+    "warnings": []
+  },
+  {
+    "id": "67:28966",
+    "name": "ic_arrow/Direction=left",
+    "file": "ic_arrow_Direction_left__67_28966.svg",
+    "size": {
+      "x": 47.999996185302734,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:28969",
+    "name": "ic_arrow/Direction=right",
+    "file": "ic_arrow_Direction_right__67_28969.svg",
+    "size": {
+      "x": 47.999996185302734,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:28972",
+    "name": "ic_arrow/Direction=up",
+    "file": "ic_arrow_Direction_up__67_28972.svg",
+    "size": {
+      "x": 47.999996185302734,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:28975",
+    "name": "ic_arrow/Direction=down",
+    "file": "ic_arrow_Direction_down__67_28975.svg",
+    "size": {
+      "x": 47.999996185302734,
+      "y": 48
+    },
+    "pathCount": 1,
+    "warnings": []
+  },
+  {
+    "id": "67:32636",
+    "name": "ic_light",
+    "file": "ic_light__67_32636.svg",
+    "size": {
+      "x": 47.999996185302734,
+      "y": 48
+    },
+    "pathCount": 8,
+    "warnings": []
+  },
+  {
+    "id": "67:33970",
+    "name": "ic_image/Type=Photo",
+    "file": "ic_image_Type_Photo__67_33970.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 2,
+    "warnings": []
+  },
+  {
+    "id": "67:33977",
+    "name": "ic_image/Type=Thumbnail",
+    "file": "ic_image_Type_Thumbnail__67_33977.svg",
+    "size": {
+      "x": 48,
+      "y": 48
+    },
+    "pathCount": 2,
+    "warnings": []
+  }
+]

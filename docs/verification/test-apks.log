@@ -1,0 +1,149 @@
+Calculating task graph as no cached configuration is available for tasks: :pleos-compose:assembleDebugAndroidTest :pleos-aaos:assembleDebugAndroidTest
+> Task :pleos-compose:generateDebugAssets UP-TO-DATE
+> Task :pleos-tokens:generateDebugAssets UP-TO-DATE
+> Task :pleos-compose:preBuild UP-TO-DATE
+> Task :pleos-compose:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :pleos-aaos:preBuild UP-TO-DATE
+> Task :pleos-aaos:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :pleos-aaos:generateDebugAssets UP-TO-DATE
+> Task :pleos-tokens:preBuild UP-TO-DATE
+> Task :pleos-compose:preDebugBuild UP-TO-DATE
+> Task :pleos-compose:preDebugAndroidTestBuild UP-TO-DATE
+> Task :pleos-compose:processDebugNavigationResources UP-TO-DATE
+> Task :pleos-compose:javaPreCompileDebug UP-TO-DATE
+> Task :pleos-compose:extractDeepLinksDebug UP-TO-DATE
+> Task :pleos-compose:writeDebugAarMetadata UP-TO-DATE
+> Task :pleos-tokens:preDebugBuild UP-TO-DATE
+> Task :pleos-compose:processDebugManifest UP-TO-DATE
+> Task :pleos-compose:mergeDebugAssets UP-TO-DATE
+> Task :pleos-compose:generateDebugResources UP-TO-DATE
+> Task :pleos-compose:generateDebugAndroidTestResources UP-TO-DATE
+> Task :pleos-compose:packageDebugResources UP-TO-DATE
+> Task :pleos-compose:generateDebugAndroidTestGlobalSynthetics UP-TO-DATE
+> Task :pleos-compose:mapDebugSourceSetPaths UP-TO-DATE
+> Task :pleos-compose:packageDebugAndroidTestResources UP-TO-DATE
+> Task :pleos-compose:mergeDebugAndroidTestJniLibFolders UP-TO-DATE
+> Task :pleos-compose:mergeDebugJniLibFolders UP-TO-DATE
+> Task :pleos-compose:compileDebugLibraryResources UP-TO-DATE
+> Task :pleos-compose:validateSigningDebugAndroidTest UP-TO-DATE
+> Task :pleos-tokens:javaPreCompileDebug UP-TO-DATE
+> Task :pleos-compose:processDebugAndroidTestNavigationResources UP-TO-DATE
+> Task :pleos-compose:javaPreCompileDebugAndroidTest UP-TO-DATE
+> Task :pleos-tokens:writeDebugAarMetadata UP-TO-DATE
+> Task :pleos-tokens:extractDeepLinksDebug UP-TO-DATE
+> Task :pleos-compose:desugarDebugAndroidTestFileDependencies UP-TO-DATE
+> Task :pleos-compose:mapDebugAndroidTestSourceSetPaths UP-TO-DATE
+> Task :pleos-tokens:processDebugManifest UP-TO-DATE
+> Task :pleos-compose:parseDebugLocalResources UP-TO-DATE
+> Task :pleos-tokens:mergeDebugAssets UP-TO-DATE
+> Task :pleos-compose:writeDebugAndroidTestSigningConfigVersions UP-TO-DATE
+> Task :pleos-tokens:generateDebugResources UP-TO-DATE
+> Task :pleos-tokens:mergeDebugJniLibFolders UP-TO-DATE
+> Task :pleos-aaos:preDebugBuild UP-TO-DATE
+> Task :pleos-compose:mergeDebugNativeLibs NO-SOURCE
+> Task :pleos-aaos:generateDebugResources UP-TO-DATE
+> Task :pleos-tokens:processDebugNavigationResources UP-TO-DATE
+> Task :pleos-compose:compileDebugAndroidTestNavigationResources UP-TO-DATE
+> Task :pleos-tokens:mapDebugSourceSetPaths UP-TO-DATE
+> Task :pleos-aaos:javaPreCompileDebug UP-TO-DATE
+> Task :pleos-aaos:processDebugNavigationResources UP-TO-DATE
+> Task :pleos-compose:parseDebugAndroidTestLocalResources UP-TO-DATE
+> Task :pleos-aaos:packageDebugResources UP-TO-DATE
+> Task :pleos-compose:generateDebugRFile UP-TO-DATE
+> Task :pleos-aaos:preDebugAndroidTestBuild UP-TO-DATE
+> Task :pleos-compose:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :pleos-tokens:mergeDebugNativeLibs NO-SOURCE
+> Task :pleos-compose:checkDebugAndroidTestDuplicateClasses UP-TO-DATE
+> Task :pleos-aaos:parseDebugLocalResources UP-TO-DATE
+> Task :pleos-tokens:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :pleos-compose:generateDebugAndroidTestRFile UP-TO-DATE
+> Task :pleos-tokens:packageDebugResources UP-TO-DATE
+> Task :pleos-tokens:compileDebugLibraryResources UP-TO-DATE
+> Task :pleos-tokens:parseDebugLocalResources UP-TO-DATE
+> Task :pleos-aaos:generateDebugRFile UP-TO-DATE
+> Task :pleos-compose:checkDebugAndroidTestAarMetadata UP-TO-DATE
+> Task :pleos-compose:mergeDebugAndroidTestAssets UP-TO-DATE
+> Task :pleos-tokens:generateDebugRFile UP-TO-DATE
+> Task :pleos-compose:compressDebugAndroidTestAssets UP-TO-DATE
+> Task :pleos-aaos:processDebugAndroidTestNavigationResources
+> Task :pleos-compose:mergeExtDexDebugAndroidTest UP-TO-DATE
+> Task :pleos-aaos:generateDebugAndroidTestResources
+> Task :pleos-compose:mergeDebugAndroidTestResources UP-TO-DATE
+> Task :pleos-compose:mergeDebugAndroidTestManifest UP-TO-DATE
+> Task :pleos-aaos:mergeDebugAssets
+> Task :pleos-compose:processDebugAndroidTestManifest UP-TO-DATE
+> Task :pleos-compose:mergeDebugAndroidTestNativeLibs UP-TO-DATE
+> Task :pleos-aaos:writeDebugAarMetadata
+> Task :pleos-aaos:javaPreCompileDebugAndroidTest
+> Task :pleos-compose:stripDebugAndroidTestDebugSymbols UP-TO-DATE
+> Task :pleos-tokens:compileDebugKotlin UP-TO-DATE
+> Task :pleos-aaos:mapDebugAndroidTestSourceSetPaths
+> Task :pleos-aaos:mapDebugSourceSetPaths
+> Task :pleos-tokens:compileDebugJavaWithJavac NO-SOURCE
+> Task :pleos-tokens:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :pleos-tokens:processDebugJavaRes UP-TO-DATE
+> Task :pleos-tokens:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :pleos-compose:processDebugAndroidTestResources UP-TO-DATE
+> Task :pleos-aaos:desugarDebugAndroidTestFileDependencies
+> Task :pleos-aaos:extractDeepLinksDebug
+> Task :pleos-aaos:checkDebugAndroidTestAarMetadata
+> Task :pleos-aaos:checkDebugAndroidTestDuplicateClasses
+> Task :pleos-aaos:packageDebugAndroidTestResources
+> Task :pleos-aaos:mergeDebugJniLibFolders
+> Task :pleos-aaos:compileDebugAndroidTestNavigationResources
+> Task :pleos-aaos:writeDebugAndroidTestSigningConfigVersions
+> Task :pleos-aaos:compileDebugLibraryResources
+> Task :pleos-aaos:mergeDebugAndroidTestJniLibFolders
+> Task :pleos-aaos:validateSigningDebugAndroidTest
+> Task :pleos-aaos:mergeDebugNativeLibs NO-SOURCE
+> Task :pleos-aaos:processDebugManifest
+> Task :pleos-aaos:parseDebugAndroidTestLocalResources
+> Task :pleos-aaos:mergeDebugAndroidTestAssets
+> Task :pleos-aaos:copyDebugJniLibsProjectOnly
+> Task :pleos-aaos:generateDebugAndroidTestRFile
+> Task :pleos-aaos:mergeDebugAndroidTestNativeLibs
+> Task :pleos-aaos:compressDebugAndroidTestAssets
+
+> Task :pleos-aaos:stripDebugAndroidTestDebugSymbols
+Unable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so. Run with --info option to learn more.
+
+> Task :pleos-aaos:mergeDebugAndroidTestManifest
+> Task :pleos-aaos:processDebugAndroidTestManifest
+> Task :pleos-aaos:generateDebugAndroidTestGlobalSynthetics
+> Task :pleos-aaos:mergeDebugAndroidTestResources
+> Task :pleos-compose:compileDebugKotlin
+> Task :pleos-compose:compileDebugJavaWithJavac NO-SOURCE
+> Task :pleos-compose:processDebugJavaRes UP-TO-DATE
+> Task :pleos-compose:bundleLibRuntimeToDirDebug
+> Task :pleos-compose:bundleLibCompileToJarDebug
+> Task :pleos-aaos:processDebugAndroidTestResources
+> Task :pleos-aaos:compileDebugKotlin
+> Task :pleos-aaos:compileDebugJavaWithJavac NO-SOURCE
+> Task :pleos-aaos:processDebugJavaRes UP-TO-DATE
+> Task :pleos-aaos:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :pleos-aaos:bundleLibRuntimeToDirDebug
+> Task :pleos-aaos:compileDebugAndroidTestKotlin
+> Task :pleos-aaos:compileDebugAndroidTestJavaWithJavac NO-SOURCE
+> Task :pleos-aaos:processDebugAndroidTestJavaRes
+> Task :pleos-aaos:dexBuilderDebugAndroidTest
+> Task :pleos-aaos:mergeProjectDexDebugAndroidTest
+> Task :pleos-aaos:mergeLibDexDebugAndroidTest
+> Task :pleos-compose:mergeLibDexDebugAndroidTest
+> Task :pleos-aaos:mergeDebugAndroidTestJavaResource
+> Task :pleos-compose:compileDebugAndroidTestKotlin
+> Task :pleos-compose:compileDebugAndroidTestJavaWithJavac NO-SOURCE
+> Task :pleos-compose:processDebugAndroidTestJavaRes UP-TO-DATE
+> Task :pleos-compose:mergeDebugAndroidTestJavaResource UP-TO-DATE
+> Task :pleos-compose:dexBuilderDebugAndroidTest
+> Task :pleos-compose:mergeProjectDexDebugAndroidTest
+> Task :pleos-compose:packageDebugAndroidTest
+> Task :pleos-compose:assembleDebugAndroidTest
+> Task :pleos-compose:createDebugAndroidTestApkListingFileRedirect UP-TO-DATE
+> Task :pleos-aaos:mergeExtDexDebugAndroidTest
+> Task :pleos-aaos:packageDebugAndroidTest
+> Task :pleos-aaos:assembleDebugAndroidTest
+> Task :pleos-aaos:createDebugAndroidTestApkListingFileRedirect
+
+BUILD SUCCESSFUL in 6s
+118 actionable tasks: 50 executed, 68 up-to-date
+Configuration cache entry stored.

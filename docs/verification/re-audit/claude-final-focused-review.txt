@@ -1,0 +1,47 @@
+# PleosConnectUI 남은 P2 7건 재검토 결과 (읽기 전용)
+
+7건 중 6건은 해결됐고, 1건(치수 주입점)은 일부만 해결됐습니다. 새로 찾은 P0, P1, P2는 없습니다.
+
+## 남은 P2 해결 여부
+
+| 항목 | 결과 | 근거 |
+| --- | --- | --- |
+| P2-1 Popup이 아주 낮을 때 action이 잘림 | 해결 | 높이가 0인 자식은 간격 계산에서 빠집니다(`Overlays.kt:267-269`). 남는 높이가 부족하면 간격도 줄어듭니다(`:270-276`). action은 항상 하단 `h - height` 위치에 놓입니다(`:285-288`). header와 body를 측정할 때 action 높이와 간격을 먼저 빼므로(`:157-166`, `:245-249`) action이 잘리지 않습니다. 03 §4.3에 맞습니다. |
+| P2-2 Hidden에서 페이지가 넘어감 | 해결 | `canPage`가 `visibility == Show`를 검사합니다(`NotificationsWidgets.kt:459-463`). 이전/다음 접근성 action은 Show에서만 등록됩니다(`:480-483`). Hidden에서는 좌우 키를 소비하지 않고 currentKey도 바뀌지 않습니다. 03 §13.2 "Hidden에서 currentKey 보존"에 맞습니다. |
+| P2-3 카드 drag가 세로 스크롤을 막음 | 해결 | 카드는 `detectHorizontalDragGestures`(`:569`), Handle은 `detectVerticalDragGestures`(`:628`)를 씁니다. 세로 스크롤을 부모에 넘기지 않던 문제가 없어졌습니다. 또 Hidden handle에 탭으로 펼치는 동작이 추가되어(`:525-533`) 03 §13 "탭 복귀"도 충족합니다. |
+| P2-4 Dropdown 폭 600 상한 | 해결 | 고정 상한 대신 `preferredWidth: Dp? = 600.dp`를 받습니다(`Dropdown.kt:378-380`, `:412`). `null`을 넘기면 내용 폭을 따르고, 부모가 좁으면 그 폭으로 줄어듭니다. 02 §10 표의 기준 폭 600을 기본으로 두면서, "600/568은 예시 폭이며 responsive width를 제공한다"(02 §10, 354행)는 조건도 만족합니다. |
+| P2-5 Spinner Medium fade가 60으로 고정됨 | 해결 | Large는 웹 고정값 `spinner/web/fade_height`(60)를, Medium은 모드별 `spinner/list_mask_height`를 씁니다(`Spinners.kt:325-330`). `list_mask_height`는 webOverrides에서 빠졌습니다(`PleosTokens.kt:221-248`). 따라서 connect-l은 53, connect-w는 50, waterfall은 64가 적용됩니다. |
+| P2-6 Search 입력에 focus 주입점 없음 | 해결 | `fieldModifier`가 추가됐고(`Navigation.kt:574`) TextField에 전달됩니다(`:585`). `PleosTextField`는 이 modifier를 BasicTextField를 감싼 Column에 붙이므로(`Fields.kt:128`), 호스트가 넘긴 `FocusRequester`가 그 안의 입력란에 포커스를 줄 수 있습니다. |
+| P2-7 모든 치수의 PleosMetrics 주입점 | 일부 해결 | 아래에 정리했습니다. |
+
+### P2-7: 해결된 부분과 남은 부분
+
+이전에 지적한 치수는 모두 토큰으로 바뀌었습니다.
+- **Toast:** 최대 폭과 텍스트 최대 폭(`Overlays.kt:537`, `:567`), 아이콘 간격(`:553`)
+- **Spinner:** focus 반경(`Spinners.kt:210`, `:310`)
+- **Controllers:** Number 높이 `controller/slider/centered/value_height`(`Controllers.kt:668`), stepper 구분선 폭과 높이(`:798-799`, `:811-812`)
+
+다만 아래 세 치수는 아직 상수로 고정되어 있습니다.
+
+- **`Controllers.kt:437`** — Continuous slider의 폭 상한이 `widthIn(max = 808.dp / 560.dp)`입니다.
+  - 원인: 02 §10의 Root 기준 폭(808×100, 560×80)을 상수로 넣었습니다. 높이는 `controller/slider/height_large`처럼 모드별 토큰을 쓰지만 폭은 그렇지 않습니다.
+  - 영향: connect-l이나 connect-w에서는 높이와 padding만 모드값으로 줄고 기본 폭 상한은 808로 남아 비율이 어긋납니다. 01 §1(24행)은 모드 binding이 없는 값도 "`PleosMetrics`에서 교체 가능하게" 하라고 하는데, 이 상한은 metrics로 바꿀 수 없습니다. 호스트가 `Modifier.width`를 직접 주면 피할 수 있으므로 P2입니다.
+- **`Controllers.kt:175`** — Centered가 아닌 slider의 최소 높이 `64.dp`가 고정입니다.
+- **`Controllers.kt:177`** — slider의 focus 반경 `24.dp`가 고정입니다.
+
+두 값 모두 PleosMetrics로 바꿀 수 없고, 폼팩터를 바꿔도 따라 변하지 않습니다.
+
+## 결함으로 세지 않은 항목 (웹 우선 정책)
+
+다음은 웹 우선 정책과 문서화된 결정에 맞으므로 결함으로 세지 않았습니다.
+- Toast 792/712, Spinner Large 384/88/60, Popup 760/1200 같은 webOverrides 값 (`SPEC_DECISIONS.md:67`)
+- Toast 외부 여백 24dp (`Overlays.kt:635`)
+- Popup의 판단 기준값: 좁은 화면 기준 `600.dp`(`:122`), body 최소 확보 높이 `96.dp`(`:163`). 이 둘은 시각 치수가 아니라 배치 규칙에 쓰는 값이라 이번 범위에서 빼고 보지 않았습니다.
+
+## 한계
+
+- 파일을 수정하지 않았고 빌드, lint, 단위·UI 테스트, 기기·에뮬레이터 검증도 하지 않았습니다. 모든 판단은 현재 소스와 명세 01/02/03/08, `SPEC_DECISIONS.md`를 정적으로 대조한 결과입니다.
+- 다음 두 가지는 실행해 보지 않고 Compose 프레임워크의 동작 방식으로 추론했습니다.
+  - 제스처 방향 분리와 포인터 이벤트 소비 순서
+  - 부모에 붙인 `focusRequester`가 자식 입력란에 포커스를 넘기는지
+- 이번 환경에는 계획 파일 작성과 ExitPlanMode 도구가 없어 그 단계는 건너뛰었고, 이 보고로 대신합니다.

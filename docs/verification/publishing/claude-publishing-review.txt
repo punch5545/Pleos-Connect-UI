@@ -1,0 +1,46 @@
+검토 대상 파일을 모두 읽기만 했고, 수정·빌드·Git 작업은 하지 않았습니다. 비어 있는 라이선스 값은 결함으로 보지 않았습니다. 값이 없을 때 실제로 어떻게 동작하는지만 확인했습니다.
+
+## 고쳐야 할 문제
+
+**1. `LICENSE` 파일이 없어 API 문서 JAR에서 조용히 빠집니다**
+- `gradle/maven-central.gradle.kts:13`은 `rootProject.file("LICENSE")`를 JAR에 넣지만, 저장소 루트에 `LICENSE` 파일이 없습니다.
+- Gradle은 `from()`에 없는 파일이 주어지면 오류 없이 건너뜁니다. 그래서 라이선스를 정한 뒤에도 파일을 추가하지 않으면 JAR에 라이선스 원문이 빠집니다.
+- `tools/central_bundle.py:65-67`은 `index.html`과 `PUBLIC_API.md`만 확인하므로 이 누락을 잡지 못합니다.
+- 고치는 방법: 라이선스를 정할 때 `LICENSE`를 함께 추가하고, 검증 목록에도 넣는 것이 좋습니다.
+
+**2. 버전을 올려도 API 문서가 다시 만들어지지 않을 수 있습니다**
+- `tools/generate_api_docs.py:67`은 루트 `build.gradle.kts`에서 버전을 읽어 HTML 링크(`blob/v{version}/...`)에 씁니다.
+- 그런데 `build.gradle.kts:12-13`의 `generateApiDocumentation` 입력에는 `build.gradle.kts`가 없습니다. 그래서 버전만 바꾸면 이 작업이 최신 상태로 판정되어, `index.html`이 이전 태그를 가리킨 채 javadoc JAR에 들어갈 수 있습니다.
+- 지금 `build/maven/com/jade/pleos/.../0.1.0-dev`가 남아 있는 것으로 보아, 이전 버전으로 문서를 만든 이력이 있을 수 있습니다.
+- 고치는 방법: 입력에 `inputs.file("build.gradle.kts")`를 추가하는 것이 좋습니다. 버전을 `inputs.property`로 넘겨도 됩니다.
+
+**3. 서명 검증이 "지정한 키로 서명했는지"까지는 확인하지 않습니다**
+- `tools/central_bundle.py:76`의 `gpg --verify`는 키링 안의 어떤 유효한 키로 서명됐든 성공합니다.
+- `--sign-key`가 전체 fingerprint인지도 확인하지 않습니다. 그래서 `validation.json`의 `signingFingerprint`가 실제 서명 키와 다를 수 있습니다.
+- 고치는 방법: `--status-fd 1`로 결과를 받아 `VALIDSIG <fingerprint>` 줄을 비교하는 것이 좋습니다. 하위 키로 서명하는 경우에는 주 키 fingerprint 필드로 비교합니다.
+
+**4. `PUBLISHING.md`에 공개 키 업로드 단계가 빠져 있습니다**
+- Central은 공개 키 서버(keyserver.ubuntu.com, keys.openpgp.org 등)에서 서명 키를 찾지 못하면 업로드 검증에서 거부합니다.
+- 지금 `PUBLISHING.md:29`에는 로컬 GPG 키 이야기만 있습니다. 공개 키 배포와 확인 절차를 추가해야 합니다.
+
+**5. GitHub `v0.1.0` 태그가 있어야 하는데 절차에 없습니다**
+- 다음 세 곳이 모두 `v0.1.0` 태그를 가리킵니다.
+  - POM의 `scm/tag`
+  - pleos-tokens POM의 OFL 라이선스 URL(`maven-central.gradle.kts:36`)
+  - API 문서 HTML의 소스 링크
+- 그런데 저장소에는 아직 커밋이 없고, `PUBLISHING.md`에도 Central에 publish하기 전에 태그를 push하는 단계가 없습니다. Central은 URL이 열리는지 검사하지 않으므로, 링크가 깨진 채로 배포될 수 있습니다.
+
+## 영향이 작은 사항
+
+- **javadoc JAR가 Gradle module metadata에 없습니다.** `artifact(apiDocumentationJar)`로 추가한 산출물은 `.module` 파일에 기록되지 않습니다. Maven이나 IDE는 classifier로 찾으므로 Central 검증에는 문제가 없습니다. 다만 Gradle 소비자가 문서 변형(variant)을 요청하면 찾지 못합니다.
+- **`tools/package_release.py:9`에 버전이 `VERSION = "0.1.0"`으로 고정되어 있습니다.** 다른 스크립트처럼 `build.gradle.kts`에서 읽지 않아서, 버전을 올리면 값이 서로 어긋납니다.
+
+## 문제없음을 확인한 부분
+
+- **POM 좌표와 모듈 간 의존성:** 정상입니다. `allprojects`의 group/version이 `project(":...")` 의존성에 그대로 적용됩니다.
+- **라이선스 값이 비어 있을 때:** `<license>`에 name과 url이 빠지고, `central_bundle.py:32-36`이 이를 잡아 실패시킵니다. 실수로 배포될 위험은 없습니다.
+- **pleos-tokens의 두 번째 라이선스(OFL):** 폰트는 pleos-tokens에만 있고, AAR 안 `assets/pleos/licenses/OFL.txt`에 원문이 들어 있어 맞게 구성되어 있습니다.
+- **체크섬:** md5와 sha1을 포함하고 `.asc` 파일에는 만들지 않는 방식이 Central 요구사항과 맞습니다.
+- **번들 구성:** 경로 구조가 맞고, 저장소 메타데이터는 제외됩니다.
+- **소스 JAR:** AGP `withSourcesJar()`로 만들어지며 `.module`에도 포함됩니다.
+- **전이 의존성:** 모듈 간 `api` 연결과 lifecycle 라이브러리의 `implementation`(runtime 범위) 처리가 맞습니다. kotlin-stdlib도 자동으로 포함됩니다.

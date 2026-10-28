@@ -1,0 +1,144 @@
+Calculating task graph as no cached configuration is available for tasks: testDebugUnitTest :pleos-compose:connectedDebugAndroidTest
+> Task :pleos-compose:generateDebugAssets UP-TO-DATE
+> Task :pleos-aaos:preBuild UP-TO-DATE
+> Task :pleos-compose:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :pleos-tokens:generateDebugAssets UP-TO-DATE
+> Task :pleos-compose:preBuild UP-TO-DATE
+> Task :pleos-tokens:preBuild UP-TO-DATE
+> Task :pleos-aaos:preDebugBuild UP-TO-DATE
+> Task :pleos-compose:preDebugBuild UP-TO-DATE
+> Task :pleos-tokens:preDebugBuild UP-TO-DATE
+> Task :pleos-aaos:preDebugUnitTestBuild UP-TO-DATE
+> Task :pleos-compose:preDebugAndroidTestBuild UP-TO-DATE
+> Task :pleos-compose:preDebugUnitTestBuild UP-TO-DATE
+> Task :pleos-tokens:preDebugUnitTestBuild UP-TO-DATE
+> Task :pleos-aaos:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :pleos-aaos:generateDebugResources UP-TO-DATE
+> Task :pleos-aaos:javaPreCompileDebug UP-TO-DATE
+> Task :pleos-aaos:processDebugNavigationResources UP-TO-DATE
+> Task :pleos-tokens:javaPreCompileDebug UP-TO-DATE
+> Task :pleos-compose:processDebugAndroidTestNavigationResources UP-TO-DATE
+> Task :pleos-tokens:generateDebugResources UP-TO-DATE
+> Task :pleos-tokens:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :pleos-compose:javaPreCompileDebug UP-TO-DATE
+> Task :pleos-compose:generateDebugAndroidTestGlobalSynthetics UP-TO-DATE
+> Task :pleos-tokens:processDebugNavigationResources UP-TO-DATE
+> Task :pleos-compose:mergeDebugAssets UP-TO-DATE
+> Task :pleos-compose:generateDebugAndroidTestResources UP-TO-DATE
+> Task :pleos-compose:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :pleos-tokens:mergeDebugAssets UP-TO-DATE
+> Task :pleos-compose:javaPreCompileDebugAndroidTest UP-TO-DATE
+> Task :pleos-compose:writeDebugAarMetadata UP-TO-DATE
+> Task :pleos-compose:desugarDebugAndroidTestFileDependencies UP-TO-DATE
+> Task :pleos-tokens:writeDebugAarMetadata UP-TO-DATE
+> Task :pleos-compose:generateDebugResources UP-TO-DATE
+> Task :pleos-compose:processDebugNavigationResources UP-TO-DATE
+> Task :pleos-tokens:extractDeepLinksDebug UP-TO-DATE
+> Task :pleos-compose:mapDebugAndroidTestSourceSetPaths UP-TO-DATE
+> Task :pleos-compose:extractDeepLinksDebug UP-TO-DATE
+> Task :pleos-compose:mapDebugSourceSetPaths UP-TO-DATE
+> Task :pleos-tokens:mapDebugSourceSetPaths UP-TO-DATE
+> Task :pleos-compose:mergeDebugJniLibFolders UP-TO-DATE
+> Task :pleos-compose:mergeDebugAndroidTestJniLibFolders UP-TO-DATE
+> Task :pleos-tokens:mergeDebugJniLibFolders UP-TO-DATE
+> Task :pleos-compose:validateSigningDebugAndroidTest UP-TO-DATE
+> Task :pleos-compose:compileDebugAndroidTestNavigationResources UP-TO-DATE
+> Task :pleos-compose:mergeDebugNativeLibs NO-SOURCE
+> Task :pleos-tokens:packageDebugResources UP-TO-DATE
+> Task :pleos-tokens:mergeDebugNativeLibs NO-SOURCE
+> Task :pleos-compose:checkDebugAndroidTestDuplicateClasses UP-TO-DATE
+> Task :pleos-compose:writeDebugAndroidTestSigningConfigVersions UP-TO-DATE
+> Task :pleos-compose:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :pleos-tokens:compileDebugLibraryResources UP-TO-DATE
+> Task :pleos-compose:packageDebugAndroidTestResources UP-TO-DATE
+> Task :pleos-aaos:packageDebugResources UP-TO-DATE
+> Task :pleos-tokens:parseDebugLocalResources UP-TO-DATE
+> Task :pleos-tokens:processDebugManifest UP-TO-DATE
+> Task :pleos-compose:checkDebugAndroidTestAarMetadata UP-TO-DATE
+> Task :pleos-compose:processDebugManifest UP-TO-DATE
+> Task :pleos-compose:mergeDebugAndroidTestAssets UP-TO-DATE
+> Task :pleos-tokens:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :pleos-compose:packageDebugResources UP-TO-DATE
+> Task :pleos-compose:parseDebugAndroidTestLocalResources UP-TO-DATE
+> Task :pleos-aaos:parseDebugLocalResources UP-TO-DATE
+> Task :pleos-tokens:generateDebugRFile UP-TO-DATE
+> Task :pleos-compose:mergeExtDexDebugAndroidTest UP-TO-DATE
+> Task :pleos-compose:compressDebugAndroidTestAssets UP-TO-DATE
+> Task :pleos-compose:parseDebugLocalResources UP-TO-DATE
+> Task :pleos-compose:compileDebugLibraryResources UP-TO-DATE
+> Task :pleos-aaos:generateDebugRFile UP-TO-DATE
+> Task :pleos-compose:generateDebugAndroidTestRFile UP-TO-DATE
+> Task :pleos-compose:mergeDebugAndroidTestNativeLibs UP-TO-DATE
+> Task :pleos-compose:generateDebugRFile UP-TO-DATE
+> Task :pleos-compose:mergeDebugAndroidTestResources UP-TO-DATE
+> Task :pleos-compose:stripDebugAndroidTestDebugSymbols UP-TO-DATE
+> Task :pleos-tokens:generateDebugUnitTestStubRFile UP-TO-DATE
+> Task :pleos-compose:mergeDebugAndroidTestManifest UP-TO-DATE
+> Task :pleos-compose:processDebugAndroidTestManifest UP-TO-DATE
+> Task :pleos-tokens:compileDebugKotlin UP-TO-DATE
+> Task :pleos-tokens:compileDebugJavaWithJavac NO-SOURCE
+> Task :pleos-compose:processDebugAndroidTestResources UP-TO-DATE
+> Task :pleos-tokens:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :pleos-tokens:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :pleos-tokens:processDebugJavaRes UP-TO-DATE
+> Task :pleos-tokens:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :pleos-aaos:generateDebugUnitTestStubRFile
+> Task :pleos-compose:generateDebugUnitTestStubRFile
+> Task :pleos-tokens:compileDebugUnitTestKotlin
+> Task :pleos-tokens:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :pleos-tokens:processDebugUnitTestJavaRes UP-TO-DATE
+> Task :pleos-tokens:testDebugUnitTest
+> Task :pleos-compose:compileDebugKotlin
+> Task :pleos-compose:compileDebugJavaWithJavac NO-SOURCE
+> Task :pleos-compose:processDebugJavaRes UP-TO-DATE
+> Task :pleos-compose:bundleLibRuntimeToJarDebug
+> Task :pleos-compose:bundleLibCompileToJarDebug
+> Task :pleos-compose:bundleLibRuntimeToDirDebug
+> Task :pleos-aaos:compileDebugKotlin
+> Task :pleos-aaos:compileDebugJavaWithJavac NO-SOURCE
+> Task :pleos-aaos:processDebugJavaRes UP-TO-DATE
+> Task :pleos-aaos:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :pleos-aaos:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :pleos-compose:compileDebugUnitTestKotlin
+> Task :pleos-compose:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :pleos-compose:processDebugUnitTestJavaRes UP-TO-DATE
+> Task :pleos-compose:compileDebugAndroidTestKotlin
+> Task :pleos-compose:compileDebugAndroidTestJavaWithJavac NO-SOURCE
+> Task :pleos-compose:processDebugAndroidTestJavaRes UP-TO-DATE
+> Task :pleos-compose:dexBuilderDebugAndroidTest UP-TO-DATE
+> Task :pleos-compose:mergeDebugAndroidTestJavaResource UP-TO-DATE
+> Task :pleos-compose:mergeProjectDexDebugAndroidTest UP-TO-DATE
+> Task :pleos-aaos:compileDebugUnitTestKotlin
+> Task :pleos-aaos:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :pleos-aaos:processDebugUnitTestJavaRes UP-TO-DATE
+> Task :pleos-aaos:testDebugUnitTest
+> Task :pleos-compose:testDebugUnitTest
+> Task :pleos-compose:mergeLibDexDebugAndroidTest
+> Task :pleos-compose:packageDebugAndroidTest
+> Task :pleos-compose:createDebugAndroidTestApkListingFileRedirect
+
+> Task :pleos-compose:connectedDebugAndroidTest
+Running tests on devices: Pleos_Connect_v2.1.0(AVD) - 14
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::arrayBaseOffset has been called by com.google.protobuf.UnsafeUtil$MemoryAccessor (file:/Users/jade/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java/3.25.5/5ae5c9ec39930ae9b5a61b32b93288818ec05ec1/protobuf-java-3.25.5.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.protobuf.UnsafeUtil$MemoryAccessor
+WARNING: sun.misc.Unsafe::arrayBaseOffset will be removed in a future release
+
+> Task :pleos-compose:connectedDebugAndroidTest FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':pleos-compose:connectedDebugAndroidTest' (registered by plugin 'com.android.internal.library').
+> There were failing tests. See the report at: file:///Users/jade/AndroidStudioProjects/PleosConnectUI/pleos-compose/build/reports/androidTests/connected/debug/index.html
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 39s
+96 actionable tasks: 18 executed, 78 up-to-date
+Configuration cache entry stored.

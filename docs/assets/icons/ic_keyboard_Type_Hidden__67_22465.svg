@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+<title>ic_keyboard/Type=Hidden</title>
+<g >
+
+<g transform="matrix(1,0,0,1,7,6)">
+<path fill="#131417" fill-opacity="1" fill-rule="nonzero" data-pleos-token="icon/dark/primary" d="M8 4 C8 6.20914 6.20914 8 4 8 C1.79086 8 0 6.20914 0 4 C0 1.79086 1.79086 0 4 0 C6.20914 0 8 1.79086 8 4 Z"/>
+<path fill="#131417" fill-opacity="1" fill-rule="nonzero" data-pleos-token="icon/dark/primary" d="M7.5708 27 C6.65879 27 6.22279 28.12089 6.89508 28.73715 L15.64855 36.76117 C16.41319 37.46209 17.58681 37.46209 18.35145 36.76117 L27.10492 28.73715 C27.77721 28.12089 27.34121 27 26.4292 27 L7.5708 27 Z"/>
+<path fill="#131417" fill-opacity="1" fill-rule="nonzero" data-pleos-token="icon/dark/primary" d="M4 20 C6.20914 20 8 18.20914 8 16 C8 13.79086 6.20914 12 4 12 C1.79086 12 0 13.79086 0 16 C0 18.20914 1.79086 20 4 20 Z"/>
+<path fill="#131417" fill-opacity="1" fill-rule="nonzero" data-pleos-token="icon/dark/primary" d="M21 4 C21 6.20914 19.20914 8 17 8 C14.79086 8 13 6.20914 13 4 C13 1.79086 14.79086 0 17 0 C19.20914 0 21 1.79086 21 4 Z"/>
+<path fill="#131417" fill-opacity="1" fill-rule="nonzero" data-pleos-token="icon/dark/primary" d="M17 20 C19.20914 20 21 18.20914 21 16 C21 13.79086 19.20914 12 17 12 C14.79086 12 13 13.79086 13 16 C13 18.20914 14.79086 20 17 20 Z"/>
+<path fill="#131417" fill-opacity="1" fill-rule="nonzero" data-pleos-token="icon/dark/primary" d="M34 4 C34 6.20914 32.20914 8 30 8 C27.79086 8 26 6.20914 26 4 C26 1.79086 27.79086 0 30 0 C32.20914 0 34 1.79086 34 4 Z"/>
+<path fill="#131417" fill-opacity="1" fill-rule="nonzero" data-pleos-token="icon/dark/primary" d="M30 20 C32.20914 20 34 18.20914 34 16 C34 13.79086 32.20914 12 30 12 C27.79086 12 26 13.79086 26 16 C26 18.20914 27.79086 20 30 20 Z"/>
+</g>
+</g>
+</svg>

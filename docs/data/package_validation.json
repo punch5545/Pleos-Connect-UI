@@ -1,0 +1,46 @@
+{
+  "validatedDate": "2026-10-28",
+  "scope": "Prompt package integrity and source coverage; no Android library has been built by this document-authoring task.",
+  "markdownFiles": 28,
+  "componentCount": 22,
+  "componentPages": 22,
+  "foundationPages": 7,
+  "imageReferences": 137,
+  "figmaVariableRecords": {
+    "data/figma_asset_tokens.json": 722,
+    "data/figma_display_tokens.json": 1009
+  },
+  "figmaResolvedModeEntries": 6182,
+  "webPrimitiveColorRows": 31,
+  "webSemanticColorRows": 118,
+  "webVersusFigmaColorModeConflicts": 11,
+  "componentMastersByAppendix": {
+    "10_figma_actions.md": 104,
+    "11_figma_sliders.md": 50,
+    "12_figma_stepper.md": 1,
+    "13_figma_dropdown.md": 18,
+    "14_figma_fields.md": 20,
+    "15_figma_navigation.md": 9,
+    "16_figma_popups.md": 11,
+    "17_figma_tabs.md": 29,
+    "18_figma_selections.md": 27,
+    "19_figma_spinner.md": 7,
+    "20_figma_notification.md": 10,
+    "21_figma_bars.md": 6,
+    "22_figma_display_support.md": 10
+  },
+  "svgIcons": 80,
+  "svgPaths": 217,
+  "fontAndLicenseSHA256Verified": true,
+  "checks": [
+    "22 requested IDs present in master and source coverage",
+    "all relative Markdown links resolve",
+    "Markdown fences balanced",
+    "JSON parse and token records verified",
+    "all token mode entries resolved",
+    "SVG XML and path counts verified",
+    "font and license hashes verified"
+  ],
+  "issues": [],
+  "status": "PASS"
+}

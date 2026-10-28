@@ -1,0 +1,318 @@
+Reusing configuration cache.
+> Task :pleos-aaos:preBuild UP-TO-DATE
+> Task :pleos-tokens:generateReleaseAssets UP-TO-DATE
+> Task :pleos-aaos:preReleaseBuild UP-TO-DATE
+> Task :pleos-aaos:preDebugBuild UP-TO-DATE
+> Task :pleos-compose:preBuild UP-TO-DATE
+> Task :pleos-compose:preReleaseBuild UP-TO-DATE
+> Task :pleos-aaos:generateReleaseAssets UP-TO-DATE
+> Task :pleos-tokens:preBuild UP-TO-DATE
+> Task :pleos-compose:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :pleos-compose:generateDebugAssets UP-TO-DATE
+> Task :pleos-compose:generateReleaseAssets UP-TO-DATE
+> Task :pleos-tokens:preReleaseBuild UP-TO-DATE
+> Task :pleos-compose:prepareLintJarForPublish UP-TO-DATE
+> Task :pleos-aaos:generateReleaseResources UP-TO-DATE
+> Task :pleos-tokens:writeReleaseAarMetadata UP-TO-DATE
+> Task :pleos-aaos:prepareLintJarForPublish UP-TO-DATE
+> Task :pleos-aaos:extractDeepLinksForAarRelease UP-TO-DATE
+> Task :pleos-tokens:prepareLintJarForPublish UP-TO-DATE
+> Task :pleos-compose:writeReleaseAarMetadata UP-TO-DATE
+> Task :pleos-aaos:processReleaseNavigationResources UP-TO-DATE
+> Task :pleos-aaos:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :pleos-tokens:generatePomFileForReleasePublication
+> Task :pleos-aaos:generatePomFileForReleasePublication
+> Task :pleos-compose:generatePomFileForReleasePublication
+> Task :pleos-compose:javaPreCompileRelease UP-TO-DATE
+> Task :pleos-aaos:prepareReleaseArtProfile UP-TO-DATE
+> Task :pleos-aaos:mergeReleaseAssets UP-TO-DATE
+> Task :pleos-tokens:javaPreCompileRelease UP-TO-DATE
+> Task :pleos-aaos:javaPreCompileRelease UP-TO-DATE
+> Task :pleos-aaos:mergeReleaseNativeLibs NO-SOURCE
+> Task :pleos-aaos:stripReleaseDebugSymbols NO-SOURCE
+> Task :pleos-aaos:writeReleaseAarMetadata UP-TO-DATE
+> Task :pleos-aaos:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :pleos-compose:extractDeepLinksForAarRelease UP-TO-DATE
+> Task :pleos-aaos:checkReleaseAarMetadata UP-TO-DATE
+> Task :pleos-compose:prepareReleaseArtProfile UP-TO-DATE
+> Task :pleos-compose:checkReleaseAarMetadata UP-TO-DATE
+> Task :pleos-tokens:generateReleaseResources UP-TO-DATE
+> Task :pleos-tokens:processReleaseNavigationResources UP-TO-DATE
+> Task :pleos-aaos:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :pleos-tokens:extractDeepLinksForAarRelease UP-TO-DATE
+> Task :pleos-tokens:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :pleos-compose:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :pleos-compose:mergeReleaseAssets UP-TO-DATE
+> Task :pleos-tokens:prepareReleaseArtProfile UP-TO-DATE
+> Task :pleos-tokens:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :pleos-compose:mergeReleaseNativeLibs NO-SOURCE
+> Task :pleos-tokens:mergeReleaseNativeLibs NO-SOURCE
+> Task :pleos-compose:stripReleaseDebugSymbols NO-SOURCE
+> Task :pleos-tokens:stripReleaseDebugSymbols NO-SOURCE
+> Task :pleos-aaos:packageReleaseResources UP-TO-DATE
+> Task :pleos-aaos:processReleaseManifest UP-TO-DATE
+> Task :pleos-aaos:generateDebugResources UP-TO-DATE
+> Task :pleos-compose:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :pleos-tokens:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :pleos-compose:preDebugBuild UP-TO-DATE
+> Task :pleos-compose:processReleaseManifest UP-TO-DATE
+> Task :pleos-tokens:packageReleaseResources UP-TO-DATE
+> Task :pleos-tokens:processReleaseManifest UP-TO-DATE
+> Task :pleos-tokens:preDebugBuild UP-TO-DATE
+> Task :pleos-tokens:compileReleaseLibraryResources UP-TO-DATE
+> Task :pleos-aaos:processDebugNavigationResources UP-TO-DATE
+> Task :pleos-tokens:generateDebugResources UP-TO-DATE
+> Task :pleos-tokens:javaPreCompileDebug UP-TO-DATE
+> Task :pleos-aaos:packageDebugResources UP-TO-DATE
+> Task :pleos-tokens:processDebugNavigationResources UP-TO-DATE
+> Task :pleos-compose:javaPreCompileDebug UP-TO-DATE
+> Task :pleos-aaos:parseReleaseLocalResources UP-TO-DATE
+> Task :pleos-aaos:preDebugUnitTestBuild UP-TO-DATE
+> Task :pleos-aaos:parseDebugLocalResources UP-TO-DATE
+> Task :pleos-tokens:parseReleaseLocalResources UP-TO-DATE
+> Task :pleos-tokens:checkReleaseAarMetadata UP-TO-DATE
+> Task :pleos-compose:preDebugUnitTestBuild UP-TO-DATE
+> Task :pleos-aaos:javaPreCompileDebug UP-TO-DATE
+> Task :pleos-tokens:preDebugUnitTestBuild UP-TO-DATE
+> Task :pleos-aaos:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :pleos-tokens:packageDebugResources UP-TO-DATE
+> Task :pleos-compose:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :pleos-tokens:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :pleos-aaos:extractProguardFiles UP-TO-DATE
+> Task :pleos-tokens:mergeReleaseResources UP-TO-DATE
+> Task :pleos-aaos:generateDebugRFile UP-TO-DATE
+> Task :pleos-aaos:generateReleaseRFile UP-TO-DATE
+> Task :pleos-tokens:writeReleaseLintModelMetadata UP-TO-DATE
+> Task :pleos-tokens:extractProguardFiles UP-TO-DATE
+> Task :pleos-compose:extractProguardFiles UP-TO-DATE
+> Task :pleos-compose:preDebugAndroidTestBuild UP-TO-DATE
+> Task :pleos-tokens:parseDebugLocalResources UP-TO-DATE
+> Task :pleos-compose:writeReleaseLintModelMetadata UP-TO-DATE
+> Task :pleos-compose:generateDebugAndroidTestResources UP-TO-DATE
+> Task :pleos-tokens:generateReleaseRFile UP-TO-DATE
+> Task :pleos-aaos:sourceReleaseJar UP-TO-DATE
+> Task :pleos-compose:processDebugAndroidTestNavigationResources UP-TO-DATE
+> Task :pleos-tokens:generateDebugRFile UP-TO-DATE
+> Task :pleos-compose:javaPreCompileDebugAndroidTest UP-TO-DATE
+> Task :pleos-compose:packageDebugAndroidTestResources UP-TO-DATE
+> Task :pleos-compose:parseDebugAndroidTestLocalResources UP-TO-DATE
+> Task :pleos-compose:generateDebugAndroidTestRFile UP-TO-DATE
+> Task :pleos-compose:mergeDebugAssets UP-TO-DATE
+> Task :pleos-tokens:generateDebugAssets UP-TO-DATE
+> Task :pleos-tokens:generateDebugUnitTestStubRFile UP-TO-DATE
+> Task :pleos-compose:generateDebugAndroidTestGlobalSynthetics UP-TO-DATE
+> Task :pleos-compose:checkDebugAndroidTestDuplicateClasses UP-TO-DATE
+> Task :pleos-compose:desugarDebugAndroidTestFileDependencies UP-TO-DATE
+> Task :pleos-compose:mergeExtDexDebugAndroidTest UP-TO-DATE
+> Task :pleos-compose:writeDebugAarMetadata UP-TO-DATE
+> Task :pleos-tokens:writeDebugAarMetadata UP-TO-DATE
+> Task :pleos-tokens:verifyReleaseResources UP-TO-DATE
+> Task :pleos-compose:sourceReleaseJar
+> Task :pleos-compose:checkDebugAndroidTestAarMetadata UP-TO-DATE
+> Task :pleos-compose:mapDebugAndroidTestSourceSetPaths UP-TO-DATE
+> Task :pleos-compose:extractDeepLinksDebug UP-TO-DATE
+> Task :pleos-tokens:mergeReleaseAssets UP-TO-DATE
+> Task :pleos-compose:compileDebugAndroidTestNavigationResources UP-TO-DATE
+> Task :pleos-tokens:extractDeepLinksDebug UP-TO-DATE
+> Task :pleos-tokens:mapDebugSourceSetPaths UP-TO-DATE
+> Task :pleos-compose:processDebugManifest UP-TO-DATE
+> Task :pleos-tokens:compileDebugLibraryResources UP-TO-DATE
+> Task :pleos-tokens:processDebugManifest UP-TO-DATE
+> Task :pleos-compose:mergeDebugAndroidTestJniLibFolders UP-TO-DATE
+> Task :pleos-compose:mergeDebugJniLibFolders UP-TO-DATE
+> Task :pleos-tokens:mergeDebugJniLibFolders UP-TO-DATE
+> Task :pleos-compose:mergeDebugNativeLibs NO-SOURCE
+> Task :pleos-compose:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :pleos-tokens:mergeDebugNativeLibs NO-SOURCE
+> Task :pleos-tokens:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :pleos-compose:validateSigningDebugAndroidTest UP-TO-DATE
+> Task :pleos-compose:writeDebugAndroidTestSigningConfigVersions UP-TO-DATE
+> Task :pleos-aaos:preDebugAndroidTestBuild UP-TO-DATE
+> Task :pleos-aaos:generateDebugAndroidTestResources UP-TO-DATE
+> Task :pleos-compose:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :pleos-compose:mapDebugSourceSetPaths UP-TO-DATE
+> Task :pleos-compose:processDebugNavigationResources UP-TO-DATE
+> Task :pleos-compose:generateDebugResources UP-TO-DATE
+> Task :pleos-compose:processReleaseNavigationResources UP-TO-DATE
+> Task :pleos-aaos:processDebugAndroidTestNavigationResources UP-TO-DATE
+> Task :pleos-aaos:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :pleos-compose:generateReleaseResources UP-TO-DATE
+> Task :pleos-aaos:generateDebugAssets UP-TO-DATE
+> Task :pleos-aaos:javaPreCompileDebugAndroidTest UP-TO-DATE
+> Task :pleos-aaos:packageDebugAndroidTestResources UP-TO-DATE
+> Task :pleos-aaos:mergeDebugAssets UP-TO-DATE
+> Task :pleos-aaos:generateDebugAndroidTestGlobalSynthetics UP-TO-DATE
+> Task :pleos-compose:packageDebugResources UP-TO-DATE
+> Task :pleos-aaos:parseDebugAndroidTestLocalResources UP-TO-DATE
+> Task :pleos-compose:parseDebugLocalResources UP-TO-DATE
+> Task :pleos-compose:compileDebugLibraryResources UP-TO-DATE
+> Task :pleos-aaos:desugarDebugAndroidTestFileDependencies UP-TO-DATE
+> Task :pleos-compose:packageReleaseResources UP-TO-DATE
+> Task :pleos-compose:compileReleaseLibraryResources UP-TO-DATE
+> Task :pleos-compose:generateDebugRFile UP-TO-DATE
+> Task :pleos-aaos:generateDebugAndroidTestRFile UP-TO-DATE
+> Task :pleos-compose:parseReleaseLocalResources UP-TO-DATE
+> Task :pleos-tokens:mergeDebugAssets UP-TO-DATE
+> Task :pleos-tokens:extractReleaseAnnotations UP-TO-DATE
+> Task :pleos-compose:generateReleaseRFile UP-TO-DATE
+> Task :pleos-tokens:sourceReleaseJar UP-TO-DATE
+> Task :pleos-aaos:checkDebugAndroidTestDuplicateClasses UP-TO-DATE
+> Task :pleos-aaos:writeDebugAarMetadata UP-TO-DATE
+> Task :pleos-aaos:mapDebugAndroidTestSourceSetPaths UP-TO-DATE
+> Task :pleos-aaos:compileDebugAndroidTestNavigationResources UP-TO-DATE
+> Task :pleos-aaos:mapDebugSourceSetPaths UP-TO-DATE
+> Task :pleos-aaos:compileDebugLibraryResources UP-TO-DATE
+> Task :pleos-aaos:checkDebugAndroidTestAarMetadata UP-TO-DATE
+> Task :pleos-aaos:extractDeepLinksDebug UP-TO-DATE
+> Task :pleos-aaos:mergeExtDexDebugAndroidTest UP-TO-DATE
+> Task :pleos-aaos:generateDebugUnitTestStubRFile UP-TO-DATE
+> Task :pleos-aaos:mergeDebugJniLibFolders UP-TO-DATE
+> Task :pleos-compose:mergeDebugAndroidTestAssets UP-TO-DATE
+> Task :pleos-aaos:mergeDebugAndroidTestAssets UP-TO-DATE
+> Task :pleos-compose:generateDebugUnitTestStubRFile UP-TO-DATE
+> Task :pleos-tokens:compileDebugKotlin UP-TO-DATE
+> Task :pleos-aaos:mergeDebugNativeLibs NO-SOURCE
+> Task :pleos-aaos:mergeDebugAndroidTestJniLibFolders UP-TO-DATE
+> Task :pleos-compose:compressDebugAndroidTestAssets UP-TO-DATE
+> Task :pleos-compose:mergeDebugAndroidTestNativeLibs UP-TO-DATE
+> Task :pleos-compose:mergeReleaseResources UP-TO-DATE
+> Task :pleos-aaos:compressDebugAndroidTestAssets UP-TO-DATE
+> Task :pleos-aaos:processDebugManifest UP-TO-DATE
+> Task :pleos-tokens:compileDebugJavaWithJavac NO-SOURCE
+> Task :pleos-compose:mergeDebugAndroidTestManifest UP-TO-DATE
+> Task :pleos-compose:mergeDebugAndroidTestResources UP-TO-DATE
+> Task :pleos-aaos:validateSigningDebugAndroidTest UP-TO-DATE
+> Task :pleos-tokens:compileReleaseKotlin UP-TO-DATE
+> Task :pleos-aaos:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :pleos-compose:stripDebugAndroidTestDebugSymbols UP-TO-DATE
+> Task :pleos-tokens:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :pleos-tokens:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :pleos-compose:verifyReleaseResources UP-TO-DATE
+> Task :pleos-tokens:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :pleos-compose:processDebugAndroidTestManifest UP-TO-DATE
+> Task :pleos-aaos:mergeDebugAndroidTestResources UP-TO-DATE
+> Task :pleos-aaos:writeDebugAndroidTestSigningConfigVersions UP-TO-DATE
+> Task :pleos-aaos:mergeReleaseResources UP-TO-DATE
+> Task :pleos-tokens:processDebugJavaRes UP-TO-DATE
+> Task :pleos-tokens:compileReleaseJavaWithJavac NO-SOURCE
+> Task :pleos-tokens:processReleaseJavaRes UP-TO-DATE
+> Task :pleos-tokens:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :pleos-tokens:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :pleos-tokens:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :pleos-tokens:mergeReleaseConsumerProguardFiles UP-TO-DATE
+> Task :pleos-tokens:createFullJarRelease UP-TO-DATE
+> Task :pleos-aaos:mergeDebugAndroidTestManifest UP-TO-DATE
+> Task :pleos-aaos:mergeDebugAndroidTestNativeLibs UP-TO-DATE
+> Task :pleos-tokens:generateReleaseLintModel UP-TO-DATE
+> Task :pleos-tokens:mergeReleaseJavaResource UP-TO-DATE
+> Task :pleos-aaos:verifyReleaseResources UP-TO-DATE
+> Task :pleos-aaos:processDebugAndroidTestManifest UP-TO-DATE
+> Task :pleos-aaos:stripDebugAndroidTestDebugSymbols UP-TO-DATE
+> Task :pleos-tokens:compileDebugUnitTestKotlin UP-TO-DATE
+> Task :pleos-compose:processDebugAndroidTestResources UP-TO-DATE
+> Task :pleos-tokens:syncReleaseLibJars UP-TO-DATE
+> Task :pleos-tokens:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :pleos-tokens:generateReleaseLintReportModel UP-TO-DATE
+> Task :pleos-tokens:bundleReleaseAar UP-TO-DATE
+> Task :pleos-tokens:assembleRelease UP-TO-DATE
+> Task :pleos-tokens:processDebugUnitTestJavaRes UP-TO-DATE
+> Task :pleos-tokens:bundleReleaseLocalLintAar UP-TO-DATE
+> Task :pleos-tokens:lintAnalyzeRelease UP-TO-DATE
+> Task :pleos-compose:extractReleaseAnnotations
+> Task :pleos-aaos:processDebugAndroidTestResources UP-TO-DATE
+> Task :pleos-tokens:generateMetadataFileForReleasePublication
+> Task :pleos-tokens:lintReportRelease UP-TO-DATE
+> Task :pleos-tokens:lintRelease
+> Task :pleos-tokens:testDebugUnitTest UP-TO-DATE
+> Task :pleos-tokens:publishReleasePublicationToProjectLocalRepository
+> Task :pleos-tokens:publishAllPublicationsToProjectLocalRepository
+> Task :pleos-compose:compileReleaseKotlin
+> Task :pleos-compose:compileReleaseJavaWithJavac NO-SOURCE
+> Task :pleos-compose:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :pleos-compose:processReleaseJavaRes UP-TO-DATE
+> Task :pleos-compose:mergeReleaseJavaResource UP-TO-DATE
+> Task :pleos-compose:mergeReleaseConsumerProguardFiles UP-TO-DATE
+> Task :pleos-compose:compileDebugKotlin
+> Task :pleos-compose:compileDebugJavaWithJavac NO-SOURCE
+> Task :pleos-compose:processDebugJavaRes UP-TO-DATE
+> Task :pleos-compose:bundleLibRuntimeToDirDebug
+> Task :pleos-compose:generateReleaseLintReportModel
+> Task :pleos-compose:generateReleaseLintModel
+> Task :pleos-compose:bundleLibRuntimeToJarRelease
+> Task :pleos-compose:bundleLibCompileToJarRelease
+> Task :pleos-compose:bundleLibCompileToJarDebug
+> Task :pleos-compose:bundleLibRuntimeToJarDebug
+> Task :pleos-compose:createFullJarRelease
+> Task :pleos-aaos:extractReleaseAnnotations
+> Task :pleos-compose:syncReleaseLibJars
+> Task :pleos-compose:bundleReleaseLocalLintAar
+> Task :pleos-aaos:compileDebugKotlin UP-TO-DATE
+> Task :pleos-aaos:compileDebugJavaWithJavac NO-SOURCE
+> Task :pleos-aaos:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :pleos-compose:compileDebugUnitTestKotlin UP-TO-DATE
+> Task :pleos-aaos:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :pleos-compose:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :pleos-aaos:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :pleos-aaos:compileReleaseKotlin UP-TO-DATE
+> Task :pleos-aaos:processDebugJavaRes UP-TO-DATE
+> Task :pleos-compose:processDebugUnitTestJavaRes UP-TO-DATE
+> Task :pleos-aaos:compileReleaseJavaWithJavac NO-SOURCE
+> Task :pleos-aaos:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :pleos-aaos:mergeReleaseConsumerProguardFiles UP-TO-DATE
+> Task :pleos-aaos:processReleaseJavaRes UP-TO-DATE
+> Task :pleos-compose:bundleReleaseAar
+> Task :pleos-compose:assembleRelease
+> Task :pleos-aaos:compileDebugUnitTestKotlin UP-TO-DATE
+> Task :pleos-aaos:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :pleos-aaos:mergeReleaseJavaResource UP-TO-DATE
+> Task :pleos-aaos:compileDebugAndroidTestKotlin UP-TO-DATE
+> Task :pleos-aaos:compileDebugAndroidTestJavaWithJavac NO-SOURCE
+> Task :pleos-aaos:processDebugUnitTestJavaRes UP-TO-DATE
+> Task :pleos-aaos:syncReleaseLibJars UP-TO-DATE
+> Task :pleos-aaos:processDebugAndroidTestJavaRes UP-TO-DATE
+> Task :pleos-aaos:bundleReleaseAar UP-TO-DATE
+> Task :pleos-aaos:assembleRelease UP-TO-DATE
+> Task :pleos-compose:generateMetadataFileForReleasePublication
+> Task :pleos-aaos:dexBuilderDebugAndroidTest UP-TO-DATE
+> Task :pleos-aaos:mergeDebugAndroidTestJavaResource UP-TO-DATE
+> Task :pleos-aaos:generateMetadataFileForReleasePublication
+> Task :pleos-aaos:mergeProjectDexDebugAndroidTest UP-TO-DATE
+> Task :pleos-aaos:publishReleasePublicationToProjectLocalRepository
+> Task :pleos-aaos:publishAllPublicationsToProjectLocalRepository
+> Task :pleos-aaos:generateReleaseLintReportModel
+> Task :pleos-compose:publishReleasePublicationToProjectLocalRepository
+> Task :pleos-compose:publishAllPublicationsToProjectLocalRepository
+> Task :pleos-aaos:mergeLibDexDebugAndroidTest
+> Task :pleos-compose:mergeLibDexDebugAndroidTest
+> Task :pleos-aaos:testDebugUnitTest
+> Task :pleos-aaos:packageDebugAndroidTest
+> Task :pleos-aaos:assembleDebugAndroidTest
+> Task :pleos-aaos:createDebugAndroidTestApkListingFileRedirect UP-TO-DATE
+> Task :pleos-compose:testDebugUnitTest
+> Task :pleos-compose:compileDebugAndroidTestKotlin
+> Task :pleos-compose:compileDebugAndroidTestJavaWithJavac NO-SOURCE
+> Task :pleos-compose:processDebugAndroidTestJavaRes UP-TO-DATE
+> Task :pleos-compose:mergeDebugAndroidTestJavaResource UP-TO-DATE
+> Task :pleos-compose:dexBuilderDebugAndroidTest
+> Task :pleos-compose:mergeProjectDexDebugAndroidTest
+> Task :pleos-compose:packageDebugAndroidTest
+> Task :pleos-compose:createDebugAndroidTestApkListingFileRedirect UP-TO-DATE
+> Task :pleos-compose:assembleDebugAndroidTest
+> Task :pleos-compose:lintAnalyzeRelease
+
+> Task :pleos-compose:lintReportRelease
+Wrote HTML report to file:///Users/jade/AndroidStudioProjects/PleosConnectUI/pleos-compose/build/reports/lint-results-release.html
+Wrote SARIF report to file:///Users/jade/AndroidStudioProjects/PleosConnectUI/pleos-compose/build/reports/lint-results-release.sarif
+
+> Task :pleos-compose:lintRelease
+> Task :pleos-aaos:lintAnalyzeRelease
+
+> Task :pleos-aaos:lintReportRelease
+Wrote HTML report to file:///Users/jade/AndroidStudioProjects/PleosConnectUI/pleos-aaos/build/reports/lint-results-release.html
+Wrote SARIF report to file:///Users/jade/AndroidStudioProjects/PleosConnectUI/pleos-aaos/build/reports/lint-results-release.sarif
+
+> Task :pleos-aaos:lintRelease
+
+BUILD SUCCESSFUL in 7s
+255 actionable tasks: 42 executed, 213 up-to-date
+Configuration cache entry reused.

@@ -1,0 +1,9 @@
+Calculating task graph as no cached configuration is available for tasks: :pleos-tokens:apiDocumentationJar :pleos-compose:apiDocumentationJar :pleos-aaos:apiDocumentationJar
+> Task :generateApiDocumentation
+> Task :pleos-compose:apiDocumentationJar
+> Task :pleos-tokens:apiDocumentationJar
+> Task :pleos-aaos:apiDocumentationJar
+
+BUILD SUCCESSFUL in 1s
+4 actionable tasks: 4 executed
+Configuration cache entry stored.

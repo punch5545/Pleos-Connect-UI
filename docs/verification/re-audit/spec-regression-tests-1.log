@@ -1,0 +1,50 @@
+
+com.jade.pleos.compose.PleosSpecRegressionTest:............
+Error in smallFieldActionAndLargeNumberTextHaveEnoughSpace(com.jade.pleos.compose.PleosSpecRegressionTest):
+java.lang.AssertionError: Actual height is 128.0.dp, expected at least 160.0.dp (tolerance: 0.5.dp)
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertIsAtLeast-cWfXhoU(BoundsAssertions.kt:342)
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertIsAtLeast-cWfXhoU$default(BoundsAssertions.kt:339)
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertHeightIsAtLeast_3ABfNKs$lambda$5(BoundsAssertions.kt:98)
+	at androidx.compose.ui.test.BoundsAssertionsKt$$ExternalSyntheticLambda2.invoke(D8$$SyntheticClass:0)
+	at androidx.compose.ui.test.BoundsAssertionsKt.withUnclippedBoundsInRoot(BoundsAssertions.kt:266)
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertHeightIsAtLeast-3ABfNKs(BoundsAssertions.kt:98)
+	at com.jade.pleos.compose.PleosSpecRegressionTest.smallFieldActionAndLargeNumberTextHaveEnoughSpace(PleosSpecRegressionTest.kt:218)
+...
+Error in readOnlyAndPasswordSemanticsRemainProtectedWithVisiblePassword(com.jade.pleos.compose.PleosSpecRegressionTest):
+java.lang.AssertionError: Failed to perform action RequestFocus, the node is missing [RequestFocus]
+Semantics of the node:
+Node #354 at (l=0.0, t=0.0, r=400.0, b=100.0)px
+Has 1 child
+Selector used: ((TestTag = 'readonly').child)
+
+	at androidx.compose.ui.test.ActionsKt.requireSemantics(Actions.kt:804)
+	at androidx.compose.ui.test.ActionsKt.performSemanticsAction(Actions.kt:590)
+	at com.jade.pleos.compose.PleosSpecRegressionTest.readOnlyAndPasswordSemanticsRemainProtectedWithVisiblePassword(PleosSpecRegressionTest.kt:200)
+.
+
+Time: 62.601
+There were 2 failures:
+1) smallFieldActionAndLargeNumberTextHaveEnoughSpace(com.jade.pleos.compose.PleosSpecRegressionTest)
+java.lang.AssertionError: Actual height is 128.0.dp, expected at least 160.0.dp (tolerance: 0.5.dp)
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertIsAtLeast-cWfXhoU(BoundsAssertions.kt:342)
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertIsAtLeast-cWfXhoU$default(BoundsAssertions.kt:339)
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertHeightIsAtLeast_3ABfNKs$lambda$5(BoundsAssertions.kt:98)
+	at androidx.compose.ui.test.BoundsAssertionsKt$$ExternalSyntheticLambda2.invoke(D8$$SyntheticClass:0)
+	at androidx.compose.ui.test.BoundsAssertionsKt.withUnclippedBoundsInRoot(BoundsAssertions.kt:266)
+	at androidx.compose.ui.test.BoundsAssertionsKt.assertHeightIsAtLeast-3ABfNKs(BoundsAssertions.kt:98)
+	at com.jade.pleos.compose.PleosSpecRegressionTest.smallFieldActionAndLargeNumberTextHaveEnoughSpace(PleosSpecRegressionTest.kt:218)
+2) readOnlyAndPasswordSemanticsRemainProtectedWithVisiblePassword(com.jade.pleos.compose.PleosSpecRegressionTest)
+java.lang.AssertionError: Failed to perform action RequestFocus, the node is missing [RequestFocus]
+Semantics of the node:
+Node #354 at (l=0.0, t=0.0, r=400.0, b=100.0)px
+Has 1 child
+Selector used: ((TestTag = 'readonly').child)
+
+	at androidx.compose.ui.test.ActionsKt.requireSemantics(Actions.kt:804)
+	at androidx.compose.ui.test.ActionsKt.performSemanticsAction(Actions.kt:590)
+	at com.jade.pleos.compose.PleosSpecRegressionTest.readOnlyAndPasswordSemanticsRemainProtectedWithVisiblePassword(PleosSpecRegressionTest.kt:200)
+
+FAILURES!!!
+Tests run: 18,  Failures: 2
+
+

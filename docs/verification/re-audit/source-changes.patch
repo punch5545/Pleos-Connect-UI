@@ -1,0 +1,4204 @@
+--- before/pleos-compose/src/androidTest/java/com/jade/pleos/compose/PleosLibraryUiTest.kt
++++ after/pleos-compose/src/androidTest/java/com/jade/pleos/compose/PleosLibraryUiTest.kt
+@@ -506,6 +506,7 @@
+                             "긴 제목을 포함하는 확인창",
+                             PleosPopupAction("ok", "확인", {}),
+                             cancelAction = PleosPopupAction("cancel", "취소", {}),
++                            bodyScroll = false,
+                             body = {
+                                 androidx.compose.foundation.lazy.LazyColumn {
+                                     items(40) { PleosText("목록 항목 $it") }
+--- before/pleos-compose/src/androidTest/java/com/jade/pleos/compose/PleosSpecRegressionTest.kt
++++ after/pleos-compose/src/androidTest/java/com/jade/pleos/compose/PleosSpecRegressionTest.kt
+@@ -0,0 +1,672 @@
++@file:OptIn(androidx.compose.ui.test.ExperimentalTestApi::class)
++
++package com.jade.pleos.compose
++
++import androidx.compose.foundation.background
++import androidx.compose.foundation.interaction.*
++import androidx.compose.foundation.layout.*
++import androidx.compose.foundation.rememberScrollState
++import androidx.compose.foundation.verticalScroll
++import androidx.compose.runtime.*
++import androidx.compose.ui.Modifier
++import androidx.compose.ui.geometry.Offset
++import androidx.compose.ui.graphics.*
++import androidx.compose.ui.input.InputMode
++import androidx.compose.ui.input.key.Key
++import androidx.compose.ui.platform.*
++import androidx.compose.ui.semantics.*
++import androidx.compose.ui.state.ToggleableState
++import androidx.compose.ui.test.*
++import androidx.compose.ui.test.junit4.createAndroidComposeRule
++import androidx.compose.ui.text.*
++import androidx.compose.ui.text.input.TextFieldValue
++import androidx.compose.ui.unit.*
++import androidx.lifecycle.*
++import androidx.lifecycle.compose.LocalLifecycleOwner
++import androidx.test.ext.junit.runners.AndroidJUnit4
++import com.jade.pleos.tokens.*
++import org.junit.*
++import org.junit.Assert.*
++import org.junit.runner.RunWith
++
++@RunWith(AndroidJUnit4::class)
++class PleosSpecRegressionTest {
++    @get:Rule val rule = createAndroidComposeRule<PleosTestActivity>()
++
++    private fun content(
++        profile: PleosFormFactor = PleosFormFactor.Standard17,
++        scale: Float = 1f,
++        capabilities: PleosCapabilities = PleosCapabilities.Unrestricted,
++        behavior: PleosBehaviorDefaults = PleosBehaviorDefaults(reducedMotion = true),
++        block: @Composable () -> Unit,
++    ) {
++        rule.setContent {
++            val density = LocalDensity.current
++            val input = LocalInputModeManager.current
++            LaunchedEffect(Unit) { input.requestInputMode(InputMode.Keyboard) }
++            CompositionLocalProvider(LocalDensity provides Density(density.density, scale)) {
++                PleosTheme(formFactor = profile, capabilities = capabilities, behavior = behavior) {
++                    Box(Modifier.fillMaxSize().background(Color.White)) { block() }
++                }
++            }
++        }
++    }
++
++    private fun pixelNear(actual: Int, expected: Int) {
++        for (shift in listOf(0, 8, 16)) assertTrue(
++            "실제 색 $actual / 기대 색 $expected",
++            kotlin.math.abs(((actual shr shift) and 255) - ((expected shr shift) and 255)) <= 2,
++        )
++    }
++
++    private fun countColor(tag: String, color: Color): Int {
++        val b = rule.onNodeWithTag(tag).captureToImage().asAndroidBitmap()
++        val expected = color.toArgb()
++        return (0 until b.height).sumOf { y ->
++            (0 until b.width).count { x -> b.getPixel(x, y) == expected }
++        }
++    }
++
++    @Test
++    fun shortPopupKeepsEveryVerticalActionReachable() {
++        content {
++            PleosPopupSurface(
++                "제목",
++                PleosPopupAction("ok", "확인", {}),
++                Modifier.width(760.dp).height(220.dp).testTag("short-actions"),
++                cancelAction = PleosPopupAction("cancel", "취소", {}),
++                buttonAlign = PleosActionLayout.Vertical,
++                body = { PleosText("본문") },
++            )
++        }
++        rule.onNodeWithText("확인").assertHeightIsEqualTo(100.dp).assertIsDisplayed()
++        rule
++            .onNodeWithText("취소")
++            .performScrollTo()
++            .assertHeightIsEqualTo(100.dp)
++            .assertIsDisplayed()
++        val root = rule.onNodeWithTag("short-actions").getUnclippedBoundsInRoot()
++        val cancel = rule.onNodeWithText("취소").getUnclippedBoundsInRoot()
++        assertTrue(cancel.top >= root.top + 48.dp)
++        assertTrue(cancel.bottom <= root.bottom - 48.dp)
++    }
++
++    @Test
++    fun shortPopupDropsEmptySpacingBeforeItsActions() {
++        content {
++            PleosPopupSurface(
++                "제목",
++                PleosPopupAction("ok", "확인", {}),
++                Modifier.width(760.dp).height(220.dp).testTag("short-popup"),
++                body = { PleosText("본문") },
++            )
++        }
++        rule.onNodeWithText("확인").assertHeightIsEqualTo(100.dp).assertIsDisplayed()
++        val root = rule.onNodeWithTag("short-popup").getUnclippedBoundsInRoot()
++        assertTrue(
++            rule.onNodeWithText("확인").getUnclippedBoundsInRoot().bottom <= root.bottom - 48.dp
++        )
++    }
++
++    @Test
++    fun hiddenWidgetPreservesItsPageAndAllowsFocusToLeave() {
++        var changes = 0
++        content {
++            Row {
++                PleosBasicButton("왼쪽 영역", {})
++                PleosWidgetHost(
++                    (0..2).map { PleosWidgetItem("$it", "제목", information = { PleosText("정보") }) },
++                    "1",
++                    { changes++ },
++                    PleosWidgetVisibility.Hidden,
++                    {},
++                    Modifier.testTag("hidden"),
++                )
++            }
++        }
++        val actions =
++            rule.onNodeWithTag("hidden").fetchSemanticsNode().config[SemanticsActions.CustomActions]
++        assertEquals(listOf("펼치기"), actions.map { it.label })
++        rule.onNodeWithTag("hidden").performSemanticsAction(SemanticsActions.RequestFocus) { it() }
++        rule.onNodeWithTag("hidden").performKeyInput { pressKey(Key.DirectionLeft) }
++        rule.onNodeWithText("왼쪽 영역").assertIsFocused()
++        rule.runOnIdle { assertEquals(0, changes) }
++    }
++
++    @Test
++    fun verticalParentScrollCanStartOverWidgetContent() {
++        lateinit var scrollState: androidx.compose.foundation.ScrollState
++        content {
++            val scroll = rememberScrollState()
++            SideEffect { scrollState = scroll }
++            Column(Modifier.height(400.dp).verticalScroll(scroll)) {
++                PleosWidgetHost(
++                    listOf(PleosWidgetItem("a", "제목", information = { PleosText("정보") })),
++                    "a",
++                    {},
++                    PleosWidgetVisibility.Show,
++                    {},
++                    Modifier.testTag("scroll-widget"),
++                )
++                repeat(40) { PleosText("목록 $it") }
++            }
++        }
++        rule.onNodeWithTag("scroll-widget").performTouchInput {
++            swipe(Offset(width * .8f, 140f), Offset(width * .8f, 20f), 400)
++        }
++        rule.runOnIdle { assertTrue("위젯 본문 위에서 부모 스크롤이 시작되어야 합니다.", scrollState.value > 0) }
++    }
++
++    @Test
++    fun windowBarKeyboardUsesHostDragCallbacksOnce() {
++        var started = 0
++        var finished = 0
++        val changes = mutableListOf<Offset>()
++        content {
++            PleosWindowControlBar(
++                { changes.add(it) },
++                Modifier.testTag("window"),
++                onDragStart = { started++ },
++                onDragEnd = { finished++ },
++            )
++        }
++        rule.onNodeWithTag("window").performSemanticsAction(SemanticsActions.RequestFocus) { it() }
++        rule.onNodeWithTag("window").performKeyInput {
++            pressKey(Key.Enter)
++            pressKey(Key.DirectionRight)
++            pressKey(Key.Escape)
++        }
++        rule.runOnIdle {
++            assertEquals(1, started)
++            assertEquals(1, finished)
++            assertEquals(listOf(Offset(48f, 0f)), changes)
++        }
++    }
++
++    @Test
++    fun controllableScrollbarSupportsKeyboardEditingAndBoundedActions() {
++        var offset by mutableFloatStateOf(0f)
++        var events = 0
++        content {
++            PleosScrollBar(
++                100f,
++                1000f,
++                offset,
++                Modifier.height(407.dp).testTag("scroll"),
++                onScrollTo = {
++                    offset = it
++                    events++
++                },
++            )
++        }
++        val control =
++            rule.onNode(
++                hasAnyAncestor(hasTestTag("scroll")) and
++                    SemanticsMatcher.keyIsDefined(SemanticsActions.RequestFocus)
++            )
++        control.performSemanticsAction(SemanticsActions.RequestFocus) { it() }
++        control.performKeyInput {
++            pressKey(Key.Enter)
++            pressKey(Key.DirectionDown)
++            pressKey(Key.Escape)
++        }
++        rule.runOnIdle {
++            assertEquals(10f, offset)
++            assertEquals(1, events)
++            offset = 900f
++        }
++        val down =
++            control
++                .fetchSemanticsNode()
++                .config[SemanticsActions.CustomActions]
++                .first { it.label == "아래로 스크롤" }
++                .action
++        rule.runOnIdle { assertFalse(down()) }
++        rule.runOnIdle { assertEquals(1, events) }
++    }
++
++    @Test
++    fun keypadFunctionSubmitIsIndependentOfEmptyDeleteState() {
++        var submitted = 0
++        content {
++            PleosNumericKeypad(
++                { if (it == PleosKeyAction.Submit) submitted++ },
++                Modifier.width(744.dp),
++                canDelete = false,
++                function = PleosNumericKeyKind.Function("완료", PleosKeyAction.Submit),
++            )
++        }
++        rule.onNodeWithText("완료").assertIsEnabled().performClick()
++        rule.onNodeWithContentDescription("한 글자 지우기").assertIsNotEnabled()
++        rule.runOnIdle { assertEquals(1, submitted) }
++    }
++
++    @Test
++    fun voiceKeyboardHonorsHostInputRestriction() {
++        var calls = 0
++        content(capabilities = PleosCapabilities()) {
++            PleosKeyboard({ calls++ }, mode = PleosKeyboardMode.Voice)
++        }
++        rule.onNodeWithText("음성 입력 요청").assertIsNotEnabled().performClick()
++        rule.onNodeWithText("문자 입력").assertIsNotEnabled()
++        rule.runOnIdle { assertEquals(0, calls) }
++    }
++
++    @Test
++    fun staticKeyboardAndShiftUseTheirIconTokens() {
++        var green = Color.Unspecified
++        content {
++            green = PleosTheme.colors["informative/active"]
++            Column {
++                PleosKeyboardKey(
++                    PleosKeyboardKeyKind.Delete,
++                    {},
++                    Modifier.testTag("delete"),
++                    palette = PleosKeyboardPalette.Static,
++                )
++                PleosKeyboardKey(
++                    PleosKeyboardKeyKind.Shift,
++                    {},
++                    Modifier.testTag("shift"),
++                    shifted = true,
++                )
++            }
++        }
++        assertTrue(countColor("delete", Color.White) > 10)
++        assertTrue(countColor("shift", green) > 10)
++    }
++
++    @Test
++    fun selectionPressedOverlayPreservesMarkAndRadioCenter() {
++        content {
++            val source = remember { MutableInteractionSource() }
++            LaunchedEffect(Unit) { source.emit(PressInteraction.Press(Offset.Zero)) }
++            Column {
++                PleosCheckbox(
++                    ToggleableState.Indeterminate,
++                    {},
++                    Modifier.testTag("check"),
++                    interactionSource = source,
++                )
++                PleosRadioButton(true, {}, Modifier.testTag("radio"), interactionSource = source)
++            }
++        }
++        rule.waitForIdle()
++        for (tag in listOf("check", "radio")) {
++            val image = rule.onNodeWithTag(tag).captureToImage().asAndroidBitmap()
++            pixelNear(image.getPixel(image.width / 2, image.height / 2), Color.White.toArgb())
++        }
++    }
++
++    @Test
++    fun dropdownFooterUsesItsOwnExactGeometryAndModes() {
++        var legacy by mutableStateOf(false)
++        rule.setContent {
++            PleosTheme(
++                formFactor = if (legacy) PleosFormFactor.Legacy12_9 else PleosFormFactor.Standard17,
++                capabilities = PleosCapabilities.Unrestricted,
++                behavior = PleosBehaviorDefaults(reducedMotion = true),
++            ) {
++                Column {
++                    PleosDropdownItem(
++                        PleosDropdownEntry("a", "추가", kind = PleosDropdownItemKind.Footer {}),
++                        {},
++                        Modifier.width(600.dp).testTag("medium"),
++                    )
++                    PleosDropdownItem(
++                        PleosDropdownEntry("b", "추가", kind = PleosDropdownItemKind.Footer {}),
++                        {},
++                        Modifier.width(600.dp).testTag("small"),
++                        size = PleosDropdownSize.Small,
++                    )
++                }
++            }
++        }
++        rule.onNodeWithTag("medium").assertHeightIsEqualTo(97.dp)
++        rule.onNodeWithTag("small").assertHeightIsEqualTo(81.dp)
++        rule.runOnIdle { legacy = true }
++        rule.onNodeWithTag("medium").assertHeightIsEqualTo(85.dp)
++        rule.onNodeWithTag("small").assertHeightIsEqualTo(71.dp)
++    }
++
++    @Test
++    fun dropdownMenuUsesActualAnchorWidth() {
++        var wide by mutableStateOf(false)
++        content {
++            PleosDropdown(
++                true,
++                {},
++                listOf(PleosDropdownEntry("a", "항목")),
++                null,
++                {},
++                preferredWidth = if (wide) 800.dp else 320.dp,
++            )
++        }
++        rule.waitUntilAtLeastOneExists(hasText("항목"), 5000)
++        rule.onNode(hasText("항목") and hasClickAction()).assertWidthIsEqualTo(288.dp)
++        rule.runOnIdle { wide = true }
++        rule.onNode(hasText("항목") and hasClickAction()).assertWidthIsEqualTo(768.dp)
++    }
++
++    @Test
++    fun searchNavigationOwnsNoSearchOrNavigationState() {
++        var value by mutableStateOf(TextFieldValue("검색어"))
++        var search = 0
++        var back = 0
++        var close = 0
++        content {
++            PleosSearchNavigation(
++                value,
++                { value = it },
++                { search++ },
++                { close++ },
++                Modifier.width(988.dp),
++                onBack = { back++ },
++            )
++        }
++        rule.onNode(hasSetTextAction()).performImeAction()
++        rule.onNodeWithContentDescription("검색 닫기").performClick()
++        rule.onNodeWithContentDescription("뒤로").assertWidthIsEqualTo(56.dp).performClick()
++        rule.runOnIdle {
++            assertEquals(1, search)
++            assertEquals(1, back)
++            assertEquals(1, close)
++            assertEquals("검색어", value.text)
++        }
++    }
++
++    @Test
++    fun headerPresetKeepsBackgroundDividerAndHeight() {
++        content {
++            Box(Modifier.background(Color.Red)) {
++                PleosNavigationHeader(
++                    PleosHeaderPreset.Radio,
++                    "서비스",
++                    Modifier.width(988.dp).testTag("header"),
++                )
++            }
++        }
++        rule.onNodeWithTag("header").assertHeightIsEqualTo(144.dp)
++        val b = rule.onNodeWithTag("header").captureToImage().asAndroidBitmap()
++        pixelNear(b.getPixel(1, 1), Color.White.toArgb())
++        pixelNear(
++            b.getPixel(b.width / 2, b.height - 1),
++            Color(0xFF131417).copy(alpha = .2f).compositeOver(Color.White).toArgb(),
++        )
++    }
++
++    @Test
++    fun externalTabSelectionScrollsIntoView() {
++        var selected by mutableStateOf("0")
++        content {
++            PleosTabs(
++                (0..5).map { PleosTabItem("$it", "긴 항목 이름 $it") },
++                selected,
++                { selected = it },
++                Modifier.width(320.dp),
++                fitted = false,
++            )
++        }
++        rule.runOnIdle { selected = "5" }
++        rule.onNodeWithText("긴 항목 이름 5").assertIsDisplayed()
++    }
++
++    @Test
++    fun popupSeparatesHeaderBodyGapAndBodyScrollFromActions() {
++        content {
++            PleosPopupSurface(
++                "고정 제목",
++                PleosPopupAction("ok", "확인", {}),
++                Modifier.width(760.dp).height(500.dp),
++                body = {
++                    Column {
++                        repeat(50) {
++                            PleosText(
++                                "본문 $it",
++                                Modifier.then(if (it == 0) Modifier.testTag("first") else Modifier),
++                            )
++                        }
++                    }
++                },
++            )
++        }
++        val titleTop = rule.onNodeWithText("고정 제목").getUnclippedBoundsInRoot().top
++        val titleBottom = rule.onNodeWithText("고정 제목").getUnclippedBoundsInRoot().bottom
++        assertEquals(
++            56f,
++            (rule.onNodeWithTag("first").getUnclippedBoundsInRoot().top - titleBottom).value,
++            1f,
++        )
++        rule.onNodeWithText("본문 49").performScrollTo().assertIsDisplayed()
++        assertEquals(titleTop, rule.onNodeWithText("고정 제목").getUnclippedBoundsInRoot().top)
++        rule.onNodeWithText("확인").assertIsDisplayed()
++    }
++
++    @Test
++    fun popupRadiusAndPaddingAreIndependentAndActionsCanBeHidden() {
++        content(profile = PleosFormFactor.Legacy12_9) {
++            Box(Modifier.background(Color.Black)) {
++                PleosPopupSurface(
++                    "",
++                    null,
++                    Modifier.width(760.dp).testTag("popup"),
++                    description = "읽기 전용 안내",
++                )
++            }
++        }
++        rule.onAllNodes(hasClickAction()).assertCountEquals(0)
++        val b = rule.onNodeWithTag("popup").captureToImage().asAndroidBitmap()
++        pixelNear(b.getPixel(5, 18), Color.Black.toArgb())
++    }
++
++    @Test
++    fun readOnlyAndPasswordSemanticsRemainProtectedWithVisiblePassword() {
++        var expected = Color.Unspecified
++        content {
++            expected =
++                PleosTheme.colors["divider/secondary"].compositeOver(
++                    PleosTheme.colors["surface/high"]
++                )
++            Column {
++                PleosTextField(
++                    TextFieldValue("읽기"),
++                    {},
++                    Modifier.width(400.dp).testTag("readonly"),
++                    readOnly = true,
++                )
++                PleosTextField(
++                    TextFieldValue("비밀문자"),
++                    {},
++                    Modifier.width(400.dp).testTag("password"),
++                    type = PleosFieldType.Password,
++                    passwordVisible = true,
++                )
++            }
++        }
++        rule
++            .onNode(
++                hasAnyAncestor(hasTestTag("readonly")) and
++                    SemanticsMatcher.keyIsDefined(SemanticsActions.RequestFocus)
++            )
++            .performSemanticsAction(SemanticsActions.RequestFocus) { it() }
++        val b = rule.onNodeWithTag("readonly").captureToImage().asAndroidBitmap()
++        pixelNear(b.getPixel(1, b.height / 2), expected.toArgb())
++        val protected =
++            rule
++                .onNode(
++                    hasSetTextAction() and
++                        SemanticsMatcher.expectValue(SemanticsProperties.Password, Unit)
++                )
++                .fetchSemanticsNode()
++                .config
++        assertEquals("••••", protected[SemanticsProperties.InputText].text)
++        assertEquals("••••", protected[SemanticsProperties.EditableText].text)
++    }
++
++    @Test
++    fun smallFieldActionAndLargeNumberTextHaveEnoughSpace() {
++        var value by mutableStateOf(TextFieldValue("입력"))
++        var required = 0.dp
++        content(scale = 3f) {
++            val scaledLine = with(LocalDensity.current) { 80.sp.toDp() }
++            SideEffect { required = scaledLine }
++            Column {
++                PleosTextField(
++                    value,
++                    { value = it },
++                    Modifier.width(600.dp).testTag("field"),
++                    size = PleosFieldSize.Small,
++                )
++                PleosNumberField("0012", {}, 4, Modifier.testTag("number"))
++            }
++        }
++        rule
++            .onNode(hasSetTextAction() and hasAnyAncestor(hasTestTag("field")))
++            .performSemanticsAction(SemanticsActions.RequestFocus) { it() }
++        rule
++            .onNodeWithContentDescription("입력 지우기")
++            .assertWidthIsAtLeast(48.dp)
++            .assertHeightIsAtLeast(48.dp)
++        rule.onNodeWithTag("number").assertHeightIsAtLeast(required)
++    }
++
++    @Test
++    fun toastIconRecompositionDoesNotRestartLifetime() {
++        val state = PleosToastHostState()
++        var counter by mutableIntStateOf(0)
++        content {
++            PleosToastPopup(
++                true,
++                "안내",
++                {},
++                state = state,
++                id = "a",
++                duration = PleosToastDuration.Custom(60000),
++                icon = { PleosText("$counter") },
++            )
++        }
++        var generation = 0L
++        rule.runOnIdle {
++            generation = state.current!!.generation
++            counter++
++        }
++        rule.runOnIdle { assertEquals(generation, state.current!!.generation) }
++        rule.onNodeWithText("1").assertIsDisplayed()
++    }
++
++    @Test
++    fun toastTimerPausesWithHostLifecycle() {
++        val owner =
++            object : LifecycleOwner {
++                val registry by lazy { LifecycleRegistry(this) }
++                override val lifecycle: Lifecycle
++                    get() = registry
++            }
++        val state = PleosToastHostState()
++        state.show("시간 안내", duration = PleosToastDuration.Custom(350))
++        content {
++            CompositionLocalProvider(
++                LocalLifecycleOwner provides owner,
++                LocalAccessibilityManager provides null,
++            ) {
++                PleosToastHost(state)
++            }
++        }
++        rule.runOnIdle { owner.registry.currentState = Lifecycle.State.STARTED }
++        rule.waitForIdle()
++        rule.runOnIdle { owner.registry.currentState = Lifecycle.State.CREATED }
++        android.os.SystemClock.sleep(450)
++        rule.runOnIdle {
++            assertNotNull(state.current)
++            owner.registry.currentState = Lifecycle.State.STARTED
++        }
++        rule.waitUntil(3000) { state.current == null }
++    }
++
++    @Test
++    fun widgetOnlyHidesOnHandleDragAndUsesItsOwnPagination() {
++        var visibility by mutableStateOf(PleosWidgetVisibility.Show)
++        var hide = 0
++        content {
++            PleosWidgetHost(
++                (0..2).map { PleosWidgetItem("$it", "위젯 제목", information = { PleosText("정보") }) },
++                "0",
++                {},
++                visibility,
++                {
++                    hide++
++                    visibility = it
++                },
++                Modifier.testTag("widget"),
++            )
++        }
++        rule
++            .onNode(
++                SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, "총 3페이지 중 1페이지")
++            )
++            .assertWidthIsEqualTo(44.dp)
++        rule.onNodeWithTag("widget").performTouchInput { click(Offset(width / 2f, 30f)) }
++        rule.runOnIdle { assertEquals(0, hide) }
++        rule.onNodeWithTag("widget").performTouchInput {
++            swipe(Offset(width * .75f, 100f), Offset(width * .75f, 300f), 300)
++        }
++        rule.runOnIdle { assertEquals(PleosWidgetVisibility.Show, visibility) }
++        rule.onNodeWithTag("widget").performTouchInput {
++            swipe(Offset(width / 2f, 20f), Offset(width / 2f, 200f), 300)
++        }
++        rule.runOnIdle { assertEquals(PleosWidgetVisibility.Hidden, visibility) }
++    }
++
++    @Test
++    fun widgetChildrenRetainDpadAndTitleUsesSeparateScale() {
++        var hidden = 0
++        content(profile = PleosFormFactor.Wide) {
++            Column {
++                PleosWidgetHost(
++                    listOf(
++                        PleosWidgetItem(
++                            "a",
++                            "위젯 제목",
++                            action = { PleosBasicButton("위젯 동작", {}) },
++                            information = { PleosText("정보") },
++                        )
++                    ),
++                    "a",
++                    {},
++                    PleosWidgetVisibility.Show,
++                    { hidden++ },
++                )
++                PleosBasicButton("아래 영역", {})
++            }
++        }
++        val layouts = mutableListOf<TextLayoutResult>()
++        rule.onNodeWithText("위젯 제목").performSemanticsAction(SemanticsActions.GetTextLayoutResult) {
++            it(layouts)
++        }
++        assertEquals(24.sp, layouts.single().layoutInput.style.fontSize)
++        rule.onNodeWithText("위젯 동작").performSemanticsAction(SemanticsActions.RequestFocus) { it() }
++        rule.onNodeWithText("위젯 동작").performKeyInput { pressKey(Key.DirectionDown) }
++        rule.runOnIdle { assertEquals(0, hidden) }
++        rule.onNodeWithText("아래 영역").assertIsFocused()
++    }
++
++    @Test
++    fun controllerShapesAndStepperFullActionRemainOperable() {
++        var value by mutableStateOf(java.math.BigDecimal.ONE)
++        content {
++            Column {
++                PleosCenteredSlider(2e38f, {}, valueRange = 1e38f..3e38f)
++                PleosStepper(
++                    value,
++                    { value = it },
++                    java.math.BigDecimal.ZERO,
++                    java.math.BigDecimal.TEN,
++                    java.math.BigDecimal.ONE,
++                    Modifier.testTag("stepper"),
++                )
++            }
++        }
++        rule.onNodeWithTag("stepper").performTouchInput { click(Offset(5f, height / 2f)) }
++        rule.runOnIdle { assertEquals(java.math.BigDecimal.ZERO, value) }
++    }
++}
+--- before/pleos-compose/src/androidTest/java/com/jade/pleos/compose/PleosVariantCoverageTest.kt
++++ after/pleos-compose/src/androidTest/java/com/jade/pleos/compose/PleosVariantCoverageTest.kt
+@@ -283,6 +283,45 @@
+                 },
+             )
+         }
++        add("N01-Main-menus") {
++            PleosPageNavigation(
++                PleosNavigationType.Main,
++                "서비스",
++                Modifier.width(988.dp),
++                primaryMenu = {
++                    PleosNavigationDropdown(
++                        false,
++                        { events++ },
++                        listOf(PleosDropdownEntry("a", "라디오")),
++                        "a",
++                        { events++ },
++                    )
++                },
++                secondaryMenu = { PleosNavigationMenu("FM", { events++ }) },
++            )
++        }
++        add("N01-Depth-subtitle") {
++            PleosPageNavigation(
++                PleosNavigationType.Depth,
++                "페이지",
++                Modifier.width(988.dp),
++                subtitle = "설명",
++                onBack = { events++ },
++            )
++        }
++        add("N01-Search") {
++            PleosSearchNavigation(
++                TextFieldValue("검색어"),
++                { events++ },
++                { events++ },
++                { events++ },
++                Modifier.width(988.dp),
++                onBack = { events++ },
++            )
++        }
++        for (size in PleosPopupSize.entries) add("P01-$size-I-no-actions") {
++            PleosPopupSurface("안내", null, size = size, description = "읽기 전용 내용")
++        }
+         for (size in PleosPopupSize.entries) for (preset in
+             PleosPopupMetricsPreset.entries) for (layout in PleosActionLayout.entries) for (body in
+             0..3) add("P01-$size-$preset-$layout-$body") {
+--- before/pleos-compose/src/main/java/com/jade/pleos/compose/Actions.kt
++++ after/pleos-compose/src/main/java/com/jade/pleos/compose/Actions.kt
+@@ -48,6 +48,10 @@
+     val largeSize: Dp = 100.dp,
+     val largeIcon: Dp = 64.dp,
+     val largeRadius: Dp = 24.dp,
++    val smallSize: Dp? = null,
++    val smallIcon: Dp? = null,
++    val mediumSize: Dp? = null,
++    val mediumIcon: Dp? = null,
+ )
+ 
+ data class LoadingIndicatorSpec(
+@@ -393,10 +397,14 @@
+     val p = "buttons/icon/${size.name.lowercase()}/"
+     val root =
+         if (large) metrics.largeSize
+-        else m.dp(p + "width", if (size == PleosButtonSize.Medium) 80f else 64f)
++        else
++            (if (size == PleosButtonSize.Medium) metrics.mediumSize else metrics.smallSize)
++                ?: m.dp(p + "width", if (size == PleosButtonSize.Medium) 80f else 64f)
+     val glyph =
+         if (large) metrics.largeIcon
+-        else m.dp(p + "content", if (size == PleosButtonSize.Medium) 56f else 44f)
++        else
++            (if (size == PleosButtonSize.Medium) metrics.mediumIcon else metrics.smallIcon)
++                ?: m.dp(p + "content", if (size == PleosButtonSize.Medium) 56f else 44f)
+     val radius =
+         if (style == PleosIconButtonStyle.Circle) root / 2
+         else if (large) metrics.largeRadius
+@@ -404,7 +412,7 @@
+     val pressed by interactionSource.collectIsPressedAsState()
+     val c = PleosTheme.colors
+     val color =
+-        if (style == PleosIconButtonStyle.Plain && !pressed) Color.Transparent
++        if (style == PleosIconButtonStyle.Plain && (!enabled || !pressed)) Color.Transparent
+         else c["button/basic/${if(!enabled)"disabled" else if(pressed)"pressed" else "enabled"}"]
+     PleosSurface(
+         actionModifier(
+--- before/pleos-compose/src/main/java/com/jade/pleos/compose/Bars.kt
++++ after/pleos-compose/src/main/java/com/jade/pleos/compose/Bars.kt
+@@ -8,7 +8,9 @@
+ import androidx.compose.foundation.shape.RoundedCornerShape
+ import androidx.compose.runtime.*
+ import androidx.compose.ui.*
++import androidx.compose.ui.focus.onFocusChanged
+ import androidx.compose.ui.geometry.Offset
++import androidx.compose.ui.input.key.*
+ import androidx.compose.ui.input.pointer.*
+ import androidx.compose.ui.semantics.*
+ import androidx.compose.ui.unit.*
+@@ -56,7 +58,7 @@
+ }
+ 
+ /** 포인터를 소비하지 않고 down/up/cancel의 표시 상태만 관찰합니다. */
+-private fun Modifier.observeControlPress(enabled: Boolean, onPressed: (Boolean) -> Unit) =
++internal fun Modifier.observeControlPress(enabled: Boolean, onPressed: (Boolean) -> Unit) =
+     pointerInput(enabled) {
+         if (enabled)
+             awaitEachGesture {
+@@ -91,24 +93,25 @@
+     val source = remember { MutableInteractionSource() }
+     val pressed by source.collectIsPressedAsState()
+     var touching by remember { mutableStateOf(false) }
++    var editing by remember { mutableStateOf(false) }
+     val active = enabled
++    val m = PleosTheme.metrics
++    val motion = !PleosTheme.behavior.reducedMotion && LocalPleosCapabilities.current.animations
++    val density = androidx.compose.ui.platform.LocalDensity.current
+     val held = dragging || pressed || touching
+     val length by
+         animateDpAsState(
+-            if (held) 100.dp else 140.dp,
+-            tween(
+-                if (PleosTheme.behavior.reducedMotion) 0 else 300,
+-                easing = CubicBezierEasing(.16f, 1f, .3f, 1f),
++            m.dp(
++                if (held) "window/handle/pressed_length" else "window/handle/enabled_length",
++                if (held) 100f else 140f,
+             ),
++            tween(if (motion) 300 else 0, easing = CubicBezierEasing(.16f, 1f, .3f, 1f)),
+             label = "windowHandle",
+         )
+     val alpha by
+         animateFloatAsState(
+             if (!active) 0f else if (held) .5f else .2f,
+-            tween(
+-                if (PleosTheme.behavior.reducedMotion) 0 else 300,
+-                easing = CubicBezierEasing(.16f, 1f, .3f, 1f),
+-            ),
++            tween(if (motion) 300 else 0, easing = CubicBezierEasing(.16f, 1f, .3f, 1f)),
+             label = "windowAlpha",
+         )
+     val color = PleosTheme.colors["basic_900"].copy(alpha = alpha)
+@@ -116,6 +119,13 @@
+     val start by rememberUpdatedState(onDragStart)
+     val end by rememberUpdatedState(onDragEnd)
+     val cancel by rememberUpdatedState(onDragCancel)
++    fun adjustOnce(amount: Offset): Boolean {
++        if (!active) return false
++        start?.invoke()
++        delta(amount)
++        end?.invoke()
++        return true
++    }
+     DisposableEffect(active) {
+         onDispose {
+             if (dragging) {
+@@ -135,12 +145,10 @@
+                     customActions =
+                         listOf(
+                             CustomAccessibilityAction("왼쪽으로 조절") {
+-                                delta(Offset(-48f, 0f))
+-                                true
++                                adjustOnce(Offset(with(density) { -48.dp.toPx() }, 0f))
+                             },
+                             CustomAccessibilityAction("오른쪽으로 조절") {
+-                                delta(Offset(48f, 0f))
+-                                true
++                                adjustOnce(Offset(with(density) { 48.dp.toPx() }, 0f))
+                             },
+                         )
+             }
+@@ -175,7 +183,43 @@
+             }
+     Box(
+         if (onClick != null) actionModifier(base, source, active, 4.dp, onClick)
+-        else base.focusable(active, source).focusIndication(source, 4.dp),
++        else
++            base
++                .onFocusChanged { if (!it.isFocused) editing = false }
++                .onKeyEvent { event ->
++                    if (!active) false
++                    else if (event.key == Key.Enter || event.key == Key.DirectionCenter) {
++                        if (event.type == KeyEventType.KeyUp) editing = !editing
++                        true
++                    } else if (editing && (event.key == Key.Back || event.key == Key.Escape)) {
++                        if (event.type == KeyEventType.KeyUp) editing = false
++                        true
++                    } else if (
++                        editing &&
++                            event.key in
++                                listOf(
++                                    Key.DirectionLeft,
++                                    Key.DirectionRight,
++                                    Key.DirectionUp,
++                                    Key.DirectionDown,
++                                )
++                    ) {
++                        if (event.type == KeyEventType.KeyDown) {
++                            val step = with(density) { 48.dp.toPx() }
++                            adjustOnce(
++                                when (event.key) {
++                                    Key.DirectionLeft -> Offset(-step, 0f)
++                                    Key.DirectionRight -> Offset(step, 0f)
++                                    Key.DirectionUp -> Offset(0f, -step)
++                                    else -> Offset(0f, step)
++                                }
++                            )
++                        }
++                        true
++                    } else false
++                }
++                .focusable(active, source)
++                .focusIndication(source, 4.dp),
+         contentAlignment = Alignment.Center,
+     ) {
+         Box(Modifier.size(4.dp, length).background(color, RoundedCornerShape(2.dp)))
+@@ -269,6 +313,8 @@
+     val change by rememberUpdatedState(onScrollTo)
+     val offset by rememberUpdatedState(scrollOffset)
+     val c = PleosTheme.colors
++    val source = remember { MutableInteractionSource() }
++    var editing by remember { mutableStateOf(false) }
+     BoxWithConstraints(modifier.width(if (controllable) 96.dp else 6.dp).heightIn(min = 48.dp)) {
+         val h = if (maxHeight == Dp.Infinity) 407.dp else maxHeight
+         val px = with(density) { h.toPx() }
+@@ -276,11 +322,39 @@
+         val geom = pleosScrollGeometry(viewportExtent, contentExtent, scrollOffset, px, minimum)
+         val latestGeometry by rememberUpdatedState(geom)
+         val active = enabled && controllable && geom.maxOffset > 0
++        fun scrollTo(request: Float): Boolean {
++            if (!active || !request.isFinite()) return false
++            val next = request.coerceIn(0f, latestGeometry.maxOffset)
++            if (next == offset.coerceIn(0f, latestGeometry.maxOffset)) return false
++            change?.invoke(next)
++            return true
++        }
+         var dragOffset by remember { mutableFloatStateOf(0f) }
+         Box(
+             Modifier.fillMaxWidth()
+                 .height(h)
+                 .observeControlPress(active) { touching = it }
++                .focusIndication(source, 4.dp)
++                .onFocusChanged { if (!it.isFocused) editing = false }
++                .onKeyEvent { event ->
++                    if (!active) false
++                    else if (event.key == Key.Enter || event.key == Key.DirectionCenter) {
++                        if (event.type == KeyEventType.KeyUp) editing = !editing
++                        true
++                    } else if (editing && (event.key == Key.Back || event.key == Key.Escape)) {
++                        if (event.type == KeyEventType.KeyUp) editing = false
++                        true
++                    } else if (editing && event.key in listOf(Key.DirectionUp, Key.DirectionDown)) {
++                        if (event.type == KeyEventType.KeyDown)
++                            scrollTo(
++                                offset +
++                                    if (event.key == Key.DirectionUp) -viewportExtent / 10
++                                    else viewportExtent / 10
++                            )
++                        true
++                    } else false
++                }
++                .focusable(active, source)
+                 .semantics {
+                     if (!enabled) disabled()
+                     if (controllable) {
+@@ -289,11 +363,17 @@
+                                 scrollOffset.coerceIn(0f, geom.maxOffset),
+                                 0f..geom.maxOffset,
+                             )
++                        if (active) setProgress { scrollTo(it) }
+                         if (active)
+-                            setProgress {
+-                                change?.invoke(it.coerceIn(0f, geom.maxOffset))
+-                                true
+-                            }
++                            customActions =
++                                listOf(
++                                    CustomAccessibilityAction("위로 스크롤") {
++                                        scrollTo(offset - viewportExtent / 10)
++                                    },
++                                    CustomAccessibilityAction("아래로 스크롤") {
++                                        scrollTo(offset + viewportExtent / 10)
++                                    },
++                                )
+                     }
+                 }
+                 .pointerInput(active, px) {
+--- before/pleos-compose/src/main/java/com/jade/pleos/compose/Controllers.kt
++++ after/pleos-compose/src/main/java/com/jade/pleos/compose/Controllers.kt
+@@ -15,6 +15,7 @@
+ import androidx.compose.ui.platform.LocalLayoutDirection
+ import androidx.compose.ui.semantics.*
+ import androidx.compose.ui.text.font.FontWeight
++import androidx.compose.ui.text.style.TextAlign
+ import androidx.compose.ui.unit.*
+ import com.jade.pleos.tokens.*
+ import java.math.BigDecimal
+@@ -82,6 +83,53 @@
+     return value.add(step.multiply(direction.toBigDecimal())).coerceIn(min, max)
+ }
+ 
++enum class PleosVolumeLevel {
++    Min,
++    Low,
++    Mid,
++    High,
++    Max,
++}
++
++/** 02 §8.1: 정규화한 0~1 비율의 0/25/75/100% 경계입니다. */
++fun pleosVolumeLevel(fraction: Float): PleosVolumeLevel {
++    require(fraction.isFinite())
++    return when {
++        fraction <= 0f -> PleosVolumeLevel.Min
++        fraction >= 1f -> PleosVolumeLevel.Max
++        fraction <= .25f -> PleosVolumeLevel.Low
++        fraction <= .75f -> PleosVolumeLevel.Mid
++        else -> PleosVolumeLevel.High
++    }
++}
++
++@Composable
++private fun VolumeIcon(level: PleosVolumeLevel) {
++    PleosIcon(
++        when (level) {
++            PleosVolumeLevel.Min -> R.drawable.pleos_ic_sound_volume_mute__67_24437
++            PleosVolumeLevel.Low -> R.drawable.pleos_ic_sound_volume_low__67_24431
++            PleosVolumeLevel.Mid -> R.drawable.pleos_ic_sound_volume_mid__67_24424
++            else -> R.drawable.pleos_ic_sound_volume_high__67_24418
++        },
++        Modifier.fillMaxSize(),
++    )
++}
++
++internal fun shiftedPleosValue(
++    value: Float,
++    delta: Float,
++    range: ClosedFloatingPointRange<Float>,
++    step: Float?,
++): Float =
++    normalizePleosValue(
++        (value.toDouble() + delta.toDouble())
++            .coerceIn(range.start.toDouble(), range.endInclusive.toDouble())
++            .toFloat(),
++        range,
++        step,
++    )
++
+ @Composable
+ private fun ValueTrack(
+     value: Float,
+@@ -95,6 +143,9 @@
+     onFinished: (() -> Unit)?,
+     formatter: (Float) -> String,
+     centerValue: Float? = null,
++    largeTrack: Boolean = true,
++    leadingIcon: (@Composable () -> Unit)? = null,
++    trailingIcon: (@Composable () -> Unit)? = null,
+ ) {
+     val v = normalizePleosValue(value, range, step)
+     val span = range.endInclusive - range.start
+@@ -109,7 +160,6 @@
+     val change by rememberUpdatedState(onValueChange)
+     val finish by rememberUpdatedState(onFinished)
+     val current by rememberUpdatedState(v)
+-    val inputMode = LocalPleosInputMode.current
+     val c = PleosTheme.colors
+     val rangeStep = step ?: if (span == 0f) 1f else span / 100
+     fun request(next: Float): Boolean {
+@@ -121,8 +171,12 @@
+     }
+     val controls =
+         modifier
+-            .heightIn(min = if (centered) 76.dp else 64.dp)
+-            .focusIndication(source, 24.dp)
++            .heightIn(
++                min =
++                    if (centered) m.dp("controller/slider/centered/value_height", 76f)
++                    else m.dp("controller/slider/minimum_touch_height", 64f)
++            )
++            .focusIndication(source, m.dp("controller/slider/focus_radius", 24f))
+             .onFocusChanged {
+                 if (!it.isFocused) {
+                     editing = false
+@@ -143,8 +197,12 @@
+                     setProgress { request(it) }
+                     customActions =
+                         listOf(
+-                            CustomAccessibilityAction("감소") { request(current - rangeStep) },
+-                            CustomAccessibilityAction("증가") { request(current + rangeStep) },
++                            CustomAccessibilityAction("감소") {
++                                request(shiftedPleosValue(current, -rangeStep, range, step))
++                            },
++                            CustomAccessibilityAction("증가") {
++                                request(shiftedPleosValue(current, rangeStep, range, step))
++                            },
+                         ) +
+                             if (centerValue != null)
+                                 listOf(CustomAccessibilityAction("중립값") { request(centerValue) })
+@@ -178,7 +236,14 @@
+                             e.key == Key.DirectionUp ||
+                                 e.key == if (rtl) Key.DirectionLeft else Key.DirectionRight
+                         keyChanged =
+-                            request(current + if (increase) rangeStep else -rangeStep) || keyChanged
++                            request(
++                                shiftedPleosValue(
++                                    current,
++                                    if (increase) rangeStep else -rangeStep,
++                                    range,
++                                    step,
++                                )
++                            ) || keyChanged
+                     }
+                     if (e.type == KeyEventType.KeyUp && keyChanged) {
+                         finish?.invoke()
+@@ -195,8 +260,20 @@
+                         down.consume()
+                         pressed = true
+                         fun at(x: Float) {
+-                            val fraction = (x / size.width.coerceAtLeast(1)).coerceIn(0f, 1f)
+-                            request(range.start + (if (rtl) 1 - fraction else fraction) * span)
++                            val baseRadius =
++                                if (centered)
++                                    m.dp("controller/slider/centered/knob/enabled_circle", 48f)
++                                        .toPx() / 2
++                                else 0f
++                            val fraction =
++                                ((x - baseRadius) / (size.width - baseRadius * 2).coerceAtLeast(1f))
++                                    .coerceIn(0f, 1f)
++                            val f = if (rtl) 1f - fraction else fraction
++                            request(
++                                (range.start.toDouble() + f * span.toDouble())
++                                    .coerceIn(range.start.toDouble(), range.endInclusive.toDouble())
++                                    .toFloat()
++                            )
+                         }
+                         try {
+                             at(down.position.x)
+@@ -211,54 +288,113 @@
+                         }
+                     }
+             }
+-    Canvas(controls) {
+-        val x = (if (rtl) 1 - frac else frac) * size.width
+-        if (centered) {
+-            val trackH = m.dp("controller/slider/centered/track/height", 8f).toPx()
+-            val brush =
+-                if (off) Brush.horizontalGradient(listOf(c["basic_200"], c["basic_200"]))
+-                else
+-                    Brush.horizontalGradient(
+-                        listOf(
+-                            Color(0xFF0064FF).copy(alpha = .9f),
+-                            Color(0xFFF62E24).copy(alpha = .9f),
++    Box(controls) {
++        Canvas(Modifier.matchParentSize()) {
++            val x = (if (rtl) 1 - frac else frac) * size.width
++            if (centered) {
++                val trackH = m.dp("controller/slider/centered/track/height", 8f).toPx()
++                val brush =
++                    if (off) Brush.horizontalGradient(listOf(c["basic_200"], c["basic_200"]))
++                    else
++                        Brush.horizontalGradient(
++                            listOf(
++                                    c["controller/slider/gradient_start"],
++                                    c["controller/slider/gradient_end"],
++                                )
++                                .let { if (rtl) it.reversed() else it }
+                         )
++                drawRoundRect(
++                    brush,
++                    Offset(0f, (size.height - trackH) / 2),
++                    Size(size.width, trackH),
++                    CornerRadius(trackH / 2),
++                )
++                val r =
++                    (m.dp(
++                            if (pressed) "controller/slider/centered/knob/pressed_circle"
++                            else "controller/slider/centered/knob/enabled_circle",
++                            if (pressed) 56f else 48f,
++                        ) / 2)
++                        .toPx()
++                val baseRadius =
++                    m.dp("controller/slider/centered/knob/enabled_circle", 48f).toPx() / 2
++                val clamped =
++                    if (size.width < baseRadius * 2) size.width / 2
++                    else baseRadius + (if (rtl) 1 - frac else frac) * (size.width - baseRadius * 2)
++                drawCircle(c["basic_700"], r, Offset(clamped, size.height / 2))
++                drawCircle(
++                    c["climate/slider_background"],
++                    r - 3.dp.toPx(),
++                    Offset(clamped, size.height / 2),
++                    style = Stroke(6.dp.toPx()),
++                )
++            } else {
++                drawRoundRect(
++                    c[if (pressed) "controller/slider/pressed" else "controller/slider/normal"],
++                    cornerRadius =
++                        CornerRadius(
++                            m.dp(
++                                    "controller/slider/continuous/track/${if (largeTrack) "medium" else "small"}/radius_top_left",
++                                    if (largeTrack) 24f else 20f,
++                                )
++                                .toPx()
++                        ),
++                )
++                val inset =
++                    m.dp(
++                            "controller/slider/continuous/track/${if (largeTrack) "medium" else "small"}/item_padding",
++                            4f,
++                        )
++                        .toPx()
++                val fill = (size.width - 2 * inset) * frac
++                if (fill > 0f)
++                    drawRoundRect(
++                        c["controller/slider/knop"],
++                        Offset(if (rtl) size.width - inset - fill else inset, inset),
++                        Size(fill, (size.height - 2 * inset).coerceAtLeast(0f)),
++                        CornerRadius(
++                            m.dp(
++                                    "controller/slider/continuous/${if (largeTrack) "medium" else "small"}/knob/radius_top_left",
++                                    if (largeTrack) 20f else 16f,
++                                )
++                                .toPx()
++                        ),
+                     )
+-            drawRoundRect(
+-                brush,
+-                Offset(0f, (size.height - trackH) / 2),
+-                Size(size.width, trackH),
+-                CornerRadius(trackH / 2),
+-            )
+-            val r =
+-                (m.dp(
+-                        if (pressed) "controller/slider/centered/knob/pressed_circle"
+-                        else "controller/slider/centered/knob/enabled_circle",
+-                        if (pressed) 56f else 48f,
+-                    ) / 2)
+-                    .toPx()
+-            val clamped = x.coerceIn(r, size.width.minus(r).coerceAtLeast(r))
+-            drawCircle(c["basic_700"], r, Offset(clamped, size.height / 2))
+-            drawCircle(
+-                c["climate/slider_background"],
+-                r - 3.dp.toPx(),
+-                Offset(clamped, size.height / 2),
+-                style = Stroke(6.dp.toPx()),
+-            )
+-        } else {
+-            drawRoundRect(
+-                c[if (pressed) "controller/slider/pressed" else "controller/slider/normal"],
+-                cornerRadius = CornerRadius(24.dp.toPx()),
+-            )
+-            val inset = 4.dp.toPx()
+-            val fill = (size.width - 2 * inset) * frac
+-            if (fill > 0f)
+-                drawRoundRect(
+-                    c["controller/slider/knop"],
+-                    Offset(if (rtl) size.width - inset - fill else inset, inset),
+-                    Size(fill, (size.height - 2 * inset).coerceAtLeast(0f)),
+-                    CornerRadius(20.dp.toPx()),
++            }
++        }
++        if (!centered && (leadingIcon != null || trailingIcon != null)) {
++            val glyph =
++                m.dp(
++                    "controller/slider/continuous/track/${if (largeTrack) "medium" else "small"}/icon",
++                    if (largeTrack) 48f else 40f,
+                 )
++            Row(
++                Modifier.matchParentSize()
++                    .padding(
++                        horizontal =
++                            m.dp(
++                                "controller/slider/continuous/track/${if (largeTrack) "medium" else "small"}/icon_padding_horizontal",
++                                if (largeTrack) 20f else 16f,
++                            )
++                    )
++                    .clearAndSetSemantics {},
++                verticalAlignment = Alignment.CenterVertically,
++            ) {
++                CompositionLocalProvider(
++                    LocalPleosContentColor provides
++                        c[if (enabled) "icon/dark/primary" else "icon/dark/quaternary"]
++                ) {
++                    if (leadingIcon != null)
++                        Box(Modifier.size(glyph), contentAlignment = Alignment.Center) {
++                            leadingIcon()
++                        }
++                    Spacer(Modifier.weight(1f))
++                    if (trailingIcon != null)
++                        Box(Modifier.size(glyph), contentAlignment = Alignment.Center) {
++                            trailingIcon()
++                        }
++                }
++            }
+         }
+     }
+ }
+@@ -283,6 +419,7 @@
+     label: String? = null,
+     leadingIcon: (@Composable () -> Unit)? = null,
+     trailingIcon: (@Composable () -> Unit)? = null,
++    showVolumeIcon: Boolean = true,
+ ) {
+     val v = normalizePleosValue(value, valueRange, step)
+     val large = size == PleosSliderSize.Large
+@@ -299,7 +436,14 @@
+         )
+     PleosSurface(
+         modifier
+-            .widthIn(max = if (large) 808.dp else 560.dp)
++            .widthIn(
++                max =
++                    m.dp(
++                        if (large) "controller/slider/continuous/width_large"
++                        else "controller/slider/continuous/width_medium",
++                        if (large) 808f else 560f,
++                    )
++            )
+             .defaultMinSize(
+                 minHeight =
+                     m.dp(
+@@ -342,20 +486,21 @@
+             PleosIconButton(
+                 "감소",
+                 {
+-                    onValueChange(normalizePleosValue(v - increment, valueRange, step))
++                    onValueChange(shiftedPleosValue(v, -increment, valueRange, step))
+                     onValueChangeFinished?.invoke()
+                 },
+                 size = if (large) PleosButtonSize.Medium else PleosButtonSize.Small,
+                 enabled = enabled && v > valueRange.start,
+                 style = PleosIconButtonStyle.Plain,
+             ) {
+-                if (leadingIcon != null) leadingIcon()
+-                else PleosIcon(MinusIcon, Modifier.fillMaxSize())
++                PleosIcon(BackIcon, Modifier.fillMaxSize())
+             }
+             label?.let {
+                 PleosText(
+                     it,
+-                    Modifier.widthIn(max = 180.dp),
++                    Modifier.widthIn(
++                        max = m.dp("controller/slider/continuous/medium/label_width", 180f)
++                    ),
+                     style =
+                         pleosTextStyle(
+                             if (large) 32 else 30,
+@@ -383,22 +528,61 @@
+                 false,
+                 onValueChangeFinished,
+                 valueFormatter,
++                largeTrack = large,
++                leadingIcon =
++                    leadingIcon
++                        ?: if (showVolumeIcon)
++                            ({
++                                VolumeIcon(
++                                    pleosVolumeLevel(
++                                        if (valueRange.start == valueRange.endInclusive) 0f
++                                        else
++                                            (v - valueRange.start) /
++                                                (valueRange.endInclusive - valueRange.start)
++                                    )
++                                )
++                            })
++                        else null,
++                trailingIcon = trailingIcon,
+             )
+             PleosIconButton(
+                 "증가",
+                 {
+-                    onValueChange(normalizePleosValue(v + increment, valueRange, step))
++                    onValueChange(shiftedPleosValue(v, increment, valueRange, step))
+                     onValueChangeFinished?.invoke()
+                 },
+                 size = if (large) PleosButtonSize.Medium else PleosButtonSize.Small,
+                 enabled = enabled && v < valueRange.endInclusive,
+                 style = PleosIconButtonStyle.Plain,
+             ) {
+-                if (trailingIcon != null) trailingIcon()
+-                else PleosIcon(PlusIcon, Modifier.fillMaxSize())
++                PleosIcon(RightIcon, Modifier.fillMaxSize())
+             }
+         }
+     }
++}
++
++@Composable
++private fun CenteredValueLabel(text: String) {
++    val match = Regex("([+-]?[0-9]{1,2})([.,][0-9]+)?").matchEntire(text)
++    val m = PleosTheme.metrics
++    if (match == null) {
++        PleosText(text, style = pleosTextStyle(40, 52, FontWeight.Bold), maxLines = 1)
++    } else
++        Row(verticalAlignment = Alignment.CenterVertically) {
++            PleosText(
++                match.groupValues[1],
++                Modifier.width(m.dp("gnb/temperature/number_width", 75f)).alignByBaseline(),
++                style = pleosTextStyle(60, 68, FontWeight.Bold),
++                maxLines = 1,
++                textAlign = TextAlign.Center,
++            )
++            PleosText(
++                match.groupValues[2],
++                Modifier.width(m.dp("gnb/temperature/decimal_places_witdh", 38f)).alignByBaseline(),
++                style = pleosTextStyle(40, 64, FontWeight.ExtraBold),
++                maxLines = 1,
++            )
++        }
+ }
+ 
+ /**
+@@ -413,12 +597,14 @@
+     modifier: Modifier = Modifier,
+     valueRange: ClosedFloatingPointRange<Float> = -1f..1f,
+     step: Float? = null,
+-    centerValue: Float = (valueRange.start + valueRange.endInclusive) / 2,
++    centerValue: Float =
++        ((valueRange.start.toDouble() + valueRange.endInclusive.toDouble()) / 2).toFloat(),
+     type: PleosCenteredSliderType = PleosCenteredSliderType.Basic,
+     off: Boolean = false,
+     enabled: Boolean = true,
+     onValueChangeFinished: (() -> Unit)? = null,
+     valueFormatter: (Float) -> String = { it.toString() },
++    valueContent: (@Composable (String) -> Unit)? = null,
+ ) {
+     val v = normalizePleosValue(value, valueRange, step)
+     require(centerValue.isFinite() && centerValue in valueRange)
+@@ -458,7 +644,13 @@
+         Row(
+             Modifier.padding(
+                 horizontal = side,
+-                vertical = m.dp("controller/slider/padding_vertical_medium", 10f),
++                vertical =
++                    m.dp(
++                        if (type == PleosCenteredSliderType.Button)
++                            "controller/slider/padding_vertical_medium"
++                        else "controller/slider/padding_vertical_large",
++                        if (type == PleosCenteredSliderType.Button) 10f else 12f,
++                    ),
+             ),
+             verticalAlignment = Alignment.CenterVertically,
+             horizontalArrangement = Arrangement.spacedBy(gap),
+@@ -467,24 +659,42 @@
+                 PleosIconButton(
+                     "감소",
+                     {
+-                        onValueChange(normalizePleosValue(v - increment, valueRange, step))
++                        onValueChange(shiftedPleosValue(v, -increment, valueRange, step))
+                         onValueChangeFinished?.invoke()
+                     },
+                     enabled = enabled && v > valueRange.start,
+                     style = PleosIconButtonStyle.Plain,
+                 ) {
+-                    PleosIcon(MinusIcon, Modifier.fillMaxSize())
++                    PleosIcon(BackIcon, Modifier.fillMaxSize())
+                 }
+-            if (type == PleosCenteredSliderType.Number)
+-                PleosText(
+-                    if (off) "OFF" else valueFormatter(v),
+-                    Modifier.widthIn(max = 113.dp),
+-                    style = pleosTextStyle(36, 44, FontWeight.Bold),
+-                )
++            if (type == PleosCenteredSliderType.Number) {
++                val formatted = if (off) "OFF" else valueFormatter(v)
++                Box(
++                    Modifier.width(
++                            m.dp("gnb/temperature/number_width", 75f) +
++                                m.dp("gnb/temperature/decimal_places_witdh", 38f)
++                        )
++                        .heightIn(min = m.dp("controller/slider/centered/value_height", 76f)),
++                    contentAlignment = Alignment.Center,
++                ) {
++                    if (valueContent != null) valueContent(formatted)
++                    else CenteredValueLabel(formatted)
++                }
++            }
+             ValueTrack(
+                 v,
+                 onValueChange,
+-                Modifier.weight(1f).height(80.dp),
++                Modifier.weight(1f)
++                    .height(
++                        (m.dp("controller/slider/height_large", 100f) -
++                                m.dp(
++                                    if (type == PleosCenteredSliderType.Button)
++                                        "controller/slider/padding_vertical_medium"
++                                    else "controller/slider/padding_vertical_large",
++                                    if (type == PleosCenteredSliderType.Button) 10f else 12f,
++                                ) * 2)
++                            .coerceAtLeast(48.dp)
++                    ),
+                 valueRange,
+                 step,
+                 enabled,
+@@ -498,13 +708,13 @@
+                 PleosIconButton(
+                     "증가",
+                     {
+-                        onValueChange(normalizePleosValue(v + increment, valueRange, step))
++                        onValueChange(shiftedPleosValue(v, increment, valueRange, step))
+                         onValueChangeFinished?.invoke()
+                     },
+                     enabled = enabled && v < valueRange.endInclusive,
+                     style = PleosIconButtonStyle.Plain,
+                 ) {
+-                    PleosIcon(PlusIcon, Modifier.fillMaxSize())
++                    PleosIcon(RightIcon, Modifier.fillMaxSize())
+                 }
+         }
+     }
+@@ -573,30 +783,31 @@
+     PleosSurface(
+         modifier
+             .widthIn(max = PleosTheme.metrics.dp("controller/stepper/width", 400f))
+-            .heightIn(min = 100.dp),
++            .heightIn(min = PleosTheme.metrics.dp("controller/stepper/height", 100f)),
+         c["controller/stepper_background"],
+-        24.dp,
++        PleosTheme.metrics.dp("controller/stepper/radius_top_left", 24f),
+         c["divider/secondary"],
+-        2.dp,
++        PleosTheme.metrics.dp("controller/stepper/border", 2f),
+         1,
+     ) {
+         Row(
+-            Modifier.fillMaxWidth().heightIn(min = 100.dp),
++            Modifier.fillMaxWidth()
++                .heightIn(min = PleosTheme.metrics.dp("controller/stepper/height", 100f)),
+             verticalAlignment = Alignment.CenterVertically,
+         ) {
+-            Box(Modifier.weight(112f), contentAlignment = Alignment.Center) {
+-                PleosIconButton(
+-                    "감소",
+-                    { onValueChange(stepPleosDecimal(v, min, max, step, -1)) },
+-                    enabled = enabled && v > min,
+-                    size = PleosButtonSize.Small,
+-                    style = PleosIconButtonStyle.Plain,
+-                ) {
+-                    PleosIcon(MinusIcon, Modifier.fillMaxSize())
+-                }
+-            }
++            StepperAction(
++                "감소",
++                { onValueChange(stepPleosDecimal(v, min, max, step, -1)) },
++                enabled && v > min,
++                MinusIcon,
++                Modifier.weight(112f),
++            )
+             Box(Modifier.weight(32f), contentAlignment = Alignment.Center) {
+-                Box(Modifier.width(2.dp).height(64.dp).background(c["divider/tertiary"]))
++                Box(
++                    Modifier.width(PleosTheme.metrics.dp("controller/stepper/divider", 2f))
++                        .height(PleosTheme.metrics.dp("controller/stepper/divider_height", 64f))
++                        .background(c["divider/tertiary"])
++                )
+             }
+             PleosText(
+                 valueFormatter(v),
+@@ -605,19 +816,57 @@
+                 textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+             )
+             Box(Modifier.weight(32f), contentAlignment = Alignment.Center) {
+-                Box(Modifier.width(2.dp).height(64.dp).background(c["divider/tertiary"]))
+-            }
+-            Box(Modifier.weight(112f), contentAlignment = Alignment.Center) {
+-                PleosIconButton(
+-                    "증가",
+-                    { onValueChange(stepPleosDecimal(v, min, max, step, 1)) },
+-                    enabled = enabled && v < max,
+-                    size = PleosButtonSize.Small,
+-                    style = PleosIconButtonStyle.Plain,
+-                ) {
+-                    PleosIcon(PlusIcon, Modifier.fillMaxSize())
+-                }
+-            }
++                Box(
++                    Modifier.width(PleosTheme.metrics.dp("controller/stepper/divider", 2f))
++                        .height(PleosTheme.metrics.dp("controller/stepper/divider_height", 64f))
++                        .background(c["divider/tertiary"])
++                )
++            }
++            StepperAction(
++                "증가",
++                { onValueChange(stepPleosDecimal(v, min, max, step, 1)) },
++                enabled && v < max,
++                PlusIcon,
++                Modifier.weight(112f),
++            )
+         }
+     }
+ }
++
++@Composable
++private fun StepperAction(
++    label: String,
++    onClick: () -> Unit,
++    enabled: Boolean,
++    icon: Int,
++    modifier: Modifier,
++) {
++    val source = remember { MutableInteractionSource() }
++    val pressed by source.collectIsPressedAsState()
++    val c = PleosTheme.colors
++    val m = PleosTheme.metrics
++    Box(
++        actionModifier(
++            modifier.heightIn(min = m.dp("controller/stepper/height", 100f)).semantics {
++                contentDescription = label
++            },
++            source,
++            enabled,
++            24.dp,
++            onClick,
++        ),
++        contentAlignment = Alignment.Center,
++    ) {
++        PleosSurface(
++            Modifier.size(m.dp("buttons/icon/small/width", 64f)),
++            if (enabled && pressed) c["button/basic/pressed"] else Color.Transparent,
++            m.dp("buttons/icon/small/rounded_radius_top_left", 16f),
++        ) {
++            PleosIcon(
++                icon,
++                Modifier.size(m.dp("buttons/icon/small/content", 44f)).align(Alignment.Center),
++                tint = c[if (enabled) "icon/dark/primary" else "icon/dark/quaternary"],
++            )
++        }
++    }
++}
+--- before/pleos-compose/src/main/java/com/jade/pleos/compose/Dropdown.kt
++++ after/pleos-compose/src/main/java/com/jade/pleos/compose/Dropdown.kt
+@@ -5,10 +5,13 @@
+ import androidx.compose.foundation.interaction.*
+ import androidx.compose.foundation.layout.*
+ import androidx.compose.foundation.selection.toggleable
++import androidx.compose.foundation.shape.RoundedCornerShape
+ import androidx.compose.runtime.*
+ import androidx.compose.ui.*
++import androidx.compose.ui.draw.clip
+ import androidx.compose.ui.focus.*
+ import androidx.compose.ui.geometry.Rect
++import androidx.compose.ui.graphics.Color
+ import androidx.compose.ui.input.key.*
+ import androidx.compose.ui.input.pointer.pointerInput
+ import androidx.compose.ui.layout.*
+@@ -112,7 +115,16 @@
+     val c = PleosTheme.colors
+     val m = PleosTheme.metrics
+     val source = interactionSource
++    val pressed by source.collectIsPressedAsState()
+     val footer = entry.kind is PleosDropdownItemKind.Footer
++    val radius = m.dp("dropdown/${size.name.lowercase()}/radius_top_left", if (small) 28f else 32f)
++    val inset =
++        m.dp(
++            if (small) "dropdown/padding_medium" else "dropdown/padding_large",
++            if (small) 16f else 20f,
++        )
++    val prefixSize = m.dp("dropdown/prefix/container_square", 56f)
++    val suffixSize = m.dp("dropdown/suffix/icon_square", 48f)
+     fun activate() {
+         when (val kind = entry.kind) {
+             PleosDropdownItemKind.Selection -> onSelected(entry.key)
+@@ -123,14 +135,24 @@
+     }
+     Column(modifier) {
+         if (footer) {
+-            Box(Modifier.fillMaxWidth().height(1.dp).background(c["divider/tertiary"]))
+-            Spacer(Modifier.height(16.dp))
++            Box(
++                Modifier.fillMaxWidth()
++                    .padding(horizontal = inset)
++                    .height(1.dp)
++                    .background(c["divider/tertiary"])
++            )
++            Spacer(Modifier.height(m.dp("dropdown/gap_vertical_medium", 16f)))
+         }
+         val base =
+             Modifier.fillMaxWidth()
+                 .heightIn(
+                     min =
+-                        if (footer) if (small) 64.dp else 80.dp
++                        if (footer)
++                            m.dp(
++                                if (small) "buttons/icon/small/height"
++                                else "buttons/icon/medium/height",
++                                if (small) 64f else 80f,
++                            )
+                         else
+                             m.dp(
+                                 "dropdown/${size.name.lowercase()}/height",
+@@ -146,7 +168,7 @@
+         val input =
+             if (switchKind != null)
+                 base
+-                    .focusIndication(source, 16.dp)
++                    .focusIndication(source, radius)
+                     .toggleable(
+                         switchKind.checked,
+                         source,
+@@ -155,32 +177,31 @@
+                         Role.Switch,
+                         switchKind.onCheckedChange,
+                     )
+-            else actionModifier(base, source, entry.enabled, 16.dp, ::activate)
++            else actionModifier(base, source, entry.enabled, radius, ::activate)
+         PleosSurface(
+             input,
+             if (selected && !footer) c["dim/dark/primary"]
+             else androidx.compose.ui.graphics.Color.Transparent,
+-            16.dp,
++            radius,
+         ) {
+             CompositionLocalProvider(
+                 LocalPleosContentColor provides
+                     c[if (entry.enabled) "text/dark/primary" else "text/dark/quaternary"]
+             ) {
+                 Row(
+-                    Modifier.padding(
+-                        horizontal =
+-                            m.dp(
+-                                if (small) "dropdown/padding_medium" else "dropdown/padding_large",
+-                                if (small) 16f else 20f,
+-                            ),
+-                        vertical = 8.dp,
+-                    ),
++                    Modifier.padding(horizontal = inset, vertical = if (footer) 0.dp else 8.dp),
+                     verticalAlignment = Alignment.CenterVertically,
+                 ) {
+                     when {
+                         footer -> {
+                             PleosSurface(
+-                                Modifier.size(if (small) 64.dp else 80.dp),
++                                Modifier.size(
++                                    m.dp(
++                                        if (small) "buttons/icon/small/width"
++                                        else "buttons/icon/medium/width",
++                                        if (small) 64f else 80f,
++                                    )
++                                ),
+                                 c["button/basic/enabled"],
+                                 999.dp,
+                             ) {
+@@ -190,34 +211,69 @@
+                                         .align(Alignment.Center),
+                                 )
+                             }
+-                            Spacer(Modifier.width(20.dp))
++                            Spacer(Modifier.width(m.dp("dropdown/padding_large", 20f)))
+                         }
+                         entry.prefix != null -> {
+-                            Box(Modifier.size(56.dp), contentAlignment = Alignment.Center) {
+-                                Box(
+-                                    Modifier.size(if (entry.appIcon) 56.dp else 40.dp),
+-                                    contentAlignment = Alignment.Center,
+-                                ) {
+-                                    entry.prefix.invoke()
+-                                }
++                            Box(Modifier.size(prefixSize), contentAlignment = Alignment.Center) {
++                                if (entry.appIcon)
++                                    PleosSurface(
++                                        Modifier.fillMaxSize(),
++                                        Color.Transparent,
++                                        m.dp("dropdown/prefix/app_radius_top_left", 16f),
++                                        c["divider/secondary"],
++                                        m.dp("dropdown/container/prefix_app_icon_border", 1f),
++                                    ) {
++                                        Box(
++                                            Modifier.padding(
++                                                    m.dp(
++                                                        "dropdown/medium/prefix/padding_horizontal",
++                                                        4f,
++                                                    )
++                                                )
++                                                .fillMaxSize()
++                                                .clip(
++                                                    RoundedCornerShape(
++                                                        m.dp(
++                                                            "dropdown/prefix/medium/app_icon_radius_top_left",
++                                                            12f,
++                                                        )
++                                                    )
++                                                )
++                                        ) {
++                                            entry.prefix.invoke()
++                                        }
++                                    }
++                                else
++                                    Box(
++                                        Modifier.size(
++                                            m.dp("dropdown/medium/prefix/icon_square", 40f)
++                                        ),
++                                        contentAlignment = Alignment.Center,
++                                    ) {
++                                        entry.prefix.invoke()
++                                    }
+                             }
+                         }
+                     }
+                     PleosText(
+                         entry.text,
+-                        Modifier.weight(1f).padding(horizontal = 12.dp),
++                        Modifier.weight(1f)
++                            .padding(
++                                horizontal =
++                                    if (footer) 0.dp else m.dp("dropdown/padding_small", 12f)
++                            ),
+                         style = pleosTextStyle(30, 38, FontWeight.Bold),
+                         maxLines = 2,
+                     )
+                     if (entry.isNew) {
+                         Box(
+-                            Modifier.size(16.dp)
++                            Modifier.size(m.dp("dropdown/suffix/dot_icon_square", 16f))
+                                 .background(
+                                     c["informative/active"],
+                                     androidx.compose.foundation.shape.CircleShape,
+                                 )
+                         )
+-                        Spacer(Modifier.width(12.dp))
++                        Spacer(Modifier.width(m.dp("dropdown/padding_small", 12f)))
+                     }
+                     val switch = entry.kind as? PleosDropdownItemKind.Switch
+                     when {
+@@ -225,14 +281,14 @@
+                             SwitchVisual(
+                                 switch.checked,
+                                 entry.enabled,
+-                                false,
++                                pressed && entry.enabled,
+                                 PleosSwitchSize.Small,
+                             )
+                         entry.suffix != null ->
+-                            Box(Modifier.size(48.dp), contentAlignment = Alignment.Center) {
++                            Box(Modifier.size(suffixSize), contentAlignment = Alignment.Center) {
+                                 entry.suffix.invoke()
+                             }
+-                        selected -> PleosIcon(CheckIcon, Modifier.size(48.dp))
++                        selected -> PleosIcon(CheckIcon, Modifier.size(suffixSize))
+                     }
+                 }
+             }
+@@ -272,12 +328,13 @@
+             if (size == PleosDropdownSize.Small) 28f else 32f,
+         ),
+         c["divider/secondary"],
+-        2.dp,
++        m.dp("dropdown/border", 2f),
+         1,
+     ) {
+         Column(
+-            Modifier.verticalScroll(rememberScrollState()).padding(16.dp),
+-            verticalArrangement = Arrangement.spacedBy(16.dp),
++            Modifier.verticalScroll(rememberScrollState())
++                .padding(m.dp("dropdown/padding_medium", 16f)),
++            verticalArrangement = Arrangement.spacedBy(m.dp("dropdown/gap_vertical_medium", 16f)),
+         ) {
+             items.forEach { item ->
+                 key(item.key) {
+@@ -317,7 +374,10 @@
+     suffix: (@Composable () -> Unit)? = null,
+     dismissAfterSelection: Boolean = true,
+     onDismissRequest: ((PleosDismissReason) -> Unit)? = null,
++    triggerContent: (@Composable (Modifier, Boolean, () -> Unit) -> Unit)? = null,
++    preferredWidth: Dp? = 600.dp,
+ ) {
++    require(preferredWidth == null || preferredWidth.value.isFinite() && preferredWidth > 0.dp)
+     val c = PleosTheme.colors
+     val m = PleosTheme.metrics
+     val small = size == PleosDropdownSize.Small
+@@ -348,81 +408,108 @@
+         if (!enabled && expanded) dismiss(PleosDismissReason.Replaced)
+     }
+     Box(
+-        modifier.widthIn(max = 600.dp).onGloballyPositioned {
+-            anchorBounds = it.boundsInWindow().translate(windowOriginOnScreen(hostView))
+-        }
++        modifier
++            .then(if (preferredWidth != null) Modifier.width(preferredWidth) else Modifier)
++            .onGloballyPositioned {
++                anchorBounds = it.boundsInWindow().translate(windowOriginOnScreen(hostView))
++            }
+     ) {
+-        PleosSurface(
+-            actionModifier(
+-                Modifier.fillMaxWidth()
+-                    .defaultMinSize(
+-                        minHeight =
+-                            m.dp(
+-                                "dropdown/${size.name.lowercase()}/height",
+-                                if (small) 80f else 100f,
+-                            )
+-                    )
+-                    .focusRequester(anchor)
+-                    .semantics {
+-                        stateDescription = if (expanded && enabled) "펼쳐짐" else "접힘"
+-                        if (enabled) {
+-                            expand {
+-                                onExpandedChange(true)
+-                                true
++        if (triggerContent != null)
++            triggerContent(Modifier.focusRequester(anchor), expanded && enabled) {
++                if (enabled) onExpandedChange(!expanded)
++            }
++        else
++            PleosSurface(
++                actionModifier(
++                    Modifier.fillMaxWidth()
++                        .defaultMinSize(
++                            minHeight =
++                                m.dp(
++                                    "dropdown/${size.name.lowercase()}/height",
++                                    if (small) 80f else 100f,
++                                )
++                        )
++                        .focusRequester(anchor)
++                        .semantics {
++                            stateDescription = if (expanded && enabled) "펼쳐짐" else "접힘"
++                            if (enabled) {
++                                expand {
++                                    onExpandedChange(true)
++                                    true
++                                }
++                                collapse {
++                                    onExpandedChange(false)
++                                    true
++                                }
+                             }
+-                            collapse {
+-                                onExpandedChange(false)
+-                                true
++                        },
++                    source,
++                    enabled,
++                    m.dp(
++                        "dropdown/${size.name.lowercase()}/radius_top_left",
++                        if (small) 28f else 32f,
++                    ),
++                    { onExpandedChange(!expanded) },
++                ),
++                c[if (pressed) "dropdown/pressed" else "dropdown/normal"],
++                m.dp("dropdown/${size.name.lowercase()}/radius_top_left", if (small) 28f else 32f),
++                c["divider/secondary"],
++                m.dp("dropdown/border", 2f),
++                1,
++            ) {
++                CompositionLocalProvider(
++                    LocalPleosContentColor provides
++                        c[if (enabled) "text/dark/primary" else "text/dark/quaternary"]
++                ) {
++                    Row(
++                        Modifier.padding(
++                            horizontal =
++                                m.dp(
++                                    if (small) "dropdown/padding_medium"
++                                    else "dropdown/padding_large",
++                                    if (small) 16f else 20f,
++                                ),
++                            vertical = 16.dp,
++                        ),
++                        verticalAlignment = Alignment.CenterVertically,
++                    ) {
++                        prefix?.let {
++                            Box(
++                                Modifier.size(m.dp("dropdown/prefix/container_square", 56f)),
++                                contentAlignment = Alignment.Center,
++                            ) {
++                                it()
+                             }
+                         }
+-                    },
+-                source,
+-                enabled,
+-                m.dp("dropdown/${size.name.lowercase()}/radius_top_left", if (small) 28f else 32f),
+-                { onExpandedChange(!expanded) },
+-            ),
+-            c[if (pressed) "dropdown/pressed" else "dropdown/normal"],
+-            m.dp("dropdown/${size.name.lowercase()}/radius_top_left", if (small) 28f else 32f),
+-            c["divider/secondary"],
+-            2.dp,
+-            1,
+-        ) {
+-            CompositionLocalProvider(
+-                LocalPleosContentColor provides
+-                    c[if (enabled) "text/dark/primary" else "text/dark/quaternary"]
+-            ) {
+-                Row(
+-                    Modifier.padding(
+-                        horizontal =
+-                            m.dp(
+-                                if (small) "dropdown/padding_medium" else "dropdown/padding_large",
+-                                if (small) 16f else 20f,
+-                            ),
+-                        vertical = 16.dp,
+-                    ),
+-                    verticalAlignment = Alignment.CenterVertically,
+-                ) {
+-                    prefix?.let {
+-                        Box(Modifier.size(56.dp), contentAlignment = Alignment.Center) { it() }
+-                    }
+-                    PleosText(
+-                        items.firstOrNull { it.key == selectedId }?.text ?: placeholder,
+-                        Modifier.weight(1f).padding(horizontal = if (small) 12.dp else 16.dp),
+-                        style = pleosTextStyle(30, 38, FontWeight.Bold),
+-                        maxLines = 2,
+-                    )
+-                    Box(Modifier.size(48.dp), contentAlignment = Alignment.Center) {
+-                        if (suffix != null) suffix()
+-                        else
+-                            PleosIcon(
+-                                if (expanded) R.drawable.pleos_ic_arrow_direction_up__67_22102
+-                                else DownIcon,
+-                                Modifier.fillMaxSize(),
+-                            )
++                        PleosText(
++                            items.firstOrNull { it.key == selectedId }?.text ?: placeholder,
++                            Modifier.weight(1f)
++                                .padding(
++                                    horizontal =
++                                        m.dp(
++                                            if (small) "dropdown/padding_small"
++                                            else "dropdown/padding_medium",
++                                            if (small) 12f else 16f,
++                                        )
++                                ),
++                            style = pleosTextStyle(30, 38, FontWeight.Bold),
++                            maxLines = 2,
++                        )
++                        Box(
++                            Modifier.size(m.dp("dropdown/suffix/icon_square", 48f)),
++                            contentAlignment = Alignment.Center,
++                        ) {
++                            if (suffix != null) suffix()
++                            else
++                                PleosIcon(
++                                    if (expanded) R.drawable.pleos_ic_arrow_direction_up__67_22102
++                                    else DownIcon,
++                                    Modifier.fillMaxSize(),
++                                )
++                        }
+                     }
+                 }
+             }
+-        }
+         if (expanded && enabled && anchorBounds.width > 0 && anchorBounds.height > 0)
+             Dialog(
+                 onDismissRequest = { dismiss(PleosDismissReason.Back) },
+@@ -449,7 +536,7 @@
+                 val dialogHeight = with(density) { dialogSize.height.toDp() }
+                 val position =
+                     PleosDropdownPositionProvider(
+-                            with(density) { 8.dp.roundToPx() },
++                            with(density) { m.dp("dropdown/gap_vertical_small", 8f).roundToPx() },
+                             with(density) { 24.dp.roundToPx() },
+                             safeLeft,
+                             safeTop,
+@@ -514,7 +601,7 @@
+                         Modifier.absoluteOffset { position }
+                             .width(
+                                 minOf(
+-                                    600.dp,
++                                    with(density) { anchorBounds.width.toDp() },
+                                     (dialogWidth -
+                                             48.dp -
+                                             with(density) { (safeLeft + safeRight).toDp() })
+--- before/pleos-compose/src/main/java/com/jade/pleos/compose/Fields.kt
++++ after/pleos-compose/src/main/java/com/jade/pleos/compose/Fields.kt
+@@ -89,6 +89,7 @@
+     val pad = m.dp(p + "padding_horizontal", if (small) 24f else 32f)
+     val gap = m.dp(p + "gap_horizontal", if (small) 12f else 16f)
+     val glyph = m.dp(p + "suffix_icon_square", if (small) 40f else 48f)
++    val actionSize = maxOf(glyph, PleosTheme.behavior.minimumTouchTarget)
+     val textStyle =
+         pleosTextStyle(if (small) 30 else 36, if (small) 38 else 44)
+             .copy(color = c[if (active) "text/dark/primary" else "text/dark/quaternary"])
+@@ -135,8 +136,8 @@
+             m.dp("fields/text/medium/radius_top_left", 24f),
+             c[
+                 if (invalid != null) "regulation/red"
+-                else if (focused && active) "field/focused" else "divider/secondary"],
+-            if (invalid != null || focused && active) m.dp("fields/text/medium/border", 3f)
++                else if (focused && editable) "field/focused" else "divider/secondary"],
++            if (invalid != null || focused && editable) m.dp("fields/text/medium/border", 3f)
+             else m.dp("fields/text/small/border", 2f),
+         ) {
+             BasicTextField(
+@@ -145,13 +146,19 @@
+                 Modifier.fillMaxWidth()
+                     .defaultMinSize(minHeight = h)
+                     .onFocusChanged { focused = it.isFocused }
+-                    .focusIndication(interactionSource, 24.dp)
++                    .focusIndication(
++                        interactionSource,
++                        m.dp("fields/text/medium/radius_top_left", 24f),
++                    )
+                     .semantics {
+                         if (!label.isNullOrBlank() || placeholder.isNotBlank())
+                             contentDescription = label ?: placeholder
+-                        if (type == PleosFieldType.Password && !passwordVisible)
+-                            this[SemanticsProperties.InputText] =
+-                                AnnotatedString("•".repeat(value.text.length))
++                        if (type == PleosFieldType.Password) {
++                            password()
++                            val protected = AnnotatedString("•".repeat(value.text.length))
++                            this[SemanticsProperties.InputText] = protected
++                            this[SemanticsProperties.EditableText] = protected
++                        }
+                         invalid?.let { error(it) }
+                         if (!enabled || !caps.textInput) disabled()
+                         if (!caps.textInput) stateDescription = caps.restrictionReason
+@@ -277,10 +284,15 @@
+                                     PleosIconButton(
+                                         if (passwordVisible) "비밀번호 숨기기" else "비밀번호 표시",
+                                         { onPasswordVisibilityChange?.invoke(!passwordVisible) },
+-                                        Modifier.size(glyph),
++                                        Modifier.size(actionSize),
+                                         style = PleosIconButtonStyle.Plain,
+                                         size = PleosButtonSize.Small,
+                                         enabled = active,
++                                        metrics =
++                                            IconButtonMetrics(
++                                                smallSize = actionSize,
++                                                smallIcon = glyph,
++                                            ),
+                                     ) {
+                                         PleosIcon(
+                                             if (passwordVisible)
+@@ -293,10 +305,15 @@
+                                     PleosIconButton(
+                                         "입력 지우기",
+                                         { onValueChange(TextFieldValue()) },
+-                                        Modifier.size(glyph),
++                                        Modifier.size(actionSize),
+                                         style = PleosIconButtonStyle.Plain,
+                                         size = PleosButtonSize.Small,
+                                         enabled = editable,
++                                        metrics =
++                                            IconButtonMetrics(
++                                                smallSize = actionSize,
++                                                smallIcon = glyph,
++                                            ),
+                                     ) {
+                                         PleosIcon(CloseIcon, Modifier.fillMaxSize())
+                                     }
+@@ -406,6 +423,9 @@
+             if (large) "fields/number/large_height" else "fields/number/medium_square",
+             if (large) 180f else 128f,
+         )
++    val numberStyle = pleosTextStyle(60, 80, FontWeight.ExtraBold)
++    val contentHeight = with(LocalDensity.current) { numberStyle.lineHeight.toDp() }
++    val cellHeight = maxOf(height, contentHeight)
+     val keyboard = LocalSoftwareKeyboardController.current
+     val requester = remember { FocusRequester() }
+     var editing by remember { mutableStateOf(TextFieldValue(value, TextRange(value.length))) }
+@@ -454,7 +474,7 @@
+                 ),
+             visualTransformation =
+                 if (obscured) PasswordVisualTransformation() else VisualTransformation.None,
+-            textStyle = pleosTextStyle(60, 80, FontWeight.ExtraBold),
++            textStyle = numberStyle,
+             decorationBox = { inner ->
+                 Box {
+                     Box(Modifier.size(1.dp).alpha(0f)) { inner() }
+@@ -468,7 +488,7 @@
+                                     active &&
+                                     i == current.selection.start.coerceAtMost(digitCount - 1)
+                             PleosSurface(
+-                                Modifier.size(width, height).clickable(
++                                Modifier.width(width).heightIn(min = cellHeight).clickable(
+                                     enabled = active && !readOnly
+                                 ) {
+                                     editing =
+@@ -493,7 +513,7 @@
+                                     PleosText(
+                                         if (obscured) "•" else value[i].toString(),
+                                         Modifier.align(Alignment.Center),
+-                                        style = pleosTextStyle(60, 80, FontWeight.ExtraBold),
++                                        style = numberStyle,
+                                         color =
+                                             c[
+                                                 if (active) "text/dark/primary"
+--- before/pleos-compose/src/main/java/com/jade/pleos/compose/Foundation.kt
++++ after/pleos-compose/src/main/java/com/jade/pleos/compose/Foundation.kt
+@@ -332,5 +332,7 @@
+     get() = R.drawable.pleos_ic_arrow_direction_down__67_22105
+ internal val BackIcon
+     get() = R.drawable.pleos_ic_arrow_direction_left__67_22096
++internal val RightIcon
++    get() = R.drawable.pleos_ic_arrow_direction_right__67_22099
+ internal val CloseIcon
+     get() = R.drawable.pleos_ic_close_type_basic__67_22415
+--- before/pleos-compose/src/main/java/com/jade/pleos/compose/Keypads.kt
++++ after/pleos-compose/src/main/java/com/jade/pleos/compose/Keypads.kt
+@@ -173,6 +173,7 @@
+                     PleosText(
+                         kind.digit.toString(),
+                         style = pleosTextStyle(56, 72, FontWeight.Bold),
++                        color = c[if (active) "text/dark/primary" else "text/dark/quaternary"],
+                     )
+                 is PleosNumericKeyKind.Function ->
+                     PleosText(
+@@ -242,8 +243,10 @@
+                             onKey,
+                             Modifier.weight(1f),
+                             enabled &&
+-                                (kind !is PleosNumericKeyKind.Delete &&
+-                                    kind !is PleosNumericKeyKind.Function || canDelete),
++                                (canDelete ||
++                                    kind !is PleosNumericKeyKind.Delete &&
++                                        (kind !is PleosNumericKeyKind.Function ||
++                                            kind.action != PleosKeyAction.ClearAll)),
+                         )
+                     }
+                 }
+@@ -339,14 +342,29 @@
+     ) {
+         val foreground =
+             c[
+-                if (!active) "text/dark/quaternary"
++                if (!active && icon != null && palette == PleosKeyboardPalette.Static)
++                    "keyboard/static/icon_disabled"
++                else if (!active) "text/dark/quaternary"
++                else if (kind == PleosKeyboardKeyKind.Shift && shifted) "informative/active"
++                else if (icon != null && palette == PleosKeyboardPalette.Static)
++                    if (kind == PleosKeyboardKeyKind.Enter) "keyboard/static/icon_dark"
++                    else "keyboard/static/icon_light"
+                 else if (palette == PleosKeyboardPalette.Static) "keyboard/static/text"
+                 else if (role == "active" || role == "accents") "text/light/primary"
+                 else "text/dark/primary"]
+         if (icon != null)
+             PleosIcon(
+                 icon,
+-                Modifier.size(m.dp(key + "icon_square", 44f)).align(Alignment.Center),
++                Modifier.size(m.dp(key + "icon_square", 44f))
++                    .align(
++                        if (kind == PleosKeyboardKeyKind.Shift) Alignment.CenterStart
++                        else Alignment.Center
++                    )
++                    .then(
++                        if (kind == PleosKeyboardKeyKind.Shift)
++                            Modifier.offset(x = m.dp("Common/20", 20f))
++                        else Modifier
++                    ),
+                 tint = foreground,
+             )
+         else
+@@ -385,6 +403,7 @@
+     voiceContent: (@Composable (PleosVoiceState) -> Unit)? = null,
+ ) {
+     val m = PleosTheme.metrics
++    val inputEnabled = enabled && LocalPleosCapabilities.current.textInput
+     val primary = m.dp("keyboard/keyword/normal_width", 100f)
+     val special = m.dp("keyboard/keyword/special_width", 120f)
+     val enter = m.dp("keyboard/keyword/enter_width", 200f)
+@@ -418,12 +437,12 @@
+                     PleosBasicButton(
+                         "음성 입력 요청",
+                         { onKey(PleosKeyAction.VoiceRequested) },
+-                        enabled = enabled,
++                        enabled = inputEnabled,
+                     )
+                     PleosTextButton(
+                         "문자 입력",
+                         { onKey(PleosKeyAction.LanguageRequested) },
+-                        enabled = enabled,
++                        enabled = inputEnabled,
+                     )
+                 }
+             } else {
+--- before/pleos-compose/src/main/java/com/jade/pleos/compose/Navigation.kt
++++ after/pleos-compose/src/main/java/com/jade/pleos/compose/Navigation.kt
+@@ -3,11 +3,16 @@
+ import androidx.compose.foundation.*
+ import androidx.compose.foundation.interaction.*
+ import androidx.compose.foundation.layout.*
++import androidx.compose.foundation.relocation.*
+ import androidx.compose.foundation.selection.*
++import androidx.compose.foundation.text.KeyboardActions
+ import androidx.compose.runtime.*
+ import androidx.compose.ui.*
++import androidx.compose.ui.focus.FocusRequester
++import androidx.compose.ui.focus.focusRequester
+ import androidx.compose.ui.semantics.*
+ import androidx.compose.ui.text.font.FontWeight
++import androidx.compose.ui.text.input.*
+ import androidx.compose.ui.text.style.TextAlign
+ import androidx.compose.ui.unit.*
+ import com.jade.pleos.tokens.*
+@@ -29,6 +34,7 @@
+     modifier: Modifier = Modifier,
+     size: PleosIndicatorSize = PleosIndicatorSize.Wide,
+     onPageSelected: ((Int) -> Unit)? = null,
++    dotGap: Dp? = null,
+ ) {
+     require(pageCount >= 0)
+     if (pageCount == 0) {
+@@ -44,7 +50,7 @@
+         horizontalArrangement =
+             Arrangement.spacedBy(
+                 if (onPageSelected != null) 0.dp
+-                else if (size == PleosIndicatorSize.Wide) 16.dp else 8.dp
++                else dotGap ?: if (size == PleosIndicatorSize.Wide) 16.dp else 8.dp
+             ),
+         verticalAlignment = Alignment.CenterVertically,
+     ) {
+@@ -154,6 +160,13 @@
+                     val selected = item.key == selectedKey
+                     val source = remember { MutableInteractionSource() }
+                     val pressed by source.collectIsPressedAsState()
++                    val bringIntoView = remember { BringIntoViewRequester() }
++                    LaunchedEffect(selected, fitted) {
++                        if (selected && !fitted) {
++                            withFrameNanos {}
++                            bringIntoView.bringIntoView()
++                        }
++                    }
+                     val itemRadius =
+                         if (box) m.dp(bp + "button/radius_top_left", if (large) 24f else 16f)
+                         else m.dp("tabs/line/button/pressed_radius_top_left", 12f)
+@@ -169,6 +182,7 @@
+                     val itemModifier = if (fitted) Modifier.weight(1f) else Modifier
+                     Box(
+                         itemModifier
++                            .bringIntoViewRequester(bringIntoView)
+                             .focusIndication(source, itemRadius)
+                             .selectable(selected, source, null, item.enabled, Role.Tab) {
+                                 onSelected(item.key)
+@@ -230,7 +244,17 @@
+                                 ) {
+                                     item.icon?.let {
+                                         Box(
+-                                            Modifier.size(if (box && large) 52.dp else 40.dp),
++                                            Modifier.size(
++                                                if (!box)
++                                                    m.dp("tabs/line/button/prefix_square", 40f)
++                                                else
++                                                    m.dp(
++                                                        bp +
++                                                            if (large) "button/prefix_icon_square"
++                                                            else "button/prefix_square",
++                                                        if (large) 52f else 40f,
++                                                    )
++                                            ),
+                                             contentAlignment = Alignment.Center,
+                                         ) {
+                                             it()
+@@ -288,6 +312,7 @@
+ enum class PleosNavigationType {
+     Main,
+     Depth,
++    Search,
+ }
+ 
+ enum class PleosHeaderPreset {
+@@ -317,9 +342,13 @@
+     onBack: (() -> Unit)? = null,
+     tabs: (@Composable () -> Unit)? = null,
+     divider: Boolean = false,
++    searchField: (@Composable () -> Unit)? = null,
+ ) {
+     val c = PleosTheme.colors
+     val m = PleosTheme.metrics
++    val main = type == PleosNavigationType.Main
++    val search = type == PleosNavigationType.Search
++    require(!search || searchField != null) { "Search에는 편집 상태를 가진 searchField가 필요합니다." }
+     Column(modifier) {
+         Row(
+             Modifier.fillMaxWidth()
+@@ -327,28 +356,50 @@
+                     start = m.dp("page_navigation/padding_extralarge", 40f),
+                     end = m.dp("page_navigation/padding_large", 24f),
+                 )
+-                .heightIn(min = m.dp("page_navigation/container_height", 80f)),
+-            horizontalArrangement = Arrangement.spacedBy(24.dp),
++                .heightIn(
++                    min =
++                        m.dp(
++                            if (search) "fields/text/medium/height"
++                            else "page_navigation/container_height",
++                            if (search) 100f else 80f,
++                        )
++                ),
++            horizontalArrangement = Arrangement.spacedBy(m.dp("page_navigation/gap_large", 24f)),
+             verticalAlignment = Alignment.CenterVertically,
+         ) {
+-            if (type == PleosNavigationType.Depth && onBack != null)
+-                PleosIconButton("뒤로", onBack, style = PleosIconButtonStyle.Plain) {
+-                    PleosIcon(BackIcon, Modifier.size(56.dp))
+-                }
+-            if (type == PleosNavigationType.Main && appIcon != null)
+-                PleosSurface(
+-                    Modifier.size(m.dp("page_navigation/title/app_icon/container_square", 80f)),
+-                    radius = m.dp("page_navigation/title/app_icon/radius_top_left", 20f),
+-                ) {
+-                    appIcon()
+-                }
+             Row(
+                 Modifier.weight(1f),
+                 verticalAlignment = Alignment.CenterVertically,
+-                horizontalArrangement = Arrangement.spacedBy(16.dp),
++                horizontalArrangement =
++                    Arrangement.spacedBy(
++                        m.dp(
++                            if (main) "page_navigation/gap_medium"
++                            else "page_navigation/title/depth_gap_horizontal",
++                            if (main) 16f else 24f,
++                        )
++                    ),
+             ) {
++                if (!main && onBack != null) {
++                    val glyph = m.dp("page_navigation/title/depth_icon_square", 56f)
++                    PleosIconButton(
++                        "뒤로",
++                        onBack,
++                        Modifier.size(glyph),
++                        style = PleosIconButtonStyle.Plain,
++                    ) {
++                        PleosIcon(BackIcon, Modifier.fillMaxSize())
++                    }
++                }
++                if (main && appIcon != null)
++                    PleosSurface(
++                        Modifier.size(m.dp("page_navigation/title/app_icon/container_square", 80f)),
++                        radius = m.dp("page_navigation/title/app_icon/radius_top_left", 20f),
++                    ) {
++                        appIcon()
++                    }
+                 Column(Modifier.weight(1f, false)) {
+-                    if (type == PleosNavigationType.Main && primaryMenu != null) primaryMenu()
++                    if (search) searchField?.invoke()
++                    else if (main && primaryMenu != null) primaryMenu()
+                     else
+                         PleosText(
+                             title,
+@@ -356,36 +407,42 @@
+                             maxLines = 1,
+                         )
+                     subtitle?.let {
+-                        Spacer(Modifier.height(4.dp))
++                        Spacer(Modifier.height(m.dp("page_navigation/sub_title_gap_vertical", 4f)))
+                         PleosText(
+                             it,
+                             color = c.scoped(.64f, "text/dark/tertiary"),
+-                            style =
+-                                pleosTextStyle(
+-                                    if (type == PleosNavigationType.Main) 24 else 26,
+-                                    if (type == PleosNavigationType.Main) 28 else 34,
+-                                ),
++                            style = pleosTextStyle(if (main) 24 else 26, if (main) 28 else 34),
+                             maxLines = 1,
+                         )
+                     }
+                 }
+-                if (type == PleosNavigationType.Main && secondaryMenu != null) {
+-                    Box(Modifier.width(2.dp).height(32.dp).background(c["divider/tertiary"]))
++                if (main && secondaryMenu != null) {
++                    Box(
++                        Modifier.width(m.dp("page_navigation/divider_width", 2f))
++                            .height(m.dp("page_navigation/divider_height", 32f))
++                            .background(c["divider/tertiary"])
++                    )
+                     secondaryMenu()
+                 }
+             }
+             if (actions != null)
+                 Row(
+-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
++                    horizontalArrangement =
++                        Arrangement.spacedBy(m.dp("page_navigation/gap_samll", 12f)),
+                     verticalAlignment = Alignment.CenterVertically,
+                     content = actions,
+                 )
+         }
+         if (tabs != null) {
+-            Spacer(Modifier.height(12.dp))
++            Spacer(Modifier.height(m.dp("page_navigation/gap_samll", 12f)))
+             tabs()
+         }
+-        if (divider) Box(Modifier.fillMaxWidth().height(1.dp).background(c["divider/tertiary"]))
++        if (divider)
++            Box(
++                Modifier.fillMaxWidth()
++                    .height(m.dp("page_navigation/border_bottom", 1f))
++                    .background(c["divider/tertiary"])
++            )
+     }
+ }
+ 
+@@ -408,21 +465,175 @@
+ ) {
+     val segmented =
+         preset == PleosHeaderPreset.RadioSegmented || preset == PleosHeaderPreset.PhoneSegmented
++    val m = PleosTheme.metrics
++    Box(
++        modifier.then(
++            if (preset != PleosHeaderPreset.Music)
++                Modifier.background(PleosTheme.colors["surface/basic"])
++            else Modifier
++        )
++    ) {
++        PleosPageNavigation(
++            PleosNavigationType.Main,
++            title,
++            Modifier.padding(
++                top = m.dp("page_navigation/padding_extralarge", 40f),
++                bottom = if (segmented) 0.dp else m.dp("page_navigation/padding_large", 24f),
++            ),
++            subtitle,
++            appIcon,
++            primaryMenu,
++            secondaryMenu,
++            actions,
++            tabs = if (segmented) tabs else null,
++        )
++        Box(
++            Modifier.align(Alignment.BottomCenter)
++                .fillMaxWidth()
++                .height(m.dp("page_navigation/border_bottom", 1f))
++                .background(PleosTheme.colors["divider/tertiary"])
++        )
++    }
++}
++
++/** 03 §3·원본 67:27623의 메뉴 버튼입니다. 선택/열림 상태는 호스트가 소유하며 title의 40/52 서체와 28 아이콘을 사용합니다. */
++@Composable
++fun PleosNavigationMenu(
++    text: String,
++    onClick: () -> Unit,
++    modifier: Modifier = Modifier,
++    expanded: Boolean = false,
++    enabled: Boolean = true,
++    showArrow: Boolean = true,
++    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
++) {
++    val m = PleosTheme.metrics
++    val c = PleosTheme.colors
++    val focus = remember { FocusRequester() }
++    var wasExpanded by remember { mutableStateOf(expanded) }
++    LaunchedEffect(expanded) {
++        if (wasExpanded && !expanded) {
++            withFrameNanos {}
++            runCatching { focus.requestFocus() }
++        }
++        wasExpanded = expanded
++    }
++    val pressed by interactionSource.collectIsPressedAsState()
++    val radius = m.dp("page_navigation/title/dropdown_menu_pressed/radius_top_left", 16f)
++    PleosSurface(
++        actionModifier(
++            modifier.focusRequester(focus).semantics {
++                stateDescription = if (expanded) "펼쳐짐" else "접힘"
++            },
++            interactionSource,
++            enabled,
++            radius,
++            onClick,
++        ),
++        if (pressed && enabled) c["button/basic/pressed"]
++        else androidx.compose.ui.graphics.Color.Transparent,
++        radius,
++    ) {
++        Row(
++            Modifier.padding(
++                horizontal = m.dp("page_navigation/padding_medium", 16f),
++                vertical = m.dp("page_navigation/padding_small", 8f),
++            ),
++            verticalAlignment = Alignment.CenterVertically,
++            horizontalArrangement = Arrangement.spacedBy(m.dp("page_navigation/gap_extrasmall", 8f)),
++        ) {
++            val foreground = c[if (enabled) "text/dark/primary" else "text/dark/quaternary"]
++            PleosText(
++                text,
++                Modifier.weight(1f, false),
++                foreground,
++                pleosTextStyle(40, 52, FontWeight.Bold),
++                maxLines = 1,
++            )
++            if (showArrow)
++                PleosIcon(
++                    if (expanded) R.drawable.pleos_ic_arrow_direction_up__67_22102 else DownIcon,
++                    Modifier.size(m.dp("page_navigation/title/dropdown_icon_square", 28f)),
++                    tint = foreground,
++                )
++        }
++    }
++}
++
++/** 03 §3·원본 Search 67:27652. 편집 값과 IME 검색·뒤로·닫기 요청을 호스트가 소유합니다. */
++@Composable
++fun PleosSearchNavigation(
++    value: TextFieldValue,
++    onValueChange: (TextFieldValue) -> Unit,
++    onSearch: () -> Unit,
++    onClose: () -> Unit,
++    modifier: Modifier = Modifier,
++    onBack: (() -> Unit)? = null,
++    placeholder: String = "검색",
++    enabled: Boolean = true,
++    fieldModifier: Modifier = Modifier,
++) {
+     PleosPageNavigation(
+-        PleosNavigationType.Main,
+-        title,
+-        modifier
+-            .then(
+-                if (preset == PleosHeaderPreset.MusicBackground)
+-                    Modifier.background(PleosTheme.colors["surface/basic"])
+-                else Modifier
++        PleosNavigationType.Search,
++        "",
++        modifier,
++        onBack = onBack,
++        searchField = {
++            PleosTextField(
++                value,
++                onValueChange,
++                fieldModifier.fillMaxWidth(),
++                enabled = enabled,
++                placeholder = placeholder,
++                imeAction = ImeAction.Search,
++                keyboardActions = KeyboardActions(onSearch = { if (enabled) onSearch() }),
+             )
+-            .padding(top = 40.dp, bottom = if (segmented) 0.dp else 24.dp),
+-        subtitle,
+-        appIcon,
+-        primaryMenu,
+-        secondaryMenu,
+-        actions,
+-        tabs = if (segmented) tabs else null,
++        },
++        actions = {
++            PleosIconButton(
++                "검색 닫기",
++                onClose,
++                enabled = enabled,
++                style = PleosIconButtonStyle.Plain,
++            ) {
++                PleosIcon(CloseIcon, Modifier.fillMaxSize())
++            }
++        },
+     )
+ }
++
++/** N01 메뉴의 40/52 서체와 Dropdown의 선택·Switch·dismiss·focus 복구를 함께 제공합니다. */
++@Composable
++fun PleosNavigationDropdown(
++    expanded: Boolean,
++    onExpandedChange: (Boolean) -> Unit,
++    items: List<PleosDropdownEntry>,
++    selectedId: String?,
++    onItemSelected: (String) -> Unit,
++    modifier: Modifier = Modifier,
++    placeholder: String = "선택",
++    enabled: Boolean = true,
++    onDismissRequest: ((PleosDismissReason) -> Unit)? = null,
++) {
++    PleosDropdown(
++        expanded,
++        onExpandedChange,
++        items,
++        selectedId,
++        onItemSelected,
++        modifier,
++        enabled = enabled,
++        placeholder = placeholder,
++        onDismissRequest = onDismissRequest,
++        preferredWidth = null,
++        triggerContent = { triggerModifier, opened, toggle ->
++            PleosNavigationMenu(
++                items.firstOrNull { it.key == selectedId }?.text ?: placeholder,
++                toggle,
++                triggerModifier,
++                expanded = opened,
++                enabled = enabled,
++            )
++        },
++    )
++}
+--- before/pleos-compose/src/main/java/com/jade/pleos/compose/NotificationsWidgets.kt
++++ after/pleos-compose/src/main/java/com/jade/pleos/compose/NotificationsWidgets.kt
+@@ -1,19 +1,22 @@
+ package com.jade.pleos.compose
+ 
+ import androidx.compose.foundation.*
+-import androidx.compose.foundation.gestures.detectDragGestures
++import androidx.compose.foundation.gestures.detectHorizontalDragGestures
++import androidx.compose.foundation.gestures.detectVerticalDragGestures
+ import androidx.compose.foundation.interaction.collectIsPressedAsState
+ import androidx.compose.foundation.layout.*
+ import androidx.compose.foundation.shape.*
+ import androidx.compose.runtime.*
+ import androidx.compose.ui.*
++import androidx.compose.ui.draw.alpha
+ import androidx.compose.ui.draw.clip
+-import androidx.compose.ui.geometry.Offset
++import androidx.compose.ui.focus.onFocusChanged
+ import androidx.compose.ui.graphics.*
+ import androidx.compose.ui.graphics.painter.Painter
+ import androidx.compose.ui.input.key.*
+ import androidx.compose.ui.input.pointer.pointerInput
+ import androidx.compose.ui.layout.ContentScale
++import androidx.compose.ui.layout.onSizeChanged
+ import androidx.compose.ui.platform.LocalDensity
+ import androidx.compose.ui.platform.LocalLayoutDirection
+ import androidx.compose.ui.semantics.*
+@@ -61,10 +64,14 @@
+             is PleosNotificationImagery.Image -> imagery.description
+             else -> null
+         }
+-    Box(Modifier.size(100.dp)) {
++    val m = PleosTheme.metrics
++    val size = m.dp("notification/system/imagary_square", 100f)
++    val badge = m.dp("notification/system/profile/app_square", 48f)
++    val badgeOffset = size - badge + m.dp("notification/system/profile/badge_overhang", 8f)
++    Box(Modifier.size(size)) {
+         val shape =
+             if (imagery is PleosNotificationImagery.Profile) CircleShape
+-            else RoundedCornerShape(24.dp)
++            else RoundedCornerShape(m.dp("notification/system/images/radius_top_left", 24f))
+         Box(Modifier.fillMaxSize().clip(shape).background(PleosTheme.colors["surface/high"])) {
+             if (painter != null)
+                 Image(
+@@ -76,8 +83,8 @@
+         }
+         if (imagery is PleosNotificationImagery.Profile)
+             PleosSurface(
+-                Modifier.offset(60.dp, 60.dp).size(48.dp),
+-                radius = 16.dp,
++                Modifier.offset(badgeOffset, badgeOffset).size(badge),
++                radius = m.dp("notification/system/profile/app_radius_top_left", 16f),
+                 shadowLevel = 2,
+             ) {
+                 imagery.badge?.let {
+@@ -120,20 +127,37 @@
+         3,
+     ) {
+         Column {
++            val textMinimum =
++                with(LocalDensity.current) {
++                    pleosTextStyle(36, 44).lineHeight.toDp() +
++                        pleosTextStyle(26, 34).lineHeight.toDp()
++                } +
++                    m.dp("notification/system/text_gap_vertical", 12f) +
++                    m.dp("notification/system/text_padding_top", 4f)
++            val headerContent =
++                if (kind == PleosNotificationKind.OnlyText) textMinimum
++                else m.dp("notification/system/imagary_square", 100f)
+             Row(
+                 Modifier.fillMaxWidth()
++                    .heightIn(
++                        min =
++                            headerContent +
++                                m.dp("notification/padding_large", 32f) +
++                                m.dp("notification/padding_small", 16f)
++                    )
+                     .padding(
+                         start = m.dp("notification/padding_large", 32f),
+                         end = m.dp("notification/padding_large", 32f),
+                         top = m.dp("notification/padding_large", 32f),
+                         bottom = m.dp("notification/padding_small", 16f),
+                     ),
+-                horizontalArrangement = Arrangement.spacedBy(24.dp),
+-                verticalAlignment = Alignment.CenterVertically,
++                horizontalArrangement = Arrangement.spacedBy(m.dp("notification/gap_large", 24f)),
++                verticalAlignment = Alignment.Top,
+             ) {
+                 if (kind != PleosNotificationKind.OnlyText) NotificationImagery(imagery)
+                 Column(
+-                    Modifier.weight(1f).padding(top = 4.dp),
++                    Modifier.weight(1f)
++                        .padding(top = m.dp("notification/system/text_padding_top", 4f)),
+                     verticalArrangement =
+                         Arrangement.spacedBy(m.dp("notification/system/text_gap_vertical", 12f)),
+                 ) {
+@@ -156,7 +180,9 @@
+                         PleosIcon(CloseIcon, Modifier.fillMaxSize())
+                     }
+             }
+-            BoxWithConstraints(Modifier.fillMaxWidth().padding(24.dp)) {
++            BoxWithConstraints(
++                Modifier.fillMaxWidth().padding(m.dp("notification/padding_medium", 24f))
++            ) {
+                 val vertical =
+                     actionLayout == PleosActionLayout.Vertical ||
+                         maxWidth < 480.dp ||
+@@ -176,11 +202,12 @@
+                         val source = remember {
+                             androidx.compose.foundation.interaction.MutableInteractionSource()
+                         }
+-                        val active = a.enabled && !a.loading
+                         val pressed by source.collectIsPressedAsState()
+                         PleosSurface(
+                             actionModifier(
+-                                    mod.heightIn(min = 80.dp),
++                                    mod.heightIn(
++                                        min = pleosButtonMetrics(PleosButtonSize.Medium).height
++                                    ),
+                                     source,
+                                     a.enabled,
+                                     24.dp,
+@@ -200,24 +227,32 @@
+                                 else if (pressed) "phone_end_pressed" else "phone_end_normal"],
+                             24.dp,
+                         ) {
+-                            if (a.loading)
+-                                PleosLoadingIndicator(Modifier.size(32.dp).align(Alignment.Center))
+-                            else
++                            Box(Modifier.align(Alignment.Center).alpha(if (a.loading) 0f else 1f)) {
+                                 PleosText(
+                                     a.label,
+                                     Modifier.align(Alignment.Center).padding(16.dp),
+                                     if (a.enabled) Color.White else c["text/dark/quaternary"],
+                                     pleosTextStyle(30, 38, FontWeight.Bold),
++                                    maxLines = 2,
+                                 )
++                            }
++                            if (a.loading)
++                                PleosLoadingIndicator(Modifier.size(32.dp).align(Alignment.Center))
+                         }
+                     }
+                 }
+                 if (vertical)
+-                    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
++                    Column(
++                        verticalArrangement =
++                            Arrangement.spacedBy(m.dp("notification/gap_medium", 16f))
++                    ) {
+                         actions.forEachIndexed { i, a -> action(a, i, Modifier.fillMaxWidth()) }
+                     }
+                 else
+-                    Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
++                    Row(
++                        horizontalArrangement =
++                            Arrangement.spacedBy(m.dp("notification/gap_medium", 16f))
++                    ) {
+                         actions.forEachIndexed { i, a -> action(a, i, Modifier.weight(1f)) }
+                     }
+             }
+@@ -296,6 +331,15 @@
+     val handleHitWidth: Dp = 240.dp,
+     val hiddenHitHeight: Dp = 80.dp,
+     val hideFraction: Float = .35f,
++    val handleHitHeight: Dp = 60.dp,
++    val hiddenRadius: Dp = 32.dp,
++)
++
++/** 03 §13의 별도 보완 서체입니다. 공통 24/28 Label 토큰과 분리합니다. */
++data class WidgetTitleTypography(
++    val fontSize: TextUnit = 24.sp,
++    val lineHeight: TextUnit = 32.sp,
++    val weight: FontWeight = FontWeight.Bold,
+ )
+ 
+ data class PleosWidgetItem(
+@@ -319,8 +363,12 @@
+     pagination: (@Composable () -> Unit)? = null,
+     handle: (@Composable () -> Unit)? = null,
+     metrics: PleosWidgetMetrics = PleosWidgetMetrics(),
++    titleTypography: WidgetTitleTypography = WidgetTitleTypography(),
+ ) {
+     val c = PleosTheme.colors
++    val titleStyle =
++        pleosTextStyle(24, 32, titleTypography.weight)
++            .copy(fontSize = titleTypography.fontSize, lineHeight = titleTypography.lineHeight)
+     BoxWithConstraints(modifier.widthIn(max = metrics.width)) {
+         val narrow = maxWidth < 720.dp
+         PleosSurface(
+@@ -336,7 +384,7 @@
+                     Modifier.padding(start = 24.dp, end = 24.dp, top = 40.dp, bottom = 24.dp),
+                     verticalArrangement = Arrangement.spacedBy(16.dp),
+                 ) {
+-                    PleosText(title, style = pleosTextStyle(24, 32, FontWeight.Bold))
++                    PleosText(title, style = titleStyle)
+                     information()
+                     action?.invoke()
+                     pagination?.invoke()
+@@ -351,7 +399,7 @@
+                         Modifier.width(224.dp),
+                         verticalArrangement = Arrangement.spacedBy(16.dp),
+                     ) {
+-                        PleosText(title, style = pleosTextStyle(24, 32, FontWeight.Bold))
++                        PleosText(title, style = titleStyle)
+                         if (action != null) Box(Modifier.heightIn(min = 64.dp)) { action() }
+                     }
+                     Column(Modifier.weight(1f).heightIn(min = 112.dp)) {
+@@ -386,40 +434,54 @@
+     onVisibilityChange: (PleosWidgetVisibility) -> Unit,
+     modifier: Modifier = Modifier,
+     enabled: Boolean = true,
+-    metrics: PleosWidgetMetrics = PleosWidgetMetrics(),
++    metrics: PleosWidgetMetrics =
++        PleosWidgetMetrics(hideFraction = PleosTheme.behavior.widgetHideFraction),
+     emptyContent: (@Composable () -> Unit)? = null,
++    titleTypography: WidgetTitleTypography = WidgetTitleTypography(),
+ ) {
+     require(items.map { it.key }.distinct().size == items.size && metrics.hideFraction in 0f..1f)
+     val handleSource = remember {
+         androidx.compose.foundation.interaction.MutableInteractionSource()
+     }
++    val hostSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }
++    var rootFocused by remember { mutableStateOf(false) }
++    var handleTouching by remember { mutableStateOf(false) }
++    var handleDragging by remember { mutableStateOf(false) }
++    var handleKeyDown by remember { mutableStateOf(false) }
++    var shellHeight by remember { mutableIntStateOf(0) }
+     val handlePressed by handleSource.collectIsPressedAsState()
+     val index = items.indexOfFirst { it.key == currentKey }
+     val c = PleosTheme.colors
+     val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+-    var distance by remember { mutableStateOf(Offset.Zero) }
+-    var axis by remember { mutableIntStateOf(0) }
++    val density = LocalDensity.current
+     val latestPage by rememberUpdatedState(onCurrentChanged)
+     val latestVisibility by rememberUpdatedState(onVisibilityChange)
++    fun canPage(delta: Int): Boolean =
++        enabled &&
++            visibility == PleosWidgetVisibility.Show &&
++            index >= 0 &&
++            index + delta in items.indices
+     fun page(delta: Int): Boolean {
+-        if (!enabled || index < 0) return false
+-        val next = (index + delta).coerceIn(items.indices)
+-        if (next == index) return false
+-        latestPage(items[next].key)
++        if (!canPage(delta)) return false
++        latestPage(items[index + delta].key)
+         return true
+     }
++    val pageRequest by rememberUpdatedState<(Int) -> Boolean>({ page(it) })
+     val host =
+         modifier
+             .windowInsetsPadding(WindowInsets.safeDrawing)
++            .onFocusChanged { rootFocused = it.isFocused }
+             .semantics {
+                 stateDescription =
+                     if (visibility == PleosWidgetVisibility.Hidden) "위젯 숨김" else "위젯 표시"
+                 if (!enabled) disabled()
+                 else
+-                    customActions =
+-                        listOf(
+-                            CustomAccessibilityAction("이전 위젯") { page(-1) },
+-                            CustomAccessibilityAction("다음 위젯") { page(1) },
++                    customActions = buildList {
++                        if (visibility == PleosWidgetVisibility.Show) {
++                            add(CustomAccessibilityAction("이전 위젯") { page(-1) })
++                            add(CustomAccessibilityAction("다음 위젯") { page(1) })
++                        }
++                        add(
+                             CustomAccessibilityAction(
+                                 if (visibility == PleosWidgetVisibility.Show) "숨기기" else "펼치기"
+                             ) {
+@@ -429,107 +491,160 @@
+                                     else PleosWidgetVisibility.Show
+                                 )
+                                 true
+-                            },
++                            }
+                         )
++                    }
+             }
+             .onKeyEvent { e ->
+-                if (!enabled) false
+-                else if (
+-                    e.type == KeyEventType.KeyDown &&
+-                        e.key in
+-                            listOf(
+-                                Key.DirectionLeft,
+-                                Key.DirectionRight,
+-                                Key.DirectionDown,
+-                                Key.DirectionUp,
+-                            )
+-                )
++                val delta =
++                    when (e.key) {
++                        Key.DirectionLeft -> if (rtl) 1 else -1
++                        Key.DirectionRight -> if (rtl) -1 else 1
++                        else -> 0
++                    }
++                val nextVisibility =
++                    when (e.key) {
++                        Key.DirectionDown -> PleosWidgetVisibility.Hidden
++                        Key.DirectionUp -> PleosWidgetVisibility.Show
++                        else -> visibility
++                    }
++                val handles =
++                    rootFocused &&
++                        enabled &&
++                        (if (delta != 0) canPage(delta) else nextVisibility != visibility)
++                if (!handles) false
++                else {
++                    if (e.type == KeyEventType.KeyUp) {
++                        if (delta != 0) page(delta) else latestVisibility(nextVisibility)
++                    }
+                     true
+-                else if (e.type != KeyEventType.KeyUp) false
+-                else
+-                    when (e.key) {
+-                        Key.DirectionLeft -> page(if (rtl) 1 else -1)
+-                        Key.DirectionRight -> page(if (rtl) -1 else 1)
+-                        Key.DirectionDown -> {
+-                            latestVisibility(PleosWidgetVisibility.Hidden)
+-                            true
+-                        }
+-                        Key.DirectionUp -> {
+-                            latestVisibility(PleosWidgetVisibility.Show)
+-                            true
+-                        }
+-                        else -> false
+-                    }
+-            }
+-            .focusable(enabled)
+-    if (visibility == PleosWidgetVisibility.Hidden)
++                }
++            }
++    if (visibility == PleosWidgetVisibility.Hidden) {
+         Box(
+-            host.size(metrics.handleHitWidth, metrics.hiddenHitHeight).clickable(
++            actionModifier(
++                host.size(metrics.handleHitWidth, metrics.hiddenHitHeight).semantics {
++                    contentDescription = "위젯 펼치기"
++                },
+                 handleSource,
+-                null,
+                 enabled,
+-            ) {
+-                latestVisibility(PleosWidgetVisibility.Show)
+-            },
++                metrics.hiddenRadius,
++                { latestVisibility(PleosWidgetVisibility.Show) },
++            ),
+             contentAlignment = Alignment.BottomCenter,
+         ) {
+             Box(
+                 Modifier.size(metrics.hiddenWidth, metrics.hiddenHeight)
+-                    .clip(RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp))
++                    .clip(
++                        RoundedCornerShape(
++                            topStart = metrics.hiddenRadius,
++                            topEnd = metrics.hiddenRadius,
++                        )
++                    )
+                     .background(
+-                        c[if (handlePressed) "button/basic/pressed" else "background/popup"]
++                        c[
++                            if (enabled && handlePressed) "button/basic/pressed"
++                            else "background/popup"]
+                     ),
+                 contentAlignment = Alignment.Center,
+             ) {
+-                PleosIcon(
+-                    R.drawable.pleos_ic_arrow_direction_up__67_22102,
+-                    Modifier.size(48.dp),
+-                    "위젯 펼치기",
+-                )
+-            }
+-        }
+-    else if (index < 0)
+-        Box(host) { if (emptyContent != null) emptyContent() else PleosText("표시할 위젯이 없습니다.") }
+-    else {
++                PleosIcon(R.drawable.pleos_ic_arrow_direction_up__67_22102, Modifier.size(48.dp))
++            }
++        }
++    } else if (index < 0) {
++        Box(host.focusIndication(hostSource, metrics.radius).focusable(enabled, hostSource)) {
++            if (emptyContent != null) emptyContent() else PleosText("표시할 위젯이 없습니다.")
++        }
++    } else {
+         val item = items[index]
+         PleosWidgetCard(
+             item.title,
+-            host.pointerInput(enabled, index, items.size, rtl) {
+-                if (enabled)
+-                    detectDragGestures(
+-                        onDragStart = {
+-                            distance = Offset.Zero
+-                            axis = 0
+-                        },
+-                        onDragCancel = {
+-                            distance = Offset.Zero
+-                            axis = 0
+-                        },
+-                        onDragEnd = {
+-                            if (axis == 2 && distance.y >= size.height * metrics.hideFraction)
+-                                latestVisibility(PleosWidgetVisibility.Hidden)
+-                            else if (axis == 1 && abs(distance.x) >= size.width * .15f)
+-                                page(if ((distance.x < 0) != rtl) 1 else -1)
+-                            distance = Offset.Zero
+-                            axis = 0
+-                        },
+-                    ) { event, amount ->
+-                        if (axis == 0) axis = if (abs(amount.x) > abs(amount.y)) 1 else 2
+-                        distance += amount
+-                        event.consume()
+-                    }
+-            },
++            host
++                .focusIndication(hostSource, metrics.radius)
++                .focusable(enabled, hostSource)
++                .onSizeChanged { shellHeight = it.height }
++                .pointerInput(enabled, index, items.map { it.key }, rtl) {
++                    if (enabled) {
++                        var distance = 0f
++                        detectHorizontalDragGestures(
++                            onDragStart = { distance = 0f },
++                            onDragCancel = { distance = 0f },
++                            onDragEnd = {
++                                if (abs(distance) >= size.width * .15f)
++                                    pageRequest(if ((distance < 0) != rtl) 1 else -1)
++                            },
++                        ) { event, amount ->
++                            distance += amount
++                            event.consume()
++                        }
++                    }
++                },
+             item.action,
+             item.information,
+             pagination = {
+-                PleosPageIndicator(items.size, index, size = PleosIndicatorSize.Narrow)
++                PleosPageIndicator(
++                    items.size,
++                    index,
++                    size = PleosIndicatorSize.Narrow,
++                    dotGap = 10.dp,
++                )
+             },
+             handle = {
+                 Box(
+-                    Modifier.size(metrics.handleHitWidth, 60.dp)
+-                        .semantics { contentDescription = "위젯 숨기기" }
+-                        .clickable(handleSource, null, enabled) {
+-                            latestVisibility(PleosWidgetVisibility.Hidden)
++                    Modifier.size(metrics.handleHitWidth, metrics.handleHitHeight)
++                        .observeControlPress(enabled) { handleTouching = it }
++                        .onFocusChanged { if (!it.isFocused) handleKeyDown = false }
++                        .focusIndication(handleSource, 4.dp)
++                        .onKeyEvent { e ->
++                            if (
++                                !enabled ||
++                                    e.key !in listOf(Key.Enter, Key.DirectionCenter, Key.Spacebar)
++                            )
++                                false
++                            else {
++                                if (e.type == KeyEventType.KeyDown) handleKeyDown = true
++                                if (e.type == KeyEventType.KeyUp && handleKeyDown) {
++                                    handleKeyDown = false
++                                    latestVisibility(PleosWidgetVisibility.Hidden)
++                                }
++                                true
++                            }
++                        }
++                        .focusable(enabled, handleSource)
++                        .semantics {
++                            contentDescription = "위젯 숨기기"
++                            role = Role.Button
++                            if (!enabled) disabled()
++                            else
++                                onClick("숨기기") {
++                                    latestVisibility(PleosWidgetVisibility.Hidden)
++                                    true
++                                }
++                        }
++                        .pointerInput(enabled, metrics, shellHeight) {
++                            if (enabled) {
++                                var distance = 0f
++                                try {
++                                    detectVerticalDragGestures(
++                                        onDragStart = { distance = 0f },
++                                        onDragCancel = { handleDragging = false },
++                                        onDragEnd = {
++                                            val height =
++                                                if (shellHeight > 0) shellHeight.toFloat()
++                                                else with(density) { metrics.height.toPx() }
++                                            if (distance >= height * metrics.hideFraction)
++                                                latestVisibility(PleosWidgetVisibility.Hidden)
++                                            handleDragging = false
++                                        },
++                                    ) { event, amount ->
++                                        handleDragging = true
++                                        distance += amount
++                                        event.consume()
++                                    }
++                                } finally {
++                                    handleDragging = false
++                                }
++                            }
+                         },
+                     contentAlignment = Alignment.TopCenter,
+                 ) {
+@@ -537,13 +652,22 @@
+                         Modifier.padding(top = 12.dp)
+                             .size(86.dp, 6.dp)
+                             .background(
+-                                c["basic_900"].copy(alpha = if (handlePressed) .5f else .2f),
++                                c["basic_900"].copy(
++                                    alpha =
++                                        if (
++                                            enabled &&
++                                                (handleTouching || handleDragging || handleKeyDown)
++                                        )
++                                            .5f
++                                        else .2f
++                                ),
+                                 RoundedCornerShape(3.dp),
+                             )
+                     )
+                 }
+             },
+             metrics = metrics,
++            titleTypography = titleTypography,
+         )
+     }
+ }
+--- before/pleos-compose/src/main/java/com/jade/pleos/compose/Overlays.kt
++++ after/pleos-compose/src/main/java/com/jade/pleos/compose/Overlays.kt
+@@ -8,7 +8,9 @@
+ import androidx.compose.ui.*
+ import androidx.compose.ui.focus.FocusRequester
+ import androidx.compose.ui.geometry.*
++import androidx.compose.ui.input.key.*
+ import androidx.compose.ui.input.pointer.pointerInput
++import androidx.compose.ui.layout.SubcomposeLayout
+ import androidx.compose.ui.layout.boundsInRoot
+ import androidx.compose.ui.layout.onGloballyPositioned
+ import androidx.compose.ui.platform.*
+@@ -76,7 +78,7 @@
+ @Composable
+ fun PleosPopupSurface(
+     title: String,
+-    confirmAction: PleosPopupAction,
++    confirmAction: PleosPopupAction?,
+     modifier: Modifier = Modifier,
+     size: PleosPopupSize = PleosPopupSize.Medium,
+     metricsPreset: PleosPopupMetricsPreset = PleosPopupMetricsPreset.Standard,
+@@ -87,6 +89,7 @@
+     cancelAction: PleosPopupAction? = null,
+     buttonAlign: PleosActionLayout = PleosActionLayout.Horizontal,
+     onClose: (() -> Unit)? = null,
++    bodyScroll: Boolean = true,
+ ) {
+     val extended = metricsPreset == PleosPopupMetricsPreset.Extended
+     val c = PleosTheme.colors
+@@ -94,125 +97,251 @@
+     val pad =
+         if (extended) m.dp("popup/system/extended/padding", 40f)
+         else m.dp("popup/system/padding_large", 48f)
++    val radius =
++        if (extended) m.dp("popup/system/extended/radius", 40f)
++        else m.dp("popup/system/radius_top_left", 48f)
++    val gap =
++        if (extended) m.dp("popup/system/extended/gap", 33f)
++        else m.dp("popup/system/gap_extralarge", 40f)
+     val width =
+-        PleosTheme.metrics.dp(
++        m.dp(
+             if (size == PleosPopupSize.Medium) "popup/medium/width" else "popup/large/width",
+             if (size == PleosPopupSize.Medium) 760f else 1200f,
+         )
++    val headerBottom =
++        if (extended) m.dp("popup/system/extended/header_padding_bottom", 12f)
++        else m.dp("popup/system/padding_small", 16f)
++    val hasHeader =
++        title.isNotEmpty() ||
++            subtitle != null ||
++            description != null ||
++            icon != null ||
++            onClose != null
++    val hasActions = confirmAction != null || cancelAction != null
+     BoxWithConstraints(modifier.widthIn(max = width)) {
+         val narrow = maxWidth < 600.dp || LocalDensity.current.fontScale > 1.4f
+-        val maxH = if (maxHeight == Dp.Infinity) 1200.dp else maxHeight
++        val normalMaxHeight = m.dp("popup/system/max_height", 1152f)
++        val tokenMaxHeight =
++            if (extended)
++                m.dp("popup/system/max_height_extended", 0f).takeIf { it > 0.dp } ?: normalMaxHeight
++            else normalMaxHeight
++        val maxH =
++            if (maxHeight == Dp.Infinity) tokenMaxHeight else minOf(maxHeight, tokenMaxHeight)
+         PleosSurface(
+             Modifier.fillMaxWidth().heightIn(max = maxH),
+             c["background/popup"],
+-            pad,
++            radius,
+             c["divider/primary"],
+-            2.dp,
++            m.dp("popup/system/border", 2f),
+             3,
+         ) {
+-            Column(
+-                Modifier.padding(pad),
+-                verticalArrangement =
+-                    Arrangement.spacedBy(
+-                        if (extended) m.dp("popup/system/extended/gap", 33f)
+-                        else m.dp("popup/system/gap_extralarge", 40f)
+-                    ),
+-            ) {
+-                Column(
+-                    Modifier.weight(1f, false)
+-                        .verticalScroll(rememberScrollState())
+-                        .padding(
+-                            bottom =
+-                                if (extended)
+-                                    m.dp("popup/system/extended/header_padding_bottom", 12f)
+-                                else m.dp("popup/system/padding_small", 16f)
+-                        ),
+-                    horizontalAlignment = Alignment.CenterHorizontally,
+-                    verticalArrangement = Arrangement.spacedBy(24.dp),
+-                ) {
+-                    if (onClose != null)
+-                        PleosIconButton(
+-                            "닫기",
+-                            onClose,
+-                            Modifier.align(Alignment.End),
+-                            style = PleosIconButtonStyle.Plain,
+-                            size = PleosButtonSize.Small,
+-                        ) {
+-                            PleosIcon(CloseIcon, Modifier.size(48.dp))
+-                        }
+-                    icon?.let {
+-                        Box(Modifier.size(80.dp), contentAlignment = Alignment.Center) { it() }
++            // 액션을 먼저 측정하여 header/body가 커져도 접근 가능한 공간을 확보합니다.
++            SubcomposeLayout(Modifier.fillMaxWidth().padding(pad)) { constraints ->
++                val childWidth = constraints.maxWidth
++                val available = constraints.maxHeight
++                val spacing = gap.roundToPx()
++                val actions =
++                    if (!hasActions) null
++                    else
++                        subcompose("actions") {
++                                PopupActions(
++                                    confirmAction,
++                                    cancelAction,
++                                    buttonAlign,
++                                    narrow,
++                                    extended,
++                                )
++                            }
++                            .single()
++                            .measure(Constraints(0, childWidth, 0, available))
++                val afterActions =
++                    (available -
++                            (actions?.height ?: 0) -
++                            if (hasActions && (hasHeader || body != null)) spacing else 0)
++                        .coerceAtLeast(0)
++                val bodyReserve =
++                    if (body != null) minOf(96.dp.roundToPx(), afterActions / 2) else 0
++                val headerLimit =
++                    (afterActions - bodyReserve - if (hasHeader && body != null) spacing else 0)
++                        .coerceAtLeast(0)
++                val header =
++                    if (!hasHeader) null
++                    else
++                        subcompose("header") {
++                                Column(
++                                    Modifier.fillMaxWidth()
++                                        .verticalScroll(rememberScrollState())
++                                        .padding(bottom = headerBottom),
++                                    horizontalAlignment = Alignment.CenterHorizontally,
++                                    verticalArrangement =
++                                        Arrangement.spacedBy(m.dp("popup/system/gap_large", 24f)),
++                                ) {
++                                    if (onClose != null) {
++                                        val glyph = m.dp("popup/system/close_icon_square", 48f)
++                                        PleosIconButton(
++                                            "닫기",
++                                            onClose,
++                                            Modifier.align(Alignment.End),
++                                            style = PleosIconButtonStyle.Plain,
++                                            size = PleosButtonSize.Small,
++                                            metrics =
++                                                IconButtonMetrics(
++                                                    smallSize =
++                                                        maxOf(
++                                                            glyph,
++                                                            PleosTheme.behavior.minimumTouchTarget,
++                                                        ),
++                                                    smallIcon = glyph,
++                                                ),
++                                        ) {
++                                            PleosIcon(CloseIcon, Modifier.fillMaxSize())
++                                        }
++                                    }
++                                    if (icon != null)
++                                        Box(
++                                            Modifier.size(m.dp("popup/system/icon_square", 80f)),
++                                            contentAlignment = Alignment.Center,
++                                        ) {
++                                            icon()
++                                        }
++                                    if (title.isNotEmpty())
++                                        PleosText(
++                                            title,
++                                            Modifier.fillMaxWidth()
++                                                .padding(
++                                                    horizontal =
++                                                        if (size == PleosPopupSize.Large)
++                                                            m.dp(
++                                                                "popup/system/header_padding_horizontal",
++                                                                32f,
++                                                            )
++                                                        else 0.dp
++                                                ),
++                                            style = pleosTextStyle(40, 52, FontWeight.ExtraBold),
++                                            textAlign = TextAlign.Center,
++                                        )
++                                    subtitle?.let {
++                                        PleosText(
++                                            it,
++                                            Modifier.fillMaxWidth(),
++                                            c["text/dark/secondary"],
++                                            pleosTextStyle(36, 44, FontWeight.Bold),
++                                            textAlign = TextAlign.Center,
++                                        )
++                                    }
++                                    description?.let {
++                                        PleosText(
++                                            it,
++                                            Modifier.fillMaxWidth(),
++                                            c.scoped(.84f, "text/dark/secondary"),
++                                            pleosTextStyle(30, 38),
++                                            textAlign = TextAlign.Center,
++                                        )
++                                    }
++                                }
++                            }
++                            .single()
++                            .measure(Constraints(0, childWidth, 0, headerLimit))
++                val bodyLimit =
++                    (afterActions -
++                            (header?.height ?: 0) -
++                            if (hasHeader && body != null) spacing else 0)
++                        .coerceAtLeast(0)
++                val bodyPlaceable =
++                    if (body == null) null
++                    else
++                        subcompose("body") {
++                                Box(
++                                    Modifier.fillMaxWidth()
++                                        .then(
++                                            if (bodyScroll)
++                                                Modifier.verticalScroll(rememberScrollState())
++                                            else Modifier
++                                        )
++                                ) {
++                                    body()
++                                }
++                            }
++                            .single()
++                            .measure(Constraints(0, childWidth, 0, bodyLimit))
++                val children =
++                    listOfNotNull(header, bodyPlaceable, actions).filter { it.height > 0 }
++                val count = (children.size - 1).coerceAtLeast(0)
++                val actualSpacing =
++                    if (count == 0) 0
++                    else
++                        minOf(
++                            spacing,
++                            ((available - children.sumOf { it.height }) / count).coerceAtLeast(0),
++                        )
++                val h =
++                    (children.sumOf { it.height } + actualSpacing * count).coerceIn(
++                        constraints.minHeight,
++                        available,
++                    )
++                layout(childWidth, h) {
++                    var y = 0
++                    children.forEach { child ->
++                        child.placeRelative(
++                            0,
++                            if (child === actions) (h - child.height).coerceAtLeast(0) else y,
++                        )
++                        y += child.height + actualSpacing
+                     }
+-                    if (title.isNotEmpty())
+-                        PleosText(
+-                            title,
+-                            Modifier.fillMaxWidth(),
+-                            style = pleosTextStyle(40, 52, FontWeight.ExtraBold),
+-                            textAlign = TextAlign.Center,
+-                        )
+-                    subtitle?.let {
+-                        PleosText(
+-                            it,
+-                            Modifier.fillMaxWidth(),
+-                            c["text/dark/secondary"],
+-                            pleosTextStyle(36, 44, FontWeight.Bold),
+-                            textAlign = TextAlign.Center,
+-                        )
+-                    }
+-                    description?.let {
+-                        PleosText(
+-                            it,
+-                            Modifier.fillMaxWidth(),
+-                            c.scoped(.84f, "text/dark/secondary"),
+-                            pleosTextStyle(30, 38),
+-                            textAlign = TextAlign.Center,
+-                        )
+-                    }
+-                    if (body != null)
+-                        Box(
+-                            Modifier.fillMaxWidth()
+-                                .heightIn(max = (maxH - pad * 2).coerceAtLeast(0.dp))
+-                        ) {
+-                            body()
+-                        }
+                 }
+-                val vertical =
+-                    (buttonAlign == PleosActionLayout.Vertical || narrow) &&
+-                        cancelAction != null &&
+-                        buttonAlign != PleosActionLayout.Single
+-                @Composable
+-                fun action(a: PleosPopupAction, primary: Boolean, mod: Modifier) {
+-                    PleosBasicButton(
+-                        a.label,
+-                        a.onClick,
+-                        mod.then(if (extended) Modifier.heightIn(min = 84.dp) else Modifier),
+-                        size = PleosButtonSize.Large,
+-                        metrics =
+-                            if (extended)
+-                                pleosButtonMetrics(PleosButtonSize.Large)
+-                                    .copy(height = m.dp("popup/system/extended/button_height", 84f))
+-                            else null,
+-                        hierarchy =
+-                            if (primary) PleosButtonHierarchy.Secondary
+-                            else PleosButtonHierarchy.Primary,
+-                        enabled = a.enabled,
+-                        loading = a.loading,
+-                    )
+-                }
+-                if (vertical)
+-                    Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
+-                        action(confirmAction, true, Modifier.fillMaxWidth())
+-                        cancelAction?.let { action(it, false, Modifier.fillMaxWidth()) }
+-                    }
+-                else
+-                    Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
+-                        action(confirmAction, true, Modifier.weight(1f))
+-                        if (buttonAlign != PleosActionLayout.Single)
+-                            cancelAction?.let { action(it, false, Modifier.weight(1f)) }
+-                    }
+             }
+         }
+     }
++}
++
++@Composable
++private fun PopupActions(
++    confirm: PleosPopupAction?,
++    cancel: PleosPopupAction?,
++    layout: PleosActionLayout,
++    narrow: Boolean,
++    extended: Boolean,
++) {
++    val actions =
++        listOfNotNull(
++            confirm?.let { it to true },
++            cancel
++                ?.takeIf { layout != PleosActionLayout.Single || confirm == null }
++                ?.let { it to false },
++        )
++    val m = PleosTheme.metrics
++    @Composable
++    fun action(a: PleosPopupAction, primary: Boolean, modifier: Modifier) {
++        PleosBasicButton(
++            a.label,
++            a.onClick,
++            modifier,
++            size = PleosButtonSize.Large,
++            metrics =
++                if (extended)
++                    pleosButtonMetrics(PleosButtonSize.Large)
++                        .copy(height = m.dp("popup/system/extended/button_height", 84f))
++                else null,
++            hierarchy =
++                if (primary) PleosButtonHierarchy.Secondary else PleosButtonHierarchy.Primary,
++            enabled = a.enabled,
++            loading = a.loading,
++        )
++    }
++    if ((layout == PleosActionLayout.Vertical || narrow) && actions.size > 1)
++        Column(
++            Modifier.verticalScroll(rememberScrollState()),
++            verticalArrangement = Arrangement.spacedBy(m.dp("popup/system/gap_large", 24f)),
++        ) {
++            actions.forEach { (a, primary) -> action(a, primary, Modifier.fillMaxWidth()) }
++        }
++    else
++        Row(
++            Modifier.verticalScroll(rememberScrollState()),
++            horizontalArrangement = Arrangement.spacedBy(m.dp("popup/system/gap_large", 24f)),
++        ) {
++            actions.forEach { (a, primary) -> action(a, primary, Modifier.weight(1f)) }
++        }
+ }
+ 
+ /**
+@@ -224,7 +353,7 @@
+ @Composable
+ fun PleosSystemPopup(
+     title: String,
+-    confirmAction: PleosPopupAction,
++    confirmAction: PleosPopupAction?,
+     onDismissRequest: (PleosDismissReason) -> Unit,
+     modifier: Modifier = Modifier,
+     size: PleosPopupSize = PleosPopupSize.Medium,
+@@ -237,6 +366,7 @@
+     buttonAlign: PleosActionLayout = PleosActionLayout.Horizontal,
+     dismissPolicy: PleosDismissPolicy = PleosDismissPolicy(),
+     restoreFocusRequester: FocusRequester? = null,
++    bodyScroll: Boolean = true,
+ ) {
+     var bounds by remember { mutableStateOf(Rect.Zero) }
+     val dismiss by rememberUpdatedState(onDismissRequest)
+@@ -256,6 +386,13 @@
+     ) {
+         Box(
+             Modifier.fillMaxSize()
++                .onPreviewKeyEvent { event ->
++                    if (event.key == Key.Escape) {
++                        if (event.type == KeyEventType.KeyUp && policy.back)
++                            dismiss(PleosDismissReason.Back)
++                        true
++                    } else false
++                }
+                 .pointerInput(Unit) {
+                     detectTapGestures {
+                         if (policy.outside && !bounds.contains(it))
+@@ -283,6 +420,7 @@
+                 if (dismissPolicy.close) {
+                     { dismiss(PleosDismissReason.CloseAction) }
+                 } else null,
++                bodyScroll = bodyScroll,
+             )
+         }
+     }
+@@ -331,6 +469,10 @@
+         icon: (@Composable () -> Unit)? = null,
+         onDismiss: ((PleosDismissReason) -> Unit)? = null,
+     ) {
++        if (message.isBlank()) {
++            remove(id)
++            return
++        }
+         val item = PleosToastMessage(id, message, duration, icon, onDismiss, ++generation)
+         if (current == null || current?.id == id) {
+             current = item
+@@ -391,10 +533,14 @@
+     icon: (@Composable () -> Unit)? = null,
+     onClose: (() -> Unit)? = null,
+ ) {
++    if (message.isBlank()) {
++        Box(modifier)
++        return
++    }
+     val c = PleosTheme.colors
+     val m = PleosTheme.metrics
+     PleosSurface(
+-        modifier.widthIn(max = m.dp("toast/max_width", 792f)).semantics {
++        modifier.widthIn(max = m.dp("popup/toast/max_width", 792f)).semantics {
+             liveRegion = LiveRegionMode.Polite
+         },
+         if (c.dark) c["basic_600"]
+@@ -410,15 +556,21 @@
+                     horizontal = m.dp("popup/toast/padding_horizontal", 40f),
+                     vertical = m.dp("popup/toast/padding_vertical", 24f),
+                 ),
+-                horizontalArrangement = Arrangement.spacedBy(16.dp),
++                horizontalArrangement = Arrangement.spacedBy(m.dp("popup/toast/icon_gap", 16f)),
+                 verticalAlignment = Alignment.CenterVertically,
+             ) {
+                 icon?.let {
+-                    Box(Modifier.size(48.dp), contentAlignment = Alignment.Center) { it() }
++                    Box(
++                        Modifier.size(m.dp("popup/toast/icon", 48f)),
++                        contentAlignment = Alignment.Center,
++                    ) {
++                        it()
++                    }
+                 }
+                 PleosText(
+                     message,
+-                    Modifier.weight(1f, false).widthIn(max = 712.dp),
++                    Modifier.weight(1f, false)
++                        .widthIn(max = m.dp("popup/toast/text_max_width", 712f)),
+                     style = pleosTextStyle(26, 34, FontWeight.Bold),
+                     textAlign = TextAlign.Center,
+                 )
+@@ -526,13 +678,14 @@
+ data class PleosPopupRequest(
+     val id: String,
+     val title: String,
+-    val confirm: PleosPopupAction,
++    val confirm: PleosPopupAction?,
+     val cancel: PleosPopupAction? = null,
+     val description: String? = null,
+     val body: (@Composable () -> Unit)? = null,
+     val onDismiss: (PleosDismissReason) -> Unit,
+     val size: PleosPopupSize = PleosPopupSize.Medium,
+     val policy: PleosDismissPolicy = PleosDismissPolicy(),
++    val bodyScroll: Boolean = true,
+ )
+ 
+ @Stable
+@@ -587,6 +740,7 @@
+                 body = request.body,
+                 cancelAction = request.cancel,
+                 dismissPolicy = request.policy,
++                bodyScroll = request.bodyScroll,
+             )
+         }
+     }
+@@ -610,9 +764,22 @@
+     state: PleosToastHostState = rememberPleosToastHostState(),
+ ) {
+     val callback by rememberUpdatedState(onDismiss)
+-    LaunchedEffect(visible, id, message, duration, icon) {
+-        if (visible) state.show(message, id, duration, icon) { callback(it) } else state.remove(id)
++    val latestIcon by rememberUpdatedState(icon)
++    val stableIcon: (@Composable () -> Unit)? =
++        if (icon == null) null else remember { { latestIcon?.invoke() } }
++    LaunchedEffect(visible, id, message, duration, icon != null) {
++        if (visible) state.show(message, id, duration, stableIcon) { callback(it) }
++        else state.remove(id)
+     }
+     DisposableEffect(state, id) { onDispose { state.remove(id) } }
+     PleosToastHost(state, modifier, margin)
+ }
++
++/** 03 §12의 메시지 surface API입니다. 수명·배치가 필요하면 state 오버로드 또는 PleosToastHost를 사용합니다. */
++@Composable
++fun PleosToast(
++    message: String,
++    modifier: Modifier = Modifier,
++    leadingIcon: (@Composable () -> Unit)? = null,
++    onClose: (() -> Unit)? = null,
++) = PleosToastSurface(message, modifier, leadingIcon, onClose)
+--- before/pleos-compose/src/main/java/com/jade/pleos/compose/Selections.kt
++++ after/pleos-compose/src/main/java/com/jade/pleos/compose/Selections.kt
+@@ -9,6 +9,7 @@
+ import androidx.compose.ui.*
+ import androidx.compose.ui.draw.clip
+ import androidx.compose.ui.graphics.Color
++import androidx.compose.ui.graphics.compositeOver
+ import androidx.compose.ui.semantics.*
+ import androidx.compose.ui.state.ToggleableState
+ import androidx.compose.ui.unit.*
+@@ -65,14 +66,14 @@
+                 ),
+             contentAlignment = Alignment.Center,
+         ) {
++            if (on && pressed && enabled)
++                Box(Modifier.matchParentSize().background(c["dim/dark/secondary"]))
+             if (on)
+                 PleosIcon(
+                     if (state == ToggleableState.Indeterminate) MinusIcon else CheckIcon,
+                     Modifier.size(m.dp("selections/checkbox/mark_square", 44f)),
+                     tint = Color.White.copy(alpha = if (enabled) 1f else .64f),
+                 )
+-            if (on && pressed && enabled)
+-                Box(Modifier.matchParentSize().background(c["dim/dark/secondary"]))
+         }
+     }
+ }
+@@ -141,13 +142,11 @@
+             .border(
+                 if (selected) m.dp("selections/border_large", 12f)
+                 else m.dp("selections/border_small", 4f),
+-                border,
++                if (selected && pressed && enabled) c["dim/dark/secondary"].compositeOver(border)
++                else border,
+                 CircleShape,
+             )
+-    ) {
+-        if (selected && pressed && enabled)
+-            Box(Modifier.matchParentSize().background(c["dim/dark/secondary"]))
+-    }
++    ) {}
+ }
+ 
+ data class PleosRadioOption<T>(val key: T, val label: String, val enabled: Boolean = true)
+@@ -171,6 +170,7 @@
+         options.forEach { item ->
+             key(item.key) {
+                 val source = remember { MutableInteractionSource() }
++                val pressed by source.collectIsPressedAsState()
+                 Row(
+                     Modifier.fillMaxWidth().focusIndication(source, 12.dp).selectable(
+                         item.key == selectedKey,
+@@ -188,9 +188,15 @@
+                         Modifier.size(PleosTheme.metrics.dp("selections/container_large", 64f)),
+                         contentAlignment = Alignment.Center,
+                     ) {
+-                        RadioVisual(item.key == selectedKey, enabled && item.enabled)
++                        RadioVisual(item.key == selectedKey, enabled && item.enabled, pressed)
+                     }
+-                    PleosText(item.label)
++                    PleosText(
++                        item.label,
++                        color =
++                            PleosTheme.colors[
++                                    if (enabled && item.enabled) "text/dark/primary"
++                                    else "text/dark/quaternary"],
++                    )
+                 }
+             }
+         }
+--- before/pleos-compose/src/main/java/com/jade/pleos/compose/Spinners.kt
++++ after/pleos-compose/src/main/java/com/jade/pleos/compose/Spinners.kt
+@@ -19,7 +19,9 @@
+ import androidx.compose.ui.platform.LocalDensity
+ import androidx.compose.ui.platform.LocalFocusManager
+ import androidx.compose.ui.semantics.*
++import androidx.compose.ui.text.AnnotatedString
+ import androidx.compose.ui.text.font.FontWeight
++import androidx.compose.ui.text.rememberTextMeasurer
+ import androidx.compose.ui.text.style.TextAlign
+ import androidx.compose.ui.unit.*
+ import com.jade.pleos.tokens.*
+@@ -74,9 +76,11 @@
+ private fun spinnerLayout(size: PleosSpinnerSize): Pair<Dp, Dp> {
+     val m = PleosTheme.metrics
+     val row =
+-        if (size == PleosSpinnerSize.Medium) m.dp("spinner/list_medium_height", 96f) else 88.dp
++        if (size == PleosSpinnerSize.Medium) m.dp("spinner/list_medium_height", 96f)
++        else m.dp("spinner/list_height", 88f)
+     val panel =
+-        if (size == PleosSpinnerSize.Medium) m.dp("spinner/panel/medium_height", 288f) else 384.dp
++        if (size == PleosSpinnerSize.Medium) m.dp("spinner/panel/medium_height", 288f)
++        else m.dp("spinner/panel/large_height", 384f)
+     val textHeight =
+         with(LocalDensity.current) { pleosTextStyle(60, 80, FontWeight.Bold).lineHeight.toDp() }
+     val expanded = maxOf(row, textHeight)
+@@ -201,7 +205,10 @@
+             modifier
+                 .height(height)
+                 .onSizeChanged { measuredHeight = it.height }
+-                .focusIndication(source, 24.dp)
++                .focusIndication(
++                    source,
++                    PleosTheme.metrics.dp("spinner/focus_radius_top_left", 24f),
++                )
+                 .onFocusChanged { if (!it.isFocused) editing = false }
+                 .onPreviewKeyEvent { e ->
+                     if (!enabled) false
+@@ -285,26 +292,43 @@
+     val c = PleosTheme.colors
+     val background = c["background/primary"]
+     val (band, h) = spinnerLayout(size)
++    val m = PleosTheme.metrics
+     Box(modifier.widthIn(max = width).horizontalScroll(rememberScrollState())) {
+-        PleosSurface(Modifier.width(width).height(h), background, 32.dp) {
++        PleosSurface(
++            Modifier.width(width).height(h),
++            background,
++            m.dp("spinner/wheel/radius_top_left", 32f),
++        ) {
+             Box(
+                 Modifier.align(Alignment.Center)
+-                    .padding(horizontal = 16.dp)
++                    .padding(horizontal = m.dp("spinner/wheel/padding_horizontal", 16f))
+                     .fillMaxWidth()
+                     .height(band)
+                     .background(
+                         c["dim/dark/primary"],
+-                        androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
++                        androidx.compose.foundation.shape.RoundedCornerShape(
++                            m.dp("spinner/focus_radius_top_left", 24f)
++                        ),
+                     )
+             )
+             Row(
+                 Modifier.fillMaxSize(),
+-                horizontalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterHorizontally),
++                horizontalArrangement =
++                    Arrangement.spacedBy(
++                        m.dp("spinner/column_gap", 24f),
++                        Alignment.CenterHorizontally,
++                    ),
+                 verticalAlignment = Alignment.CenterVertically,
+                 content = content,
+             )
+             Canvas(Modifier.matchParentSize()) {
+-                val fade = 60.dp.toPx()
++                val fade =
++                    m.dp(
++                            if (size == PleosSpinnerSize.Large) "spinner/web/fade_height"
++                            else "spinner/list_mask_height",
++                            60f,
++                        )
++                        .toPx()
+                 drawRect(
+                     Brush.verticalGradient(
+                         listOf(background, background.copy(alpha = 0f)),
+@@ -327,6 +351,18 @@
+     }
+ }
+ 
++@Composable
++private fun spinnerColumnWidth(base: Dp, labels: List<String>): Dp {
++    val measurer = rememberTextMeasurer()
++    val style = pleosTextStyle(60, 80, FontWeight.Bold)
++    val density = LocalDensity.current
++    val pixels =
++        labels.maxOfOrNull {
++            measurer.measure(AnnotatedString(it), style, softWrap = false).size.width
++        } ?: 0
++    return maxOf(base, with(density) { pixels.toDp() })
++}
++
+ /**
+  * 03 §10 / SP01. 기본 날짜 범위는 1900~2100년입니다. min≤max·3개 날짜 part의 유일한 순서가 필요합니다. 월말·윤년은 clamp하고 외부 값
+  * 보정만으로 콜백을 보내지 않습니다. 원본 노드·binding 식별자는 tools/spec_inventory.json의 19_figma_spinner.md 항목을 참조합니다.
+@@ -344,6 +380,7 @@
+     enabled: Boolean = true,
+     onSettled: ((LocalDate) -> Unit)? = null,
+     dateOrder: List<PleosDatePart> = localizedDateOrder(locale),
++    panelWidth: Dp? = null,
+ ) {
+     require(
+         minDate <= maxDate &&
+@@ -352,7 +389,38 @@
+     )
+     val date = value.coerceIn(minDate, maxDate)
+     val active = enabled && LocalPleosCapabilities.current.complexInteraction
+-    SpinnerPanel(PleosTheme.metrics.dp("spinner/date/width", 600f), size, modifier) {
++    val m = PleosTheme.metrics
++    val monthWidth =
++        spinnerColumnWidth(
++            m.dp("spinner/number_width_small", 120f),
++            Month.entries.map { it.getDisplayName(DateTextStyle.SHORT, locale) },
++        )
++    val dayWidth =
++        spinnerColumnWidth(
++            m.dp("spinner/number_width_small", 120f),
++            listOf(String.format(locale, "%d", 88)),
++        )
++    val yearWidth =
++        spinnerColumnWidth(
++            m.dp("spinner/number_width_large", 200f),
++            listOf(
++                String.format(locale, "%d", minDate.year),
++                String.format(locale, "%d", maxDate.year),
++                String.format(locale, "%d", 8888),
++            ),
++        )
++    val preferred = panelWidth ?: m.dp("spinner/date/width", 600f)
++    require(preferred.value.isFinite() && preferred > 0.dp)
++    val width =
++        maxOf(
++            preferred,
++            monthWidth +
++                dayWidth +
++                yearWidth +
++                m.dp("spinner/column_gap", 24f) * 2 +
++                m.dp("spinner/wheel/padding_horizontal", 16f) * 2,
++        )
++    SpinnerPanel(width, size, modifier) {
+         dateOrder.forEach { part ->
+             key(part) {
+                 when (part) {
+@@ -370,7 +438,7 @@
+                                     adjustPleosDate(date, month = it, min = minDate, max = maxDate)
+                                 )
+                             },
+-                            Modifier.width(120.dp),
++                            Modifier.width(monthWidth),
+                             "월",
+                             { Month.of(it).getDisplayName(DateTextStyle.SHORT, locale) },
+                             size,
+@@ -391,7 +459,7 @@
+                             days,
+                             date.dayOfMonth,
+                             { onDateChange(date.withDayOfMonth(it)) },
+-                            Modifier.width(120.dp),
++                            Modifier.width(dayWidth),
+                             "일",
+                             { String.format(locale, "%d", it) },
+                             size,
+@@ -408,7 +476,7 @@
+                                     adjustPleosDate(date, year = it, min = minDate, max = maxDate)
+                                 )
+                             },
+-                            Modifier.width(200.dp),
++                            Modifier.width(yearWidth),
+                             "연도",
+                             { String.format(locale, "%d", it) },
+                             size,
+@@ -466,18 +534,35 @@
+     size: PleosSpinnerSize = PleosSpinnerSize.Large,
+     enabled: Boolean = true,
+     onSettled: ((LocalTime) -> Unit)? = null,
++    panelWidth: Dp? = null,
+ ) {
+     require(minuteStep > 0 && 60 % minuteStep == 0)
+     val time = value.withSecond(0).withNano(0)
+     val active = enabled && LocalPleosCapabilities.current.complexInteraction
+-    SpinnerPanel(PleosTheme.metrics.dp("spinner/time/width", 500f), size, modifier) {
++    val m = PleosTheme.metrics
++    val numberWidth =
++        spinnerColumnWidth(
++            m.dp("spinner/number_width_small", 120f),
++            listOf(String.format(locale, "%02d", 88)),
++        )
++    val periods = java.text.DateFormatSymbols(locale).amPmStrings
++    val periodWidth =
++        spinnerColumnWidth(m.dp("spinner/number_width_medium", 140f), periods.toList())
++    val preferred = panelWidth ?: m.dp("spinner/time/width", 500f)
++    require(preferred.value.isFinite() && preferred > 0.dp)
++    val contentWidth =
++        numberWidth * 2 +
++            (if (is24Hour) 0.dp else periodWidth) +
++            m.dp("spinner/column_gap", 24f) * (if (is24Hour) 1 else 2) +
++            m.dp("spinner/wheel/padding_horizontal", 16f) * 2
++    SpinnerPanel(maxOf(preferred, contentWidth), size, modifier) {
+         val hours = if (is24Hour) (0..23).toList() else (1..12).toList()
+         val hour = if (is24Hour) time.hour else ((time.hour + 11) % 12) + 1
+         PleosWheelColumn(
+             hours,
+             hour,
+             { onTimeChange(time.withHour(if (is24Hour) it else pleosHour24(it, time.hour >= 12))) },
+-            Modifier.width(120.dp),
++            Modifier.width(numberWidth),
+             "시",
+             { String.format(locale, "%02d", it) },
+             size,
+@@ -493,7 +578,7 @@
+             (0..59 step minuteStep).toList(),
+             minute,
+             { onTimeChange(time.withMinute(it)) },
+-            Modifier.width(120.dp),
++            Modifier.width(numberWidth),
+             "분",
+             { String.format(locale, "%02d", it) },
+             size,
+@@ -501,12 +586,11 @@
+             onSettled = { onSettled?.invoke(time.withMinute(it)) },
+         )
+         if (!is24Hour) {
+-            val periods = java.text.DateFormatSymbols(locale).amPmStrings
+             PleosWheelColumn(
+                 listOf(false, true),
+                 time.hour >= 12,
+                 { onTimeChange(time.withHour(pleosHour24(hour, it))) },
+-                Modifier.width(140.dp),
++                Modifier.width(periodWidth),
+                 "오전 또는 오후",
+                 { periods[if (it) 1 else 0] },
+                 size,
+@@ -537,22 +621,33 @@
+     minDate: LocalDate = LocalDate.of(1900, 1, 1),
+     maxDate: LocalDate = LocalDate.of(2100, 12, 31),
+     onSettled: ((LocalDateTime) -> Unit)? = null,
++    datePanelWidth: Dp? = null,
++    timePanelWidth: Dp? = null,
+ ) {
++    val m = PleosTheme.metrics
++    val dateWidth = datePanelWidth ?: m.dp("spinner/date/width", 600f)
++    val timeWidth = timePanelWidth ?: m.dp("spinner/time/width", 500f)
++    val gap = m.dp("spinner/column_gap", 24f)
+     Row(
+-        modifier.widthIn(max = 1124.dp).horizontalScroll(rememberScrollState()),
+-        horizontalArrangement = Arrangement.spacedBy(24.dp),
++        modifier.widthIn(max = dateWidth + timeWidth + gap).horizontalScroll(rememberScrollState()),
++        horizontalArrangement = Arrangement.spacedBy(gap),
+     ) {
+         Column {
+             dateHeading?.let {
+                 PleosText(
+                     it,
+-                    Modifier.padding(top = 16.dp, bottom = 16.dp),
++                    Modifier.padding(
++                        top = m.dp("spinner/title_top_padding", 16f),
++                        bottom = m.dp("spinner/gap_small", 16f),
++                    ),
++                    color = PleosTheme.colors["text/dark/secondary"],
+                     style = pleosTextStyle(36, 44, FontWeight.Bold),
+                 )
+             }
+             PleosDateSpinner(
+                 value.toLocalDate(),
+                 { onValueChange(LocalDateTime.of(it, value.toLocalTime())) },
++                panelWidth = dateWidth,
+                 minDate = minDate,
+                 maxDate = maxDate,
+                 size = size,
+@@ -565,13 +660,18 @@
+             timeHeading?.let {
+                 PleosText(
+                     it,
+-                    Modifier.padding(top = 16.dp, bottom = 16.dp),
++                    Modifier.padding(
++                        top = m.dp("spinner/title_top_padding", 16f),
++                        bottom = m.dp("spinner/gap_small", 16f),
++                    ),
++                    color = PleosTheme.colors["text/dark/secondary"],
+                     style = pleosTextStyle(36, 44, FontWeight.Bold),
+                 )
+             }
+             PleosTimeSpinner(
+                 value.toLocalTime(),
+                 { onValueChange(LocalDateTime.of(value.toLocalDate(), it)) },
++                panelWidth = timeWidth,
+                 is24Hour = is24Hour,
+                 minuteStep = minuteStep,
+                 size = size,
+--- before/pleos-compose/src/test/java/com/jade/pleos/compose/StateContractTest.kt
++++ after/pleos-compose/src/test/java/com/jade/pleos/compose/StateContractTest.kt
+@@ -6,6 +6,41 @@
+ import org.junit.Test
+ 
+ class StateContractTest {
++    @Test
++    fun volumeBoundariesPrioritizeExactMaximum() {
++        assertEquals(PleosVolumeLevel.Min, pleosVolumeLevel(0f))
++        assertEquals(PleosVolumeLevel.Low, pleosVolumeLevel(.01f))
++        assertEquals(PleosVolumeLevel.Low, pleosVolumeLevel(.25f))
++        assertEquals(PleosVolumeLevel.Mid, pleosVolumeLevel(.26f))
++        assertEquals(PleosVolumeLevel.Mid, pleosVolumeLevel(.75f))
++        assertEquals(PleosVolumeLevel.High, pleosVolumeLevel(.76f))
++        assertEquals(PleosVolumeLevel.High, pleosVolumeLevel(.999f))
++        assertEquals(PleosVolumeLevel.Max, pleosVolumeLevel(1f))
++        assertThrows(IllegalArgumentException::class.java) { pleosVolumeLevel(Float.NaN) }
++    }
++
++    @Test
++    fun sliderAdjustmentsClampBeforeFloatOverflow() {
++        assertEquals(Float.MAX_VALUE, shiftedPleosValue(3e38f, 1e38f, 0f..Float.MAX_VALUE, null))
++        assertEquals(
++            -Float.MAX_VALUE,
++            shiftedPleosValue(-3e38f, -1e38f, -Float.MAX_VALUE..0f, null),
++        )
++    }
++
++    @Test
++    fun emptyToastNeverEntersTheQueueOrLeavesAnEmptySurface() {
++        val state = PleosToastHostState()
++        state.show("", "a")
++        assertNull(state.current)
++        state.show("첫째", "a")
++        state.show("둘째", "b")
++        state.show(" ", "b")
++        assertTrue(state.queued.isEmpty())
++        state.show("", "a")
++        assertNull(state.current)
++    }
++
+     @Test
+     fun decimalStepperReachesEndpointsWithoutDrift() {
+         var v = BigDecimal.ZERO
+--- before/pleos-tokens/src/main/java/com/jade/pleos/tokens/PleosTokens.kt
++++ after/pleos-tokens/src/main/java/com/jade/pleos/tokens/PleosTokens.kt
+@@ -130,6 +130,10 @@
+         webColors[canonical]?.let {
+             return if (dark) it.second else it.first
+         }
++        // 웹 도해의 blue/red 의미를 모드별 semantic 색으로 연결한 구현 파생 토큰입니다.
++        if (name == "controller/slider/gradient_start")
++            return get("informative/positive").copy(alpha = .9f)
++        if (name == "controller/slider/gradient_end") return get("regulation/red").copy(alpha = .9f)
+         return supplementalColors[name]?.let { if (dark) it.second else it.first }
+             ?: error("정의되지 않은 색상 토큰: $name")
+     }
+@@ -218,6 +222,7 @@
+             mapOf(
+                 "controller/stepper/width" to 400f,
+                 "controller/stepper/value_width" to 112f,
++                "controller/stepper/height" to 100f,
+                 "popup/system/medium_width" to 760f,
+                 "popup/medium/width" to 760f,
+                 "popup/large/width" to 1200f,
+@@ -228,6 +233,16 @@
+                 "spinner/date/width" to 600f,
+                 "spinner/time/width" to 500f,
+                 "spinner/column_gap" to 24f,
++                "spinner/panel/large_height" to 384f,
++                "spinner/list_height" to 88f,
++                "spinner/number_width_large" to 200f,
++                "spinner/number_width_medium" to 140f,
++                "spinner/wheel/padding_horizontal" to 16f,
++                "spinner/wheel/radius_top_left" to 32f,
++                "spinner/focus_radius_top_left" to 24f,
++                "spinner/web/fade_height" to 60f,
++                "popup/toast/max_width" to 792f,
++                "popup/toast/text_max_width" to 712f,
+                 "window/handle/enabled_length" to 140f,
+                 "window/handle/pressed_length" to 100f,
+             )
+--- before/pleos-tokens/src/test/java/com/jade/pleos/tokens/TokenContractTest.kt
++++ after/pleos-tokens/src/test/java/com/jade/pleos/tokens/TokenContractTest.kt
+@@ -5,6 +5,29 @@
+ import org.junit.Test
+ 
+ class TokenContractTest {
++    @Test
++    fun auditPreservesWebGeometryAndIndependentFigureMetrics() {
++        for (profile in PleosFormFactor.entries) {
++            val m = PleosMetrics(profile)
++            assertEquals(100f, m.value("controller/stepper/height", 0f))
++            assertEquals(384f, m.value("spinner/panel/large_height", 0f))
++            assertEquals(88f, m.value("spinner/list_height", 0f))
++            assertEquals(792f, m.value("popup/toast/max_width", 0f))
++        }
++        val legacy = PleosMetrics(PleosFormFactor.Legacy12_9)
++        assertEquals(35f, legacy.value("popup/system/padding_large", 0f))
++        assertEquals(42f, legacy.value("popup/system/radius_top_left", 0f))
++        assertEquals(245f, legacy.value("spinner/panel/medium_height", 0f))
++        for (dark in listOf(false, true)) {
++            val c = PleosColors(dark)
++            assertEquals(
++                c["informative/positive"].copy(alpha = .9f),
++                c["controller/slider/gradient_start"],
++            )
++            assertEquals(c["regulation/red"].copy(alpha = .9f), c["controller/slider/gradient_end"])
++        }
++    }
++
+     @Test
+     fun sourceIdentityAndModesArePreserved() {
+         val all = PleosSourceTokens.all

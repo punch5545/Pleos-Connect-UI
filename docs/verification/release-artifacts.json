@@ -1,0 +1,89 @@
+{
+  "pleos-tokens": {
+    "aarBytes": 2428544,
+    "minSdk": 28,
+    "permissions": [],
+    "dependencies": [
+      [
+        "androidx.compose.runtime",
+        "runtime",
+        "1.9.0",
+        "compile"
+      ],
+      [
+        "androidx.compose.ui",
+        "ui",
+        "1.9.0",
+        "compile"
+      ],
+      [
+        "org.jetbrains.kotlin",
+        "kotlin-stdlib",
+        "2.2.10",
+        "compile"
+      ]
+    ]
+  },
+  "pleos-compose": {
+    "aarBytes": 693295,
+    "minSdk": 28,
+    "permissions": [],
+    "dependencies": [
+      [
+        "com.jade.pleos",
+        "pleos-tokens",
+        "0.1.0-dev",
+        "compile"
+      ],
+      [
+        "androidx.compose.foundation",
+        "foundation",
+        "1.9.0",
+        "compile"
+      ],
+      [
+        "androidx.compose.ui",
+        "ui",
+        "1.9.0",
+        "compile"
+      ],
+      [
+        "org.jetbrains.kotlin",
+        "kotlin-stdlib",
+        "2.2.10",
+        "compile"
+      ],
+      [
+        "androidx.lifecycle",
+        "lifecycle-runtime-compose",
+        "2.9.3",
+        "runtime"
+      ]
+    ]
+  },
+  "pleos-aaos": {
+    "aarBytes": 21450,
+    "minSdk": 28,
+    "permissions": [],
+    "dependencies": [
+      [
+        "com.jade.pleos",
+        "pleos-compose",
+        "0.1.0-dev",
+        "compile"
+      ],
+      [
+        "org.jetbrains.kotlin",
+        "kotlin-stdlib",
+        "2.2.10",
+        "compile"
+      ],
+      [
+        "androidx.lifecycle",
+        "lifecycle-runtime",
+        "2.9.3",
+        "runtime"
+      ]
+    ]
+  }
+}

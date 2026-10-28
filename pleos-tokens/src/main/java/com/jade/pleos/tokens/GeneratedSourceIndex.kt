@@ -1,0 +1,2 @@
+package com.jade.pleos.tokens
+internal val generatedSourceTokens: List<SourceToken> by lazy { sourcePart0() + sourcePart1() + sourcePart2() + sourcePart3() + sourcePart4() + sourcePart5() + sourcePart6() + sourcePart7() + sourcePart8() + sourcePart9() + sourcePart10() + sourcePart11() + sourcePart12() + sourcePart13() + sourcePart14() + sourcePart15() + sourcePart16() + sourcePart17() + sourcePart18() + sourcePart19() + sourcePart20() + sourcePart21() + sourcePart22() + sourcePart23() + sourcePart24() }

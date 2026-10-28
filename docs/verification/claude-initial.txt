@@ -1,0 +1,131 @@
+검토를 마쳤습니다. 결론부터 말씀드리면, 바로 고쳐야 할 결함이 두 건 있습니다. Dropdown의 뒤로가기 처리와, Wheel이 호스트가 확정한 외부 상태와 어긋나는 문제입니다. 빌드·lint·테스트는 실행하지 않았으므로 아래 내용은 코드 판독에 근거한 판단이며, 전체 구현이 완료되었거나 검증되었다고 말씀드리지는 않습니다.
+
+## 검토 범위와 전제
+
+- 대상: `pleos-tokens`, `pleos-compose`, `pleos-aaos`의 소스, 빌드 설정, manifest, `tools/generate_spec.py`, docs 01·04·08과 03의 필드·선택 절입니다. 샘플 앱과 catalog는 지시대로 제외했습니다.
+- 검토 도중 소스가 바뀌었습니다. 처음 읽은 뒤 다음 항목이 이미 수정되어 있었고, 수정된 상태로 다시 판단했습니다. 줄번호는 마지막으로 다시 읽은 시점 기준이며 이후 편집으로 달라질 수 있습니다.
+  - 그림자 반투명 영역의 검은 채움: `Foundation.kt:53-55`에 CLEAR 처리 추가
+  - RadioGroup이 항상 disabled 색으로 그려지던 문제: `RadioVisual`로 분리
+  - Switch metric 경로 오류: `selections/switch/...`로 수정
+  - SystemPopup 바깥 탭 좌표계 불일치: `boundsInParent`로 수정
+  - Dropdown Action/Footer 항목 선택 후 닫힘 처리 추가
+
+## 높음
+
+**1. Dropdown이 열린 상태에서 뒤로가기가 동작하지 않을 위험** (`Dropdown.kt:87`, `Dropdown.kt:99`)
+- `Popup(focusable=true, dismissOnBackPress=false)`로 두고 Activity 쪽 `BackHandler`로 Back을 받으려 합니다.
+- 그런데 focusable Popup은 별도 window라서 Back 키가 popup window로 갑니다. 거기서 처리되지 않은 Back은 Activity의 `OnBackPressedDispatcher`까지 전달되지 않을 가능성이 높습니다. 특히 API 28~32에서 그렇습니다.
+- 수정안: `dismissOnBackPress=false`는 유지하고, popup 내용 root에 `onPreviewKeyEvent`를 두어 `Key.Back` KeyUp에서 `dismiss(PleosDismissReason.Back)`를 호출하십시오. 이렇게 하면 `BackHandler`와 activity-compose 의존이 필요 없습니다. 실제 기기에서 Back 동작을 반드시 확인하십시오.
+
+**2. Wheel이 외부 상태와 어긋남** (`Spinners.kt:43-49`)
+- 스크롤이 멈추면 `change(next)`를 호출합니다.
+- 호스트가 그 값을 거부하거나 보정해서 `selected`가 그대로이면, `index`가 바뀌지 않으므로 43행의 `LaunchedEffect(index, values)`가 다시 실행되지 않습니다.
+- 결과적으로 거부된 항목이 화면 중앙에 남고, 강조 표시와 semantics는 원래 값을 가리키게 됩니다. 04 §3.1 "외부 값 변경 즉시 반영, 내부 값으로 덮지 않음"에 어긋납니다.
+- `settled(next)`도 확정되지 않은 값으로 호출됩니다.
+- 수정안: 스크롤 종료 후 한 프레임 뒤에 `current`의 index와 중앙 항목을 비교하고, 다르면 `animateScrollToItem(indexOf(current))`로 되돌리십시오. `onSettled`는 외부 값으로 확정된 경우에만 호출하십시오.
+
+## 중간
+
+**3. Wheel `onSettled` 중복 호출과 연속 입력 유실** (`Spinners.kt:51-56`)
+- `move()`가 `settled`를 직접 호출한 뒤 `animateScrollToItem`이 끝나면 44-49행 collector가 `settled`를 한 번 더 호출합니다.
+- `move()`는 composition 시점의 `index`를 쓰므로, 키를 빠르게 반복하면 recomposition 전 입력이 같은 값으로 중복되거나 유실됩니다.
+- 수정안: `move()`에서는 `settled` 호출을 빼고 collector에 일원화하십시오. 목표 index는 `rememberUpdatedState`나 내부 pending index로 누적하십시오.
+
+**4. D-pad 포커스 갇힘** (`Spinners.kt:63`, `Controllers.kt:59-61`)
+- Keyboard 모드에서 Wheel의 상하 키, Slider의 상하좌우 키를 값이 끝에 도달해도 항상 소비합니다. 그래서 포커스가 컴포넌트를 빠져나가지 못합니다.
+- Slider는 가로 컨트롤인데 상하 키까지 값 변경에 씁니다.
+- 수정안: 값이 바뀌지 않았으면 `false`를 반환하십시오. Slider는 편집 모드가 아닐 때 상하 키를 소비하지 마십시오. 04 §4.3의 탐색 모드와 편집 모드 분리를 Keyboard 모드에도 적용하십시오.
+
+**5. 버튼 loading 중 접근성 이름 소실** (`Actions.kt:72`, `Actions.kt:100`)
+- loading 중 라벨 Box에 `clearAndSetSemantics{}`를 적용해서, 화면 읽기 도구가 "처리 중"만 읽고 버튼 이름을 읽지 못합니다.
+- TextButton에는 `stateDescription`이나 progress semantics도 없습니다.
+- 수정안: `clearAndSetSemantics`를 제거하십시오. alpha 0이어도 semantics는 유지됩니다. 또는 root에 `contentDescription = text`를 지정하고, TextButton에도 70행과 같은 loading semantics를 추가하십시오.
+
+**6. TextField readOnly 상태에서 선택·복사 불가** (`Fields.kt:44`)
+- `{if(editable)onValueChange(it)}` 때문에 readOnly일 때 selection 변경까지 버려집니다. 03 §1과 04 §3.3은 readOnly에서 선택·복사를 허용하라고 합니다.
+- 수정안: readOnly일 때는 텍스트가 같은 변경, 즉 selection만 바뀐 경우에 한해 전달하십시오.
+
+**7. TextField의 label·placeholder가 접근성 이름에 연결되지 않음** (`Fields.kt:41`, `Fields.kt:51`)
+- label은 별도 텍스트로만 그려지고, placeholder는 `clearAndSetSemantics`로 지워집니다. 그래서 편집 노드에 이름이 없습니다.
+- 수정안: `BasicTextField` modifier의 semantics에 `contentDescription = label ?: placeholder`를 지정하고, label 텍스트는 semantics에서 제외하십시오.
+
+**8. Dropdown Switch 항목의 중첩 상호작용** (`Dropdown.kt:43`, `Dropdown.kt:55`)
+- 행 전체가 clickable이면서 내부 `PleosSwitch`도 toggleable입니다. 포커스 정지점과 접근성 노드가 두 개 생기고, 행의 role은 Button입니다.
+- 수정안: 내부 Switch는 비상호작용 시각 요소로 만드십시오. 예를 들어 Radio처럼 visual 함수를 분리하면 됩니다. 행에는 `toggleable(role = Role.Switch)`를 적용하십시오.
+
+**9. Dropdown 포커스 처리와 disabled 전환** (`Dropdown.kt:83`, `Dropdown.kt:85`, `Dropdown.kt:98`)
+- `menuFocus`를 만들기만 하고 쓰지 않아서, 열릴 때 메뉴로 초기 포커스가 이동하지 않습니다.
+- 열린 상태에서 `enabled=false`가 되면 popup만 사라지고 `onExpandedChange(false)`는 호출되지 않습니다. 다시 활성화되면 popup이 저절로 다시 열립니다.
+- 수정안: 열림 시 첫 활성 항목에 `requestFocus`를 하십시오. `LaunchedEffect(enabled)`에서 `!enabled && expanded`이면 `dismiss`를 호출하십시오.
+
+**10. 색상 토큰 이름 누락과 웹 우선 원칙 우회** (`PleosTokens.kt:56-64`, `generate_spec.py:14`, `generate_spec.py:20-21`)
+- slash 별칭은 `figmaName`이 있는 행에서만 만들어집니다. 그래서 웹 행 22개에 slash 이름이 없습니다. 예: `informative/negative`, `surface/low`, `regulation/yellow`, `regulation/bluetooth`. 또 `Regulation/green`처럼 대소문자가 섞여 있습니다.
+- `PleosColors.get`은 이런 이름을 받으면 Figma `2:15157` collection 값으로 조용히 대체하거나, 그마저 없으면 `error()`로 크래시합니다. 예를 들어 `informative/negative`는 Display 파일에만 있어서 크래시합니다.
+- 조회할 때마다 전체 source token을 선형 탐색합니다.
+- 현재 라이브러리 내부 호출은 모두 정상 해석되는 것을 확인했습니다. 다만 공개 API로는 위험합니다.
+- 수정안: 생성기에서 149개 canonical 토큰 전체에 slash 별칭을 만드십시오. 14행의 `a`는 읽기만 하고 쓰지 않습니다. Figma fallback은 제거하거나 별도 감사용 API로 분리하고, 조회 맵은 미리 계산하십시오.
+
+**11. 폼팩터별 metric 미적용** (`Overlays.kt:44` 이하, `Dropdown.kt:42`·`89`, `Spinners.kt:39`·`81`, `PleosTokens.kt:30-37`)
+- Popup의 padding 48/40, Dropdown 높이 80/100, Spinner 행과 패널 높이는 상수로 박혀 있습니다. 해당 토큰은 존재합니다. 예: `popup/system/padding_large`, `spinner/panel/large_height`, `page_navigation/*`. 그래서 L/W/Waterfall 모드값이 적용되지 않습니다.
+- `displayMode`는 어디에서도 쓰이지 않아, `connect-s-14` 등 Display 모드값을 쓸 방법이 없습니다.
+- 수정안: 상수를 `metrics.dp(token, fallback)`로 바꾸십시오. `displayMode`는 Display 토큰 조회 API를 추가하거나 제거하십시오.
+
+**12. 그림자 비트맵의 메모리·성능 부담** (`Foundation.kt:42-58`)
+- surface마다 ARGB 비트맵을 새로 만듭니다. 상한이 16M 픽셀이라 한 장에 최대 약 64MB입니다.
+- 크기가 바뀔 때마다 다시 할당하고 recycle하지 않습니다. 애니메이션 중이나 큰 popup에서 부담이 됩니다.
+- 수정안: 상한을 크게 낮추고 9-patch 방식으로 캐시하십시오. 또는 API 28 software 경로는 유지하되 크기 변동 중에는 재생성을 지연하십시오.
+
+**13. 기본 capabilities가 일반 기기에서 입력을 차단함** (`PleosTokens.kt:41-43`, `PleosTokens.kt:95`, `PleosTokens.kt:101`)
+- 기본값이 전부 `false`입니다. 그래서 `PleosTheme`를 기본 인자로 쓰면 TextField(`Fields.kt:32`), NumberField, Keypad(`Keypads.kt:53`·`90`), Spinner(`Spinners.kt:99`·`118`)가 비활성이 되고 Loading 애니메이션(`Actions.kt:29`)도 멈춥니다.
+- 04 §4.2의 보수적 기본값과는 맞지만, 04 §1의 "일반 Android 기기 preview/test 가능"과 충돌합니다. 문서화도 되어 있지 않습니다.
+- 수정안: KDoc에 명시하십시오. AAOS adapter가 없는 host용으로 `Unrestricted`를 쓰라는 안내나 별도 factory를 제공하십시오.
+
+**14. 드래그 취소 콜백 누락** (`Bars.kt:47`, `Bars.kt:62`)
+- `pointerInput` key가 바뀌어 coroutine이 취소되면 `detectDragGestures`의 `onDragCancel`이 호출되지 않습니다. 예: 비활성화, 스크롤 중 `maxOffset` 변화.
+- 그래서 `dragging`이 true로 남고, AppControlBar의 host는 cancel을 받지 못합니다. WindowControlBar는 `DisposableEffect`로 처리하고 있습니다.
+- 수정안: `try/finally`로 dragging을 해제하고 cancel을 호출하십시오. ScrollBar key에서 `geom.maxOffset`은 빼고 `rememberUpdatedState`로 읽으십시오.
+
+**15. AAOS 라이브러리 경계** (`pleos-aaos/src/main/AndroidManifest.xml:1`, `pleos-aaos/build.gradle.kts:7`, `PleosAaosAdapters.kt:5-6`)
+- `android.car`를 컴파일 classpath에만 추가하고, manifest에는 `<uses-library android:name="android.car" android:required="false"/>` 선언이나 안내가 없습니다.
+- 비 AAOS 기기에서 adapter 클래스가 로드되면 `NoClassDefFoundError`가 날 수 있습니다. AAOS에서도 런타임 로딩을 실제로 확인해야 합니다.
+- 권한, `distractionOptimized`, 서비스가 추가되지 않은 점은 04 §4.2와 맞습니다.
+- 수정안: manifest에 `required=false`로 선언하고, adapter를 쓰기 전에 feature를 검사하도록 안내하십시오.
+
+**16. 알림 adapter의 null 채널 처리** (`PleosAaosAdapters.kt:88`)
+- `notification.channelId`가 null이면 `getNotificationChannel(null)`에서 런타임 예외가 날 수 있습니다.
+- 수정안: null이면 먼저 `Rejected`를 반환하십시오.
+
+## 낮음
+
+- `Dropdown.kt:90`: 값이 선택되어 있으면 트리거에 `selected=true`를 붙여 의미가 오해됩니다. 펼침과 접힘은 `stateDescription` 대신 `expand()`/`collapse()` semantics로 표현하십시오.
+- `Dropdown.kt:87`, `pleos-compose/build.gradle.kts:27`: `BackHandler`는 `OnBackPressedDispatcherOwner`가 없는 host에서 composition 시점에 예외를 냅니다. 1번 수정으로 함께 해소됩니다.
+- `Overlays.kt:75-77`: 화면 가장자리의 padding·inset 영역을 탭하면 바깥 탭으로 감지되지 않습니다. 닫힌 뒤 anchor로 포커스를 복원하는 처리도 없습니다(04 §4.4).
+- `Spinners.kt:99`, `Spinners.kt:122`, Controllers의 `PleosStepper`: 범위 밖 값이나 minuteStep 비정렬 값을 화면에서만 보정하고 외부로 알리지 않습니다. 정책을 KDoc에 고정하십시오.
+- `Spinners.kt:129-135`: `PleosDateTimeSpinner`에 `onSettled`가 없습니다.
+- `Fields.kt:78-84`: String 오버로드에서 `label`, `imeAction`, `keyboardActions`, `clearable`을 전달할 수 없습니다.
+- `Controllers.kt:61`: 방향키 KeyUp마다 값이 바뀌지 않아도 `onValueChangeFinished`가 호출됩니다.
+- `NotificationsWidgets.kt:128`: KeyUp에서만 처리하고 KeyDown은 소비하지 않아, 포커스 이동과 위젯 동작이 겹칠 수 있습니다.
+- `Navigation.kt:39`, `Navigation.kt:48`: item에는 `collectionItemInfo`가 있지만 부모에 `collectionInfo`가 없습니다.
+- `PleosTokens.kt:77-80`: line height 토큰이 없을 때 같은 숫자의 `size_sp` 토큰으로 대체합니다.
+- `generate_spec.py:21`: divider 별칭이 출처 기록 없이 하드코딩되어 있습니다.
+- `generate_spec.py:49`: mode 이름의 제어문자를 제거하면서 정규화 기록을 남기지 않습니다(04 §2.2).
+
+## 확인 결과 결함이 아니었던 항목
+
+아래는 Compose 구현을 추론한 결과이며 테스트로 확인해야 합니다.
+
+- **Password semantics:** `PasswordVisualTransformation`이면 password semantics가 적용되고, 비포커스 상태의 표시용 텍스트는 semantics에서 제외됩니다. NumberField의 `obscured`도 같습니다. 평문이 노출되는 경로는 찾지 못했습니다.
+- **disabled/loading 입력 차단:** `clickable(enabled=false)`로 터치·키·접근성 action이 모두 막힙니다. 누르는 도중 enabled가 바뀌면 Compose가 interaction을 정리합니다.
+- **API 28 호환성:** `java.time`, variable font, `setShadowLayer`·`PorterDuff` software canvas, `getNotificationChannel`, 접근성 timeout API에서 문제를 찾지 못했습니다.
+- **색상 토큰:** 라이브러리 내부에서 쓰는 색상 이름은 모두 정상 해석됩니다. 웹 우선 11개 값도 `GeneratedColors.kt`에 반영되어 있습니다.
+
+## 권장 검증 항목
+
+다음 항목을 계측 테스트로 우선 추가하시기를 권장드립니다.
+
+- Dropdown: Back과 outside dismiss 사유 구분, 포커스 복원
+- Wheel: 호스트가 값을 거부했을 때 되돌림, `onSettled` 1회 호출
+- loading 버튼의 접근성 이름 유지
+- readOnly 필드에서 선택 가능 여부
+- D-pad로 컴포넌트 밖으로 포커스 이동
+- 비 AAOS 기기에서 `pleos-aaos`를 로드하지 않았을 때의 동작

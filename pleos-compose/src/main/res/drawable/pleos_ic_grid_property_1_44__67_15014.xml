@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="44.0dp" android:height="44.0dp" android:viewportWidth="44.0" android:viewportHeight="44.0" android:autoMirrored="false">
+  <group>
+    <path android:pathData="M0 0 L44 0 L44 44 L0 44 L0 0 Z" android:fillType="nonZero" android:fillColor="#ffffff" android:fillAlpha="1" />
+    <group android:scaleX="1.0" android:scaleY="1.0" android:rotation="0.0" android:translateX="0.0" android:translateY="0.0">
+      <group android:scaleX="1.0" android:scaleY="1.0" android:rotation="0.0" android:translateX="7.0" android:translateY="7.0">
+        <path android:pathData="M1.5 0 L1.5 0.05 L28.5 0.05 L28.5 0 L28.5 -0.05 L1.5 -0.05 L1.5 0 Z M30 1.5 L29.95 1.5 L29.95 28.5 L30 28.5 L30.05 28.5 L30.05 1.5 L30 1.5 Z M28.5 30 L28.5 29.95 L1.5 29.95 L1.5 30 L1.5 30.05 L28.5 30.05 L28.5 30 Z M0 28.5 L0.05 28.5 L0.05 1.5 L0 1.5 L-0.05 1.5 L-0.05 28.5 L0 28.5 Z M1.5 30 L1.5 29.95 C0.69919 29.95 0.05 29.30081 0.05 28.5 L0 28.5 L-0.05 28.5 C-0.05 29.35604 0.64396 30.05 1.5 30.05 L1.5 30 Z M30 28.5 L29.95 28.5 C29.95 29.30081 29.30081 29.95 28.5 29.95 L28.5 30 L28.5 30.05 C29.35604 30.05 30.05 29.35604 30.05 28.5 L30 28.5 Z M28.5 0 L28.5 0.05 C29.30081 0.05 29.95 0.69919 29.95 1.5 L30 1.5 L30.05 1.5 C30.05 0.64396 29.35604 -0.05 28.5 -0.05 L28.5 0 Z M1.5 0 L1.5 -0.05 C0.64396 -0.05 -0.05 0.64396 -0.05 1.5 L0 1.5 L0.05 1.5 C0.05 0.69919 0.69919 0.05 1.5 0.05 L1.5 0 Z" android:fillType="nonZero" android:fillColor="#5a46fa" android:fillAlpha="1" />
+      </group>
+      <group android:scaleX="1.0" android:scaleY="1.0" android:rotation="90.0" android:translateX="34.0" android:translateY="5.0">
+        <path android:pathData="M1.5 0 L1.5 0.05 L32.5 0.05 L32.5 0 L32.5 -0.05 L1.5 -0.05 L1.5 0 Z M34 1.5 L33.95 1.5 L33.95 22.5 L34 22.5 L34.05 22.5 L34.05 1.5 L34 1.5 Z M32.5 24 L32.5 23.95 L1.5 23.95 L1.5 24 L1.5 24.05 L32.5 24.05 L32.5 24 Z M0 22.5 L0.05 22.5 L0.05 1.5 L0 1.5 L-0.05 1.5 L-0.05 22.5 L0 22.5 Z M1.5 24 L1.5 23.95 C0.69919 23.95 0.05 23.30081 0.05 22.5 L0 22.5 L-0.05 22.5 C-0.05 23.35604 0.64396 24.05 1.5 24.05 L1.5 24 Z M34 22.5 L33.95 22.5 C33.95 23.30081 33.30081 23.95 32.5 23.95 L32.5 24 L32.5 24.05 C33.35604 24.05 34.05 23.35604 34.05 22.5 L34 22.5 Z M32.5 0 L32.5 0.05 C33.30081 0.05 33.95 0.69919 33.95 1.5 L34 1.5 L34.05 1.5 C34.05 0.64396 33.35604 -0.05 32.5 -0.05 L32.5 0 Z M1.5 0 L1.5 -0.05 C0.64396 -0.05 -0.05 0.64396 -0.05 1.5 L0 1.5 L0.05 1.5 C0.05 0.69919 0.69919 0.05 1.5 0.05 L1.5 0 Z" android:fillType="nonZero" android:fillColor="#5a46fa" android:fillAlpha="1" />
+      </group>
+      <group android:scaleX="1.0" android:scaleY="1.0" android:rotation="0.0" android:translateX="5.0" android:translateY="10.0">
+        <path android:pathData="M1.5 0 L1.5 0.05 L32.5 0.05 L32.5 0 L32.5 -0.05 L1.5 -0.05 L1.5 0 Z M34 1.5 L33.95 1.5 L33.95 22.5 L34 22.5 L34.05 22.5 L34.05 1.5 L34 1.5 Z M32.5 24 L32.5 23.95 L1.5 23.95 L1.5 24 L1.5 24.05 L32.5 24.05 L32.5 24 Z M0 22.5 L0.05 22.5 L0.05 1.5 L0 1.5 L-0.05 1.5 L-0.05 22.5 L0 22.5 Z M1.5 24 L1.5 23.95 C0.69919 23.95 0.05 23.30081 0.05 22.5 L0 22.5 L-0.05 22.5 C-0.05 23.35604 0.64396 24.05 1.5 24.05 L1.5 24 Z M34 22.5 L33.95 22.5 C33.95 23.30081 33.30081 23.95 32.5 23.95 L32.5 24 L32.5 24.05 C33.35604 24.05 34.05 23.35604 34.05 22.5 L34 22.5 Z M32.5 0 L32.5 0.05 C33.30081 0.05 33.95 0.69919 33.95 1.5 L34 1.5 L34.05 1.5 C34.05 0.64396 33.35604 -0.05 32.5 -0.05 L32.5 0 Z M1.5 0 L1.5 -0.05 C0.64396 -0.05 -0.05 0.64396 -0.05 1.5 L0 1.5 L0.05 1.5 C0.05 0.69919 0.69919 0.05 1.5 0.05 L1.5 0 Z" android:fillType="nonZero" android:fillColor="#5a46fa" android:fillAlpha="1" />
+      </group>
+      <group android:scaleX="1.0" android:scaleY="1.0" android:rotation="0.0" android:translateX="3.0" android:translateY="3.0">
+        <path android:pathData="M19 38 L19 38.05 C29.52036 38.05 38.05 29.52036 38.05 19 L38 19 L37.95 19 C37.95 29.46514 29.46514 37.95 19 37.95 L19 38 Z M38 19 L38.05 19 C38.05 8.47964 29.52036 -0.05 19 -0.05 L19 0 L19 0.05 C29.46514 0.05 37.95 8.53486 37.95 19 L38 19 Z M19 0 L19 -0.05 C8.47964 -0.05 -0.05 8.47964 -0.05 19 L0 19 L0.05 19 C0.05 8.53486 8.53486 0.05 19 0.05 L19 0 Z M0 19 L-0.05 19 C-0.05 29.52036 8.47964 38.05 19 38.05 L19 38 L19 37.95 C8.53486 37.95 0.05 29.46514 0.05 19 L0 19 Z" android:fillType="nonZero" android:fillColor="#5a46fa" android:fillAlpha="1" />
+      </group>
+      <group android:scaleX="1.0" android:scaleY="1.0" android:rotation="0.0" android:translateX="0.0" android:translateY="0.0" />
+      <group android:scaleX="1.0" android:scaleY="1.0" android:rotation="0.0" android:translateX="12.0" android:translateY="12.0">
+        <path android:pathData="M20 10 L19.95 10 C19.95 15.49524 15.49524 19.95 10 19.95 L10 20 L10 20.05 C15.55046 20.05 20.05 15.55046 20.05 10 L20 10 Z M10 20 L10 19.95 C4.50477 19.95 0.05 15.49524 0.05 10 L0 10 L-0.05 10 C-0.05 15.55046 4.44954 20.05 10 20.05 L10 20 Z M0 10 L0.05 10 C0.05 4.50477 4.50477 0.05 10 0.05 L10 0 L10 -0.05 C4.44954 -0.05 -0.05 4.44954 -0.05 10 L0 10 Z M10 0 L10 0.05 C15.49524 0.05 19.95 4.50477 19.95 10 L20 10 L20.05 10 C20.05 4.44954 15.55046 -0.05 10 -0.05 L10 0 Z" android:fillType="nonZero" android:fillColor="#5a46fa" android:fillAlpha="1" />
+      </group>
+      <group android:scaleX="1.0" android:scaleY="1.0" android:rotation="0.0" android:translateX="0.0" android:translateY="22.0">
+        <path android:pathData="M0 0 L0 0.05 L44 0.05 L44 0 L44 -0.05 L0 -0.05 L0 0 Z" android:fillType="nonZero" android:fillColor="#5a46fa" android:fillAlpha="1" />
+      </group>
+      <group android:scaleX="1.0" android:scaleY="1.0" android:rotation="0.0" android:translateX="0.0" android:translateY="15.00002">
+        <path android:pathData="M0 0 L0 0.05 L44 0.05 L44 0 L44 -0.05 L0 -0.05 L0 0 Z" android:fillType="nonZero" android:fillColor="#5a46fa" android:fillAlpha="1" />
+      </group>
+      <group android:scaleX="1.0" android:scaleY="1.0" android:rotation="0.0" android:translateX="14.99878" android:translateY="0.0">
+        <path android:pathData="M0 0 L-0.05 0 L-0.05 44 L0 44 L0.05 44 L0.05 0 L0 0 Z" android:fillType="nonZero" android:fillColor="#5a46fa" android:fillAlpha="1" />
+      </group>
+      <group android:scaleX="1.0" android:scaleY="1.0" android:rotation="0.0" android:translateX="0.0" android:translateY="0.0">
+        <path android:pathData="M0 44 L0.03536 44.03535 L44.03535 0.03536 L44 0 L43.96465 -0.03536 L-0.03536 43.96465 L0 44 Z" android:fillType="nonZero" android:fillColor="#5a46fa" android:fillAlpha="1" />
+      </group>
+      <group android:scaleX="1.0" android:scaleY="1.0" android:rotation="0.0" android:translateX="22.0" android:translateY="0.0">
+        <path android:pathData="M0 0 L-0.05 0 L-0.05 44 L0 44 L0.05 44 L0.05 0 L0 0 Z" android:fillType="nonZero" android:fillColor="#5a46fa" android:fillAlpha="1" />
+      </group>
+      <group android:scaleX="1.0" android:scaleY="1.0" android:rotation="0.0" android:translateX="29.00122" android:translateY="0.0">
+        <path android:pathData="M0 0 L-0.05 0 L-0.05 44 L0 44 L0.05 44 L0.05 0 L0 0 Z" android:fillType="nonZero" android:fillColor="#5a46fa" android:fillAlpha="1" />
+      </group>
+      <group android:scaleX="1.0" android:scaleY="1.0" android:rotation="0.0" android:translateX="0.0" android:translateY="28.99998">
+        <path android:pathData="M0 0 L0 0.05 L44 0.05 L44 0 L44 -0.05 L0 -0.05 L0 0 Z" android:fillType="nonZero" android:fillColor="#5a46fa" android:fillAlpha="1" />
+      </group>
+      <group android:scaleX="1.0" android:scaleY="1.0" android:rotation="0.0" android:translateX="0.0" android:translateY="0.0">
+        <path android:pathData="M0 0 L-0.03536 0.03536 L43.96465 44.03535 L44 44 L44.03535 43.96465 L0.03536 -0.03536 L0 0 Z" android:fillType="nonZero" android:fillColor="#5a46fa" android:fillAlpha="1" />
+      </group>
+    </group>
+  </group>
+</vector>

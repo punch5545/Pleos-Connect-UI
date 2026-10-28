@@ -1,0 +1,113 @@
+# Pleos Connect 구현 재대조 결과 (읽기 전용)
+
+P0 결함은 없었습니다. 실제 결함은 P1 5건, P2 17건입니다. 대부분 원본 기하·바인딩 불일치와 사용자가 지정한 핵심 확인 항목에 몰려 있습니다. 빌드·테스트는 실행하지 않았고, 정적 소스 대조만 했습니다. IMPLEMENTATION_MATRIX의 통과 문구와 렌더 테스트는 근거로 쓰지 않았습니다. 사용자 지시는 모두 지켜지고 있습니다(app/catalog/sample 모듈 없음, minSdk 28, `android.car`는 pleos-aaos에만, 권한 추가 없음).
+
+## P1
+
+**1. Dropdown Footer 구조가 원본 수치와 다릅니다** — 02 §10 "Footer 높이 97=1+16+80, Small 81=1+16+64, circle 뒤 gap 20" / 부록 13 `67:25841`, `67:25843`
+- 본문 행에 vertical padding 8이 붙어서(`Dropdown.kt:170-177`) 높이가 Medium 113, Small 97로 늘어납니다.
+- Label에 12dp 좌우 padding이 더 붙습니다(`Dropdown.kt:208`). 원본 Footer Label에는 이 래퍼가 없습니다.
+- 구분선이 메뉴 전체 폭이라(`Dropdown.kt:126`) 원본의 좌우 20/16 inset이 빠졌습니다.
+- 행 radius가 16으로 고정입니다(`Dropdown.kt:149,158,163`). 원본은 32/28입니다.
+- 수정 방향: Footer 전용 row를 분리합니다. 세로 padding 0, 높이는 circle 크기, inset은 `dropdown/padding_large|medium`, radius는 `dropdown/{size}/radius_*`로 바인딩합니다.
+
+**2. Page Navigation에 Search 타입과 Main 메뉴 버튼이 없습니다** — 08 §5 N01 "search/menu/actions", 04 §2 "navigation/search/dropdown state", 03 §3.2 "primary/secondary 버튼 좌우16·상하8·반경16, 화살표 28·간격8", 03 §3.3 "메뉴 닫기 시 호출 버튼으로 focus 복구" / 부록 15 `Type=Search 67:27652`
+- `PleosNavigationType`에는 Main/Depth만 있습니다(`Navigation.kt:288-291`). 원본 Search(뒤로 56 + Medium TextField + 80 icon button, 988×100)는 구현되지 않았습니다.
+- `primaryMenu`/`secondaryMenu`는 빈 slot뿐입니다(`Navigation.kt:314-315,351,374`). 메뉴 버튼 기하, pressed 배경, expanded 상태, focus 복구가 라이브러리에 없습니다.
+- 수정 방향: Search 타입을 추가하고 `PleosTextField`를 재사용합니다. `PleosNavigationMenuButton(label, expanded, onExpandedChange, …)` primitive를 제공하고 `page_navigation/title/dropdown_*` 토큰에 바인딩합니다.
+
+**3. System Popup의 header·body 간격과 스크롤 범위가 원본과 다릅니다** — 03 §4.2 "주 영역 간격 40, Header 하단 16", 03 §4.3 "body를 우선 스크롤" / 부록 16 `67:29510`(VERTICAL gap 40: header pb16 → content → buttons)
+- body가 header Column 안에 들어 있어 header와 body 사이가 24입니다(`Overlays.kt:121-178`). 원본은 16+40입니다.
+- header 하단 padding이 body 아래에 적용됩니다(`Overlays.kt:124-129`).
+- 제목까지 body와 함께 스크롤됩니다.
+- 수정 방향: header, body(단독 `weight(1f,false)`+scroll), buttons를 루트 gap 40의 형제로 분리합니다.
+
+**4. Widget이 D-pad 방향키를 모두 소비해 포커스가 갇힙니다** — 04 §4.3 "방향 탐색", 03 §13.3 "대체 입력"
+- 네 방향 KeyDown에서 항상 `true`를 반환합니다(`NotificationsWidgets.kt:435-447`). 위젯 밖이나 내부 action 사이로 D-pad 이동이 불가능합니다.
+- 수정 방향: 페이지/표시 상태를 실제로 바꾼 경우에만 소비합니다. 끝 페이지나 이미 Hidden/Show인 경우에는 `false`를 반환해 포커스 이동을 허용합니다.
+
+**5. Footer가 원본 dropdown_item과 달리 일반 행 레이아웃을 공유합니다** — 02 §10 "Footer는 별도 row kind"
+- `when(footer)` 분기 외에는 일반 item과 같은 Row/padding/heightIn을 씁니다(`Dropdown.kt:129-139,169-211`). 이 때문에 1번 결함이 생깁니다.
+- 1번과 함께 전용 composable로 분리하면 해소됩니다.
+
+## P2
+
+**Navigation**
+- Depth 뒤로가기가 80 IconButton입니다(`Navigation.kt:334-337`). 원본은 56 아이콘 + gap 24라서 제목 위치가 약 24u 밀립니다. 03 §3.2, 부록 15 `Depth/Title gap 24, ic_arrow 56`.
+- header preset(Radio/Phone/Segmented)에 `surface/basic` 배경과 1u `divider/tertiary` 하단선이 없습니다(`Navigation.kt:409-427`, `divider` 미전달). 03 §3.2, 부록 15 `67:27601`.
+
+**System Popup**
+- 모서리 radius에 padding 값을 넣고 있습니다(`Overlays.kt:94-96,108`). connect-l에서 35가 되어야 할 자리가 아니라, 42여야 할 radius가 35로 렌더링됩니다. `popup/system/radius_*`로 바인딩해야 합니다.
+- 높이 상한 토큰 `popup/system/max_height`(1152 등)를 쓰지 않습니다(`Overlays.kt:104`).
+- 닫기 아이콘이 Small 버튼 glyph 상자(44)에 갇힙니다(`Overlays.kt:133-142`). 원본은 48입니다.
+- Large header 제목의 좌우 32 padding(`popup/system/header_padding_horizontal`)이 빠졌습니다.
+
+**Toast / Toast Popup**
+- 빈 문자열 message도 표시됩니다(`Overlays.kt:327-337,613-614`). 03 §12.3은 "빈 문자열은 표시하지 않는다"입니다.
+- 최대폭 토큰 키가 오기입니다: `"toast/max_width"`(`Overlays.kt:397`)이고, 실제 키는 `popup/toast/max_width`(connect-l 696, w 760, waterfall 840)입니다. 그래서 폼팩터 값이 적용되지 않습니다.
+- 712, icon 48, gap 16이 고정값입니다(`Overlays.kt:413,417,421`). 03 §12.3의 toDp(u) 규칙과 `popup/toast/icon`으로 바인딩해야 합니다.
+- timer 수명주기(STARTED 이상에서만 소모, generation 검사, 재구성 시 재시작 없음)는 규격에 맞습니다.
+
+**Widget**
+- 카드 어디서든 세로 drag로 숨겨집니다(`NotificationsWidgets.kt:497-520`). 03 §13.1은 "상단 Handle을 아래로 끌면 숨김"입니다.
+- Show handle을 탭해도 숨겨집니다(`NotificationsWidgets.kt:531-533`). 명세에 없는 동작입니다.
+- pagination 간격이 Narrow(pitch 16)입니다(`NotificationsWidgets.kt:525`). 웹 SVG는 pitch 18입니다.
+- `PleosBehaviorDefaults.widgetHideFraction`이 쓰이지 않고 `PleosWidgetMetrics.hideFraction`과 이중 소스입니다(`PleosTokens.kt:105` vs `NotificationsWidgets.kt:298`).
+
+**Dropdown**
+- 메뉴 폭이 항상 600이고, trigger는 600으로 강제 상한입니다(`Dropdown.kt:351,515-523`). 02 §10은 responsive 폭이므로 메뉴 폭을 anchor 폭에 맞춰야 합니다.
+- 메뉴 gap 8/16, padding 16, border 2, prefix 56, suffix 48이 하드코딩입니다(`Dropdown.kt:279-280,452`). `dropdown/gap_vertical_*`, `dropdown/prefix/container_square` 등 모드 토큰을 쓰지 않습니다.
+
+**Spinner**
+- Large의 row 88, panel 384가 `PleosMetrics`를 거치지 않습니다(`Spinners.kt:77,79`). fade 60(`Spinners.kt:307`), 열 120/200, gap 24, radius 32/24, inset 16도 고정 dp라서 01 §2.1의 "PleosMetrics에서 교체 가능"을 지키지 않습니다.
+- Medium fade는 `spinner/list_mask_height` 모드값을 써야 합니다.
+- 웹 Large 값을 모든 폼팩터에 적용하는 것 자체는 정책상 허용되므로 결함으로 보지 않았습니다.
+
+**Selections**
+- RadioGroup 행에서 Pressed가 표시되지 않습니다(`Selections.kt:191`, pressed 미전달).
+- 선택된 Radio의 Pressed overlay가 흰 중앙까지 덮습니다(`Selections.kt:148-149`). 03 §8.2는 테두리만 합성입니다.
+- Checkbox의 On/Mixed Pressed overlay가 흰 mark 위에 그려집니다(`Selections.kt:74-75`). overlay를 mark 아래로 옮겨야 합니다.
+
+**Controllers**
+- Medium(Small track)의 track/handle radius가 24/20으로 고정입니다(`Controllers.kt:251,260`). 원본은 20/16입니다.
+- Centered gradient가 Light HEX 고정이라 Dark를 무시합니다(`Controllers.kt:221-225`). 02 §8.2는 "gradient 토큰으로 바인딩"입니다.
+- Continuous의 prefix/suffix icon이 track 아이콘이 아니라 stepper 버튼 glyph를 대체합니다(`Controllers.kt:352,397`).
+- Volume 5단계(Min/Low/Mid/High/Max) 분류 API가 없습니다.
+- Stepper 높이 100과 radius 24가 토큰을 쓰지 않습니다(`Controllers.kt:576-578`). `controller/stepper/height|radius_*`가 존재합니다.
+
+**Keypad**
+- Static palette의 아이콘에 `keyboard/static/text`를 씁니다(`Keypads.kt:340-351`). Light에서 #313236 아이콘이 #44464E 배경 위에 놓여 대비가 거의 없습니다. `keyboard/static/icon_light|dark|disabled`를 써야 합니다.
+
+**Text Field**
+- Small의 clear/eye 버튼 hit target이 40으로 축소됩니다(`Fields.kt:280,296`, `size(glyph)`가 최소 48보다 우선). 04 §5 기준 최소 48입니다. 외형 40은 유지하고 hit 영역만 분리해야 합니다.
+
+**Bar**
+- Window bar 길이 140/100이 하드코딩입니다(`Bars.kt:98`). `webOverrides`의 `window/handle/*` 항목이 사용되지 않습니다.
+
+## 가족별 검토 여부 (22개 모두 소스 대조)
+
+| 가족 | 결과 |
+| --- | --- |
+| Basic button, Toggle, Text button, Icon button | 결함 없음. 색·치수·Loading 64/56/stroke 8 비율·2033ms 모두 일치 |
+| Keypad | P2 1건 |
+| Bar | P2 1건 |
+| Controllers | P2 다수 |
+| Indicator | 결함 없음 |
+| Dropdown | P1 2건, P2 |
+| Text Field | P2 1건 |
+| Number Field | 결함 없음 |
+| Page Navigation | P1 1건, P2 2건 |
+| System Popup | P1 1건, P2 |
+| Toast Popup / Toast | P2. timer는 적합 |
+| Tabs | 결함 없음 |
+| Checkbox, Radio | P2 |
+| Switch | 결함 없음 |
+| Spinner | P2 |
+| System Notification | 결함 없음 |
+| Widgets | P1 1건, P2 |
+
+## 참고와 한계
+- 원래 Plan 모드 절차(계획 파일 작성, ExitPlanMode)는 지시하신 Read/Glob/Grep 제한 때문에 수행하지 않고, 이 답변으로 보고를 대신했습니다.
+- 빌드·lint·테스트는 실행하지 않았습니다. 위 내용은 모두 정적 소스와 명세 문서를 대조한 결과입니다.
+- OEM 실차 rotary 동작과 원본 픽셀 일치는 검증 범위 밖이며 결함으로 세지 않았습니다.
+- 기본 `PleosCapabilities()`가 입력·애니메이션을 끈 상태로 시작하는 점은 04 §4.2의 보수적 기본값 정책에 해당하므로 결함으로 보지 않았습니다.

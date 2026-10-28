@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+<title>ic_menu/Type=3</title>
+<g >
+
+<g transform="matrix(1,0,0,1,7.19995,10.19995)">
+<path fill="#131417" fill-opacity="1" fill-rule="nonzero" data-pleos-token="icon/dark/primary" d="M1.8 0 C0.80589 0 0 0.80589 0 1.8 C0 2.79411 0.80589 3.6 1.8 3.6 L31.8 3.6 C32.79411 3.6 33.6 2.79411 33.6 1.8 C33.6 0.80589 32.79411 0 31.8 0 L1.8 0 Z"/>
+<path fill="#131417" fill-opacity="1" fill-rule="nonzero" data-pleos-token="icon/dark/primary" d="M0 13.8 C0 12.80589 0.80589 12 1.8 12 L31.8 12 C32.79411 12 33.6 12.80589 33.6 13.8 C33.6 14.79411 32.79411 15.6 31.8 15.6 L1.8 15.6 C0.80589 15.6 0 14.79411 0 13.8 Z"/>
+<path fill="#131417" fill-opacity="1" fill-rule="nonzero" data-pleos-token="icon/dark/primary" d="M0 25.8 C0 24.80589 0.80589 24 1.8 24 L31.8 24 C32.79411 24 33.6 24.80589 33.6 25.8 C33.6 26.79411 32.79411 27.6 31.8 27.6 L1.8 27.6 C0.80589 27.6 0 26.79411 0 25.8 Z"/>
+</g>
+</g>
+</svg>

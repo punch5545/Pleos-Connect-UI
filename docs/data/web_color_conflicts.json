@@ -1,0 +1,434 @@
+{
+  "valueConflicts": [
+    {
+      "token": "button_switch_pressed",
+      "mode": "dark",
+      "webTarget": "basic_alpha_dark_200",
+      "webResolved": {
+        "rgb": "#FFFFFF",
+        "alpha": 0.2
+      },
+      "figmaId": "67:22165",
+      "figmaName": "button/switch/pressed",
+      "figmaSetId": "2:15157",
+      "figmaSetKey": "994235267138968c297762f0578b4dfddb3b8126",
+      "figmaKey": "50fe683b33868dabfdedef67feca5367b52e16ab",
+      "figmaMatch": "current-assets-color-collection",
+      "figmaAlias": "alpha/dark/100",
+      "figmaResolved": {
+        "rgb": "#FFFFFF",
+        "alpha": 0.10000000149011612
+      },
+      "sourceImage": "system-color-button-7fe4b0136b1e45f7264ce44b7297c896.png",
+      "sourceRow": 5,
+      "resolution": "web-table-target",
+      "reason": "사용자 지시: 웹을 최신 버전으로 간주한다. Figma snapshot 값으로 되돌리지 않는다."
+    },
+    {
+      "token": "button_switch_disabled",
+      "mode": "dark",
+      "webTarget": "basic_alpha_dark_300",
+      "webResolved": {
+        "rgb": "#FFFFFF",
+        "alpha": 0.3
+      },
+      "figmaId": "67:22166",
+      "figmaName": "button/switch/disabled",
+      "figmaSetId": "2:15157",
+      "figmaSetKey": "994235267138968c297762f0578b4dfddb3b8126",
+      "figmaKey": "bfb65dafacdad59ad063cfc5a81b34537fb9efae",
+      "figmaMatch": "current-assets-color-collection",
+      "figmaAlias": "alpha/light/300",
+      "figmaResolved": {
+        "rgb": "#131417",
+        "alpha": 0.30000001192092896
+      },
+      "sourceImage": "system-color-button-7fe4b0136b1e45f7264ce44b7297c896.png",
+      "sourceRow": 6,
+      "resolution": "web-table-target",
+      "reason": "사용자 지시: 웹을 최신 버전으로 간주한다. Figma snapshot 값으로 되돌리지 않는다."
+    },
+    {
+      "token": "controller_stepper_background",
+      "mode": "dark",
+      "webTarget": "basic_alpha_light_100",
+      "webResolved": {
+        "rgb": "#131417",
+        "alpha": 0.1
+      },
+      "figmaId": "67:25149",
+      "figmaName": "controller/stepper_background",
+      "figmaSetId": "2:15157",
+      "figmaSetKey": "994235267138968c297762f0578b4dfddb3b8126",
+      "figmaKey": "10297715441a285b10cdfba045502e2edef5358e",
+      "figmaMatch": "current-assets-color-collection",
+      "figmaAlias": "alpha/dark/100",
+      "figmaResolved": {
+        "rgb": "#FFFFFF",
+        "alpha": 0.10000000149011612
+      },
+      "sourceImage": "system-color-controller-35efcfe0a72a4e0023b8c9240dc8e35c.png",
+      "sourceRow": 5,
+      "resolution": "web-table-target",
+      "reason": "사용자 지시: 웹을 최신 버전으로 간주한다. Figma snapshot 값으로 되돌리지 않는다."
+    },
+    {
+      "token": "driving_charging_deep",
+      "mode": "dark",
+      "webTarget": "#0082FC",
+      "webResolved": {
+        "rgb": "#0082FC",
+        "alpha": 1
+      },
+      "figmaId": "67:5027",
+      "figmaName": "Miscellaneous/Charging/deep",
+      "figmaSetId": "1:33",
+      "figmaSetKey": "9023bf9125641229eb50f7127eed620e2b5a60e8",
+      "figmaKey": "ad4a67d8c2f23679a49c442c4f59aef80b042d83",
+      "figmaMatch": "explicit-historical-equivalent",
+      "figmaAlias": null,
+      "figmaResolved": {
+        "rgb": "#00B975",
+        "alpha": 1
+      },
+      "sourceImage": "system-color-driving-aadbdd18cf6fe678339d3a733572d685.png",
+      "sourceRow": 3,
+      "resolution": "web-table-target",
+      "reason": "사용자 지시: 웹을 최신 버전으로 간주한다. Figma snapshot 값으로 되돌리지 않는다."
+    },
+    {
+      "token": "keyboard_normal_secondary_pressed",
+      "mode": "dark",
+      "webTarget": "basic_200",
+      "webResolved": {
+        "rgb": "#44464E",
+        "alpha": 1
+      },
+      "figmaId": "67:5049",
+      "figmaName": "keyboard/normal/secondary_pressed",
+      "figmaSetId": "2:15157",
+      "figmaSetKey": "994235267138968c297762f0578b4dfddb3b8126",
+      "figmaKey": "e2d2a3c60285ef213432c3af61a2af17e3a4d9ca",
+      "figmaMatch": "current-assets-color-collection",
+      "figmaAlias": "basic/300",
+      "figmaResolved": {
+        "rgb": "#686A72",
+        "alpha": 1
+      },
+      "sourceImage": "system-color-keyboard1-24ccff8da02ecbeef3797527d39a50e8.png",
+      "sourceRow": 4,
+      "resolution": "web-table-target",
+      "reason": "사용자 지시: 웹을 최신 버전으로 간주한다. Figma snapshot 값으로 되돌리지 않는다."
+    },
+    {
+      "token": "keyboard_static_secondary_pressed",
+      "mode": "dark",
+      "webTarget": "basic_200",
+      "webResolved": {
+        "rgb": "#44464E",
+        "alpha": 1
+      },
+      "figmaId": "67:5058",
+      "figmaName": "keyboard/static/secondary_pressed",
+      "figmaSetId": "2:15157",
+      "figmaSetKey": "994235267138968c297762f0578b4dfddb3b8126",
+      "figmaKey": "f9ae373f5e6830b5fa82ac26537e965b734c1781",
+      "figmaMatch": "current-assets-color-collection",
+      "figmaAlias": "basic/300",
+      "figmaResolved": {
+        "rgb": "#686A72",
+        "alpha": 1
+      },
+      "sourceImage": "system-color-keyboard2-cf104d403970ba502279fee50a4165a5.png",
+      "sourceRow": 4,
+      "resolution": "web-table-target",
+      "reason": "사용자 지시: 웹을 최신 버전으로 간주한다. Figma snapshot 값으로 되돌리지 않는다."
+    },
+    {
+      "token": "keyboard_static_background",
+      "mode": "dark",
+      "webTarget": "basic_100",
+      "webResolved": {
+        "rgb": "#313236",
+        "alpha": 1
+      },
+      "figmaId": "67:5063",
+      "figmaName": "keyboard/static/background",
+      "figmaSetId": "2:15157",
+      "figmaSetKey": "994235267138968c297762f0578b4dfddb3b8126",
+      "figmaKey": "d23e846fd2a07c51e22ba3bf0220abff199d4247",
+      "figmaMatch": "current-assets-color-collection",
+      "figmaAlias": "basic/00",
+      "figmaResolved": {
+        "rgb": "#131417",
+        "alpha": 1
+      },
+      "sourceImage": "system-color-keyboard2-cf104d403970ba502279fee50a4165a5.png",
+      "sourceRow": 9,
+      "resolution": "web-table-target",
+      "reason": "사용자 지시: 웹을 최신 버전으로 간주한다. Figma snapshot 값으로 되돌리지 않는다."
+    },
+    {
+      "token": "keyboard_static_icon_light",
+      "mode": "dark",
+      "webTarget": "basic_400",
+      "webResolved": {
+        "rgb": "#A4A8AE",
+        "alpha": 1
+      },
+      "figmaId": "67:5064",
+      "figmaName": "keyboard/static/icon_light",
+      "figmaSetId": "2:15157",
+      "figmaSetKey": "994235267138968c297762f0578b4dfddb3b8126",
+      "figmaKey": "06828626ae7c1e0804f7ef3ce27219064124681e",
+      "figmaMatch": "current-assets-color-collection",
+      "figmaAlias": "basic/900",
+      "figmaResolved": {
+        "rgb": "#FFFFFF",
+        "alpha": 1
+      },
+      "sourceImage": "system-color-keyboard2-cf104d403970ba502279fee50a4165a5.png",
+      "sourceRow": 10,
+      "resolution": "web-table-target",
+      "reason": "사용자 지시: 웹을 최신 버전으로 간주한다. Figma snapshot 값으로 되돌리지 않는다."
+    },
+    {
+      "token": "keyboard_static_icon_dark",
+      "mode": "dark",
+      "webTarget": "basic_400",
+      "webResolved": {
+        "rgb": "#A4A8AE",
+        "alpha": 1
+      },
+      "figmaId": "67:5065",
+      "figmaName": "keyboard/static/icon_dark",
+      "figmaSetId": "2:15157",
+      "figmaSetKey": "994235267138968c297762f0578b4dfddb3b8126",
+      "figmaKey": "d79b9152ba1000e3cb339f4b6abad1c9f5b86387",
+      "figmaMatch": "current-assets-color-collection",
+      "figmaAlias": "basic/00",
+      "figmaResolved": {
+        "rgb": "#131417",
+        "alpha": 1
+      },
+      "sourceImage": "system-color-keyboard2-cf104d403970ba502279fee50a4165a5.png",
+      "sourceRow": 11,
+      "resolution": "web-table-target",
+      "reason": "사용자 지시: 웹을 최신 버전으로 간주한다. Figma snapshot 값으로 되돌리지 않는다."
+    },
+    {
+      "token": "keyboard_static_text",
+      "mode": "light",
+      "webTarget": "basic_700",
+      "webResolved": {
+        "rgb": "#313236",
+        "alpha": 1
+      },
+      "figmaId": "67:5067",
+      "figmaName": "keyboard/static/text",
+      "figmaSetId": "2:15157",
+      "figmaSetKey": "994235267138968c297762f0578b4dfddb3b8126",
+      "figmaKey": "ab3e529e84f9657b4e42fd5742f181c36a364ff2",
+      "figmaMatch": "current-assets-color-collection",
+      "figmaAlias": "basic/00",
+      "figmaResolved": {
+        "rgb": "#FFFFFF",
+        "alpha": 1
+      },
+      "sourceImage": "system-color-keyboard2-cf104d403970ba502279fee50a4165a5.png",
+      "sourceRow": 13,
+      "resolution": "web-table-target",
+      "reason": "사용자 지시: 웹을 최신 버전으로 간주한다. Figma snapshot 값으로 되돌리지 않는다."
+    },
+    {
+      "token": "keyboard_static_text",
+      "mode": "dark",
+      "webTarget": "basic_400",
+      "webResolved": {
+        "rgb": "#A4A8AE",
+        "alpha": 1
+      },
+      "figmaId": "67:5067",
+      "figmaName": "keyboard/static/text",
+      "figmaSetId": "2:15157",
+      "figmaSetKey": "994235267138968c297762f0578b4dfddb3b8126",
+      "figmaKey": "ab3e529e84f9657b4e42fd5742f181c36a364ff2",
+      "figmaMatch": "current-assets-color-collection",
+      "figmaAlias": "basic/900",
+      "figmaResolved": {
+        "rgb": "#FFFFFF",
+        "alpha": 1
+      },
+      "sourceImage": "system-color-keyboard2-cf104d403970ba502279fee50a4165a5.png",
+      "sourceRow": 13,
+      "resolution": "web-table-target",
+      "reason": "사용자 지시: 웹을 최신 버전으로 간주한다. Figma snapshot 값으로 되돌리지 않는다."
+    }
+  ],
+  "sourceAnomalies": [
+    {
+      "kind": "alpha-table-inverted-rgb-label",
+      "token": "basic_alpha_dark_50",
+      "sourceLight": "#FFFFFF @ 5%",
+      "sourceDark": "#131417 @ 5%",
+      "canonicalLight": "#131417 @ 5%",
+      "canonicalDark": "#FFFFFF @ 5%",
+      "sourceImage": "gray-alpha-0ce361ac45bdc95d66fc57411cf28ae6.png"
+    },
+    {
+      "kind": "alpha-table-inverted-rgb-label",
+      "token": "basic_alpha_dark_100",
+      "sourceLight": "#FFFFFF @ 10%",
+      "sourceDark": "#131417 @ 10%",
+      "canonicalLight": "#131417 @ 10%",
+      "canonicalDark": "#FFFFFF @ 10%",
+      "sourceImage": "gray-alpha-0ce361ac45bdc95d66fc57411cf28ae6.png"
+    },
+    {
+      "kind": "alpha-table-inverted-rgb-label",
+      "token": "basic_alpha_dark_200",
+      "sourceLight": "#FFFFFF @ 20%",
+      "sourceDark": "#131417 @ 20%",
+      "canonicalLight": "#131417 @ 20%",
+      "canonicalDark": "#FFFFFF @ 20%",
+      "sourceImage": "gray-alpha-0ce361ac45bdc95d66fc57411cf28ae6.png"
+    },
+    {
+      "kind": "alpha-table-inverted-rgb-label",
+      "token": "basic_alpha_dark_300",
+      "sourceLight": "#FFFFFF @ 30%",
+      "sourceDark": "#131417 @ 30%",
+      "canonicalLight": "#131417 @ 30%",
+      "canonicalDark": "#FFFFFF @ 30%",
+      "sourceImage": "gray-alpha-0ce361ac45bdc95d66fc57411cf28ae6.png"
+    },
+    {
+      "kind": "alpha-table-inverted-rgb-label",
+      "token": "basic_alpha_dark_400",
+      "sourceLight": "#FFFFFF @ 40%",
+      "sourceDark": "#131417 @ 40%",
+      "canonicalLight": "#131417 @ 40%",
+      "canonicalDark": "#FFFFFF @ 40%",
+      "sourceImage": "gray-alpha-0ce361ac45bdc95d66fc57411cf28ae6.png"
+    },
+    {
+      "kind": "alpha-table-inverted-rgb-label",
+      "token": "basic_alpha_dark_500",
+      "sourceLight": "#FFFFFF @ 50%",
+      "sourceDark": "#131417 @ 50%",
+      "canonicalLight": "#131417 @ 50%",
+      "canonicalDark": "#FFFFFF @ 50%",
+      "sourceImage": "gray-alpha-0ce361ac45bdc95d66fc57411cf28ae6.png"
+    },
+    {
+      "kind": "alpha-table-inverted-rgb-label",
+      "token": "basic_alpha_light_50",
+      "sourceLight": "#131417 @ 5%",
+      "sourceDark": "#FFFFFF @ 5%",
+      "canonicalLight": "#FFFFFF @ 5%",
+      "canonicalDark": "#131417 @ 5%",
+      "sourceImage": "white-alpha-1a1359524cb98282c87149651de538d8.png"
+    },
+    {
+      "kind": "alpha-table-inverted-rgb-label",
+      "token": "basic_alpha_light_100",
+      "sourceLight": "#131417 @ 10%",
+      "sourceDark": "#FFFFFF @ 10%",
+      "canonicalLight": "#FFFFFF @ 10%",
+      "canonicalDark": "#131417 @ 10%",
+      "sourceImage": "white-alpha-1a1359524cb98282c87149651de538d8.png"
+    },
+    {
+      "kind": "alpha-table-inverted-rgb-label",
+      "token": "basic_alpha_light_200",
+      "sourceLight": "#131417 @ 20%",
+      "sourceDark": "#FFFFFF @ 20%",
+      "canonicalLight": "#FFFFFF @ 20%",
+      "canonicalDark": "#131417 @ 20%",
+      "sourceImage": "white-alpha-1a1359524cb98282c87149651de538d8.png"
+    },
+    {
+      "kind": "alpha-table-inverted-rgb-label",
+      "token": "basic_alpha_light_300",
+      "sourceLight": "#131417 @ 30%",
+      "sourceDark": "#FFFFFF @ 30%",
+      "canonicalLight": "#FFFFFF @ 30%",
+      "canonicalDark": "#131417 @ 30%",
+      "sourceImage": "white-alpha-1a1359524cb98282c87149651de538d8.png"
+    },
+    {
+      "kind": "alpha-table-inverted-rgb-label",
+      "token": "basic_alpha_light_400",
+      "sourceLight": "#131417 @ 40%",
+      "sourceDark": "#FFFFFF @ 40%",
+      "canonicalLight": "#FFFFFF @ 40%",
+      "canonicalDark": "#131417 @ 40%",
+      "sourceImage": "white-alpha-1a1359524cb98282c87149651de538d8.png"
+    },
+    {
+      "kind": "alpha-table-inverted-rgb-label",
+      "token": "basic_alpha_light_500",
+      "sourceLight": "#131417 @ 50%",
+      "sourceDark": "#FFFFFF @ 50%",
+      "canonicalLight": "#FFFFFF @ 50%",
+      "canonicalDark": "#131417 @ 50%",
+      "sourceImage": "white-alpha-1a1359524cb98282c87149651de538d8.png"
+    },
+    {
+      "kind": "duplicate-web-token-label",
+      "token": "icon_light_primary",
+      "sourceToken": "icon_dark_primary",
+      "sourceImage": "system-color-icon-e9b6e7d15a6a5927758f457e39c68eda.png",
+      "sourceRow": 5
+    },
+    {
+      "kind": "duplicate-web-token-label",
+      "token": "icon_light_secondary",
+      "sourceToken": "icon_dark_secondary",
+      "sourceImage": "system-color-icon-e9b6e7d15a6a5927758f457e39c68eda.png",
+      "sourceRow": 6
+    },
+    {
+      "kind": "duplicate-web-token-label",
+      "token": "icon_light_tertiary",
+      "sourceToken": "icon_dark_tertiary",
+      "sourceImage": "system-color-icon-e9b6e7d15a6a5927758f457e39c68eda.png",
+      "sourceRow": 7
+    },
+    {
+      "kind": "duplicate-web-token-label",
+      "token": "icon_light_quaternary",
+      "sourceToken": "icon_dark_quaternary",
+      "sourceImage": "system-color-icon-e9b6e7d15a6a5927758f457e39c68eda.png",
+      "sourceRow": 8
+    },
+    {
+      "kind": "duplicate-web-token-label",
+      "token": "text_light_primary",
+      "sourceToken": "text_dark_primary",
+      "sourceImage": "system-color-text-e7366a153c7953a16d9d7939a9ce2b25.png",
+      "sourceRow": 5
+    },
+    {
+      "kind": "duplicate-web-token-label",
+      "token": "text_light_secondary",
+      "sourceToken": "text_dark_secondary",
+      "sourceImage": "system-color-text-e7366a153c7953a16d9d7939a9ce2b25.png",
+      "sourceRow": 6
+    },
+    {
+      "kind": "duplicate-web-token-label",
+      "token": "text_light_tertiary",
+      "sourceToken": "text_dark_tertiary",
+      "sourceImage": "system-color-text-e7366a153c7953a16d9d7939a9ce2b25.png",
+      "sourceRow": 7
+    },
+    {
+      "kind": "duplicate-web-token-label",
+      "token": "text_light_quaternary",
+      "sourceToken": "text_dark_quaternary",
+      "sourceImage": "system-color-text-e7366a153c7953a16d9d7939a9ce2b25.png",
+      "sourceRow": 8
+    }
+  ]
+}

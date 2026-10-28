@@ -1,0 +1,26 @@
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.jetbrains.kotlin.com.intellij.util.containers.ConcurrentLongObjectHashMap (file:/private/tmp/pleos-ktfmt-0.54.jar)
+WARNING: Please consider reporting this to the maintainers of class org.jetbrains.kotlin.com.intellij.util.containers.ConcurrentLongObjectHashMap
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+Done formatting pleos-aaos/src/androidTest/java/com/jade/pleos/aaos/UxRestrictionAdapterTest.kt
+Done formatting pleos-compose/src/test/java/com/jade/pleos/compose/StateContractTest.kt
+Done formatting pleos-tokens/src/test/java/com/jade/pleos/tokens/TokenContractTest.kt
+Done formatting pleos-compose/src/main/java/com/jade/pleos/compose/Bars.kt
+Done formatting pleos-compose/src/main/java/com/jade/pleos/compose/Foundation.kt
+Done formatting pleos-aaos/src/main/java/com/jade/pleos/aaos/PleosAaosAdapters.kt
+Done formatting pleos-tokens/src/main/java/com/jade/pleos/tokens/PleosTokens.kt
+Done formatting pleos-aaos/src/test/java/com/jade/pleos/aaos/RotaryEditSessionTest.kt
+Done formatting pleos-compose/src/main/java/com/jade/pleos/compose/Fields.kt
+Done formatting pleos-compose/src/main/java/com/jade/pleos/compose/Selections.kt
+Done formatting pleos-compose/src/androidTest/java/com/jade/pleos/compose/PublicApiUsage.kt
+Done formatting pleos-compose/src/main/java/com/jade/pleos/compose/Navigation.kt
+Done formatting pleos-compose/src/main/java/com/jade/pleos/compose/Overlays.kt
+Done formatting pleos-compose/src/androidTest/java/com/jade/pleos/compose/PleosVariantCoverageTest.kt
+Done formatting pleos-compose/src/main/java/com/jade/pleos/compose/Actions.kt
+Done formatting pleos-compose/src/androidTest/java/com/jade/pleos/compose/PleosLibraryUiTest.kt
+Done formatting pleos-compose/src/main/java/com/jade/pleos/compose/NotificationsWidgets.kt
+Done formatting pleos-compose/src/androidTest/java/com/jade/pleos/compose/PleosSpecRegressionTest.kt
+Done formatting pleos-compose/src/main/java/com/jade/pleos/compose/Spinners.kt
+Done formatting pleos-compose/src/main/java/com/jade/pleos/compose/Controllers.kt
+Done formatting pleos-compose/src/main/java/com/jade/pleos/compose/Keypads.kt
+Done formatting pleos-compose/src/main/java/com/jade/pleos/compose/Dropdown.kt

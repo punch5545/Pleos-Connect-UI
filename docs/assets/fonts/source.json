@@ -1,0 +1,16 @@
+[
+  {
+    "local": "asta_sans_variable.ttf",
+    "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/astasans/AstaSans%5Bwght%5D.ttf",
+    "github_blob_sha": "40b58eb9177a7deb81912b4f1045b074c7702d54",
+    "sha256": "f68410bf7d04deb992097758640145c72ddcf234070794237fc4994e18991c33",
+    "size": 5771772
+  },
+  {
+    "local": "OFL.txt",
+    "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/astasans/OFL.txt",
+    "github_blob_sha": "9a672b7bf950586c6fa3741a0ea162bc1e98ae88",
+    "sha256": "2448ea782a6364d571a4848c34db8a042311f44c78cf00265888db19ea10d5a4",
+    "size": 4389
+  }
+]
