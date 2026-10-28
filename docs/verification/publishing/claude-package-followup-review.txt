@@ -1,0 +1,28 @@
+세 가지 모두 확인했습니다. 개인 미추적 파일 포함과 소스·바이너리 버전 불일치는 막혀 있습니다. 결함은 manifest 검증 쪽에 한 건 남아 있고, 나머지는 사소합니다. 파일은 읽기만 했고 아무것도 실행하지 않았습니다.
+
+**1. 개인 미추적 파일 포함: 막혀 있습니다**
+- 소스는 `git archive v0.1.0`의 결과만 사용합니다(`tools/package_release.py:44`). 따라서 작업 폴더의 미추적 파일과 수정본(예: `claude-*.txt`, 현재 수정된 README)은 들어가지 않습니다.
+- Maven 쪽은 bundle 전체 SHA-256이 태그 기록과 같은지 확인하고(`:26`), 파일 목록이 예정된 90개와 정확히 같은지도 확인합니다(`:42`). 그래서 다른 파일이 섞일 수 없습니다.
+- 다만 태그에 이미 추적된 파일은 모두 들어갑니다. 제외 규칙은 `/app/`, `/catalog/`, `local.properties` 확인(`:78`) 하나뿐이고 `.gitattributes`의 export-ignore도 없습니다. 그래서 제외 여부는 태그 내용에 달려 있습니다. 현재 태그에서는 통과했습니다.
+
+**2. 소스·바이너리 버전 불일치: 막혀 있습니다**
+- 태그 안의 `bundle-validation.json`이 서명 여부·버전을 보증하고(`:22-23`), bundle 해시로 바이너리를 고정합니다. 소스와 바이너리는 같은 태그 기준으로 묶입니다.
+- 남은 한계:
+  - `bundle-validation.json`에 빌드한 소스 커밋이 기록되어 있지 않습니다. 그래서 AAR이 태그 소스로 빌드되었다는 사실은 기록만으로 보증되며, 다시 빌드해서 대조하지는 않습니다.
+  - `VERSION`을 태그가 아니라 main 작업 폴더의 `build.gradle.kts`에서 읽습니다(`:14`). main에서 버전을 올리면 v0.1.0 ZIP을 만들 수 없습니다. 반면 README와 PUBLISHING은 "main의 도구로 0.1.0 ZIP 생성"으로 설명합니다. 불일치를 만들지는 않지만 설명과 동작이 어긋날 수 있습니다.
+
+**3. manifest 검증: 결함이 남아 있습니다**
+- **ZIP을 매번 같게 만들 수 없습니다.** 소스 항목에는 tar의 mtime을 넣지만(`:61`), Maven 항목(`:68`)과 `RELEASE_SNAPSHOT.json`(`:69`)은 문자열 이름으로 `writestr`하므로 실행 시각이 기록됩니다. 그 결과:
+  - 실행할 때마다 ZIP 해시와 `SHA256SUMS.txt`가 달라집니다.
+  - `source-package-validation.json`의 `sourceArchiveSha256`은 다시 실행해서 확인할 수 없는, 한 번의 실행 기록일 뿐입니다.
+  - Maven 항목의 권한도 기본값(0600)으로 바뀝니다.
+- **`sourceArchiveSha256`이 무엇의 해시인지 모호합니다.** git archive tar인지 최종 ZIP인지 알 수 없고, 도구가 이 값을 출력하지도 않습니다.
+- **검증 JSON이 도구 출력과 이어지지 않습니다.** 도구의 출력은 로그 한 줄뿐입니다(`:79`). JSON의 `sourceReadmeMatchesTag`, `gradlewExecutablePreserved`, `workspaceAndUntrackedFilesExcluded`, `tamperedBundleRejected`는 어떤 검사로 만들었는지 저장소에 근거가 없습니다. 로그로 뒷받침되는 값은 `sourceFiles: 520`과 `originalMavenFiles: 90`뿐입니다.
+- **`RELEASE_SNAPSHOT.json`에 버전과 출력 해시가 없습니다.** 태그·커밋·bundle 해시·파일 수만 기록하고, 버전과 소스 tar 해시는 빠져 있습니다.
+- **사소한 점**
+  - 최종 검사가 `assert`라서 `python -O`로 실행하면 건너뜁니다(`:77-78`).
+  - 파일이 빠지면 `ValueError`가 아니라 `KeyError`가 납니다(`:33`, `:39`).
+  - `dist/aar/`에 남아 있는 이전 파일을 지우지 않습니다.
+  - 이 셋은 잘못된 결과를 통과시키지는 않습니다.
+
+README와 PUBLISHING의 ZIP 설명은 실제 동작과 맞습니다. 다만 ZIP 안의 README는 태그 시점의 문서여서, 지금 추가한 로컬 ZIP 설명은 들어 있지 않습니다. 의도하신 동작이라면 문제가 되지 않습니다.

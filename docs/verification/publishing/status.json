@@ -34,5 +34,6 @@
   "portalLastObservedState": "PUBLISHING",
   "verifiedAt": "2026-10-28T06:30:24.858504+00:00",
   "consumerCompile": "PASS",
-  "consumerProjectKind": "Temporary Android Library; no app or Activity"
+  "consumerProjectKind": "Temporary Android Library; no app or Activity",
+  "portalObservationNote": "The last UI observation preceded public availability; completion was independently verified by anonymous downloads, compilation, dependency resolution, and the live Maven Central badge."
 }

@@ -13,7 +13,7 @@
 
 ## 설치
 
-AAR를 단독 복사하면 다른 두 모듈 및 AndroidX 의존성이 자동 설치되지 않습니다. 소비 앱에는 세 모듈의 Maven 배포물을 함께 제공하는 방법을 권장합니다. 일반 UI 소비 앱은 `pleos-compose`만 의존하면 토큰이 전이됩니다. AAOS adapter를 사용할 때만 `pleos-aaos`를 추가하십시오.
+일반 UI 앱에는 `pleos-compose`만 추가하면 됩니다. `pleos-tokens`는 전이 의존성으로 포함됩니다. AAOS adapter가 필요한 앱에서 `pleos-aaos`를 추가하십시오. AAR를 단독으로 복사할 경우 필요한 모듈과 AndroidX 의존성은 직접 추가해야 합니다.
 
 ```kotlin
 repositories {
@@ -106,7 +106,7 @@ export JAVA_HOME='/Applications/Android Studio.app/Contents/jbr/Contents/Home'
 
 릴리스 AAR는 각 모듈의 `build/outputs/aar/`, 소스 JAR와 의존성 메타데이터를 포함한 로컬 Maven 저장소는 `build/maven/`에 생성됩니다. 공개 배포 좌표는 인증된 GitHub 네임스페이스 `io.github.punch5545`를 사용합니다. Kotlin 패키지 이름은 `com.jade.pleos.*`로 유지하며 공식 Pleos 좌표가 아닙니다.
 
-완성된 배포 묶음은 `dist/pleos-connect-ui-0.1.0.zip`입니다. 세 모듈의 AAR·소스·Maven 메타데이터와 빌드 가능한 프로젝트 소스·설계/검증 문서를 포함합니다. 개별 AAR와 SHA-256 목록은 `dist/aar/`, `dist/SHA256SUMS.txt`에 있습니다. 재포장은 검증 후 `python3 tools/package_release.py`로 수행합니다.
+소스 배포 ZIP은 릴리스 태그와 원래 서명 bundle을 준비한 뒤 `python3 tools/package_release.py`로 로컬에서 만듭니다. `dist/pleos-connect-ui-0.1.0.zip`에 태그의 프로젝트 소스·설계/검증 문서와 원래 Maven 배포 파일을 넣습니다. 개별 AAR와 SHA-256 목록은 `dist/aar/`, `dist/SHA256SUMS.txt`에 생성하며 Git 저장소에는 포함하지 않습니다. Maven Central에 게시한 파일은 다시 생성하거나 덮어쓰지 않습니다.
 
 ## 추적과 검증
 

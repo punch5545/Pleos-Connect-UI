@@ -1,8 +1,8 @@
 {
   "status": "PASS",
   "route": "light",
-  "changeRate": 0.2023,
-  "ignoreMarkupChangeRate": 0.203,
+  "changeRate": 0.2226,
+  "ignoreMarkupChangeRate": 0.2237,
   "grade": "B",
   "selfCheckPassed": 6,
   "selfCheckTotal": 6,
@@ -10,8 +10,8 @@
   "gate": {
     "genre": "essay",
     "change_rate": {
-      "rate": 0.2023,
-      "scope": "\uc804\ubb38",
+      "rate": 0.2226,
+      "scope": "전문",
       "verdict": "OK"
     },
     "s1_targets": [
@@ -19,18 +19,18 @@
         "metric": "ending_comma_rate",
         "z_before": 6.54,
         "z_after": -0.52,
-        "verdict": "\ub2ec\uc131"
+        "verdict": "달성"
       }
     ],
     "antithesis": {
       "before": 0,
       "after": 0,
-      "verdict": "\uc2a4\ud0b5 (\uc6d0\ubb38 \ub300\uad6c < 5)"
+      "verdict": "스킵 (원문 대구 < 5)"
     },
     "golden": [],
     "sentence_touch": {
-      "rate": 0.1241,
-      "touched": 17,
+      "rate": 0.1825,
+      "touched": 25,
       "total": 137
     },
     "numbers_dropped": [],
@@ -40,7 +40,7 @@
       "counts": {
         "deontic": {
           "before": 1,
-          "after": 1
+          "after": 2
         },
         "hedge": {
           "before": 10,
@@ -50,7 +50,7 @@
       "verdict": "OK"
     },
     "gate": {
-      "verdict": "OK \u2014 \uc218\ub834",
+      "verdict": "OK — 수렴",
       "exit_code": 0
     }
   },
@@ -62,9 +62,10 @@
     "Maven Central and license badges",
     "Module version links",
     "Installation before build instructions",
-    "Removed repetitive commas and combined duplicate publishing links"
+    "Removed repetitive commas and combined duplicate publishing links",
+    "Clarified transitive dependencies and local release ZIP generation"
   ],
-  "readmeSha256": "efdc299c7a3d0e08d04e2bf2554cc4db802cd22c4fdfe57366ce68a76e00752d",
+  "readmeSha256": "1152017c29cc193e9e18a9054b464af65c8aad36435b6561aa8d4f79fe6260e1",
   "initialProsePassChangeRate": 0.0008,
   "codeBlocksPreserved": true,
   "localLinksValid": true,

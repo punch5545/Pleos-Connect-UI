@@ -1,0 +1,5 @@
+Packaged v0.1.0 (ad714d0): 520 source files and 90 original Maven files, 9905651 bytes
+Source ZIP SHA-256: ac157f1c2b68b947a395279c6ce7bee6da24ecc31fc43824db549b652f3d8b3a
+Packaged v0.1.0 (ad714d0): 520 source files and 90 original Maven files, 9905651 bytes
+Source ZIP SHA-256: ac157f1c2b68b947a395279c6ce7bee6da24ecc31fc43824db549b652f3d8b3a
+{"status": "PASS", "sourceTag": "v0.1.0", "sourceCommit": "ad714d0817f8d3f89e7512f0d62e99c2ade2bb5f", "sourceFiles": 520, "originalMavenFiles": 90, "allTaggedSourcesMatch": true, "gradlewExecutablePreserved": true, "workspaceAndUntrackedFilesExcluded": true, "tamperedBundleRejected": true, "repeatedZipBytesIdentical": true, "sourceZipSha256": "ac157f1c2b68b947a395279c6ce7bee6da24ecc31fc43824db549b652f3d8b3a", "verificationCommand": "python3 tools/verify_release_package.py"}

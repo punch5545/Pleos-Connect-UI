@@ -50,6 +50,10 @@ POM과 API 소스 링크는 `v0.1.0` 태그를 사용합니다. 해당 버전의
 
 배포한 파일을 다시 만들 때는 `v0.1.0` 태그를 기준으로 빌드하십시오. 게시 후 main의 문서가 바뀌어도 기존 Central 파일을 덮어쓰지 않습니다.
 
+로컬 소스 배포 ZIP이 필요하면 main의 `tools/package_release.py`를 실행합니다. 이 도구는 작업 폴더를 수집하지 않고 `git archive v0.1.0`과 태그에 기록한 해시가 같은 원본 서명 bundle만 포장합니다. 공개 태그에 없는 개인 파일·미추적 파일·윤문 작업 폴더는 포함하지 않습니다. ZIP의 `RELEASE_SNAPSHOT.json`에 소스 태그·커밋·bundle 해시를 기록하며, 공개 Maven 파일을 재생성하지 않습니다.
+
+`python3 tools/verify_release_package.py`는 태그의 모든 소스와 원래 Maven 파일의 바이트 일치, 실행 권한, 체크섬, 미추적 파일 제외와 변조 bundle 거부를 검사합니다. 동일 입력으로 ZIP을 두 번 생성하여 바이트가 같은지도 확인합니다. ZIP 내부에는 버전과 소스 tar 해시를 기록하고, 최종 ZIP 해시는 외부 `SHA256SUMS.txt`에 둡니다. [실행 결과](docs/verification/publishing/source-package-validation.json)와 [로그](docs/verification/publishing/source-package-check.log)를 보존합니다.
+
 ## 사용한 공식 문서
 
 - [네임스페이스 인증](https://central.sonatype.org/register/namespace/)
