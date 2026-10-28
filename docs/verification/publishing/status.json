@@ -1,0 +1,22 @@
+{
+  "sourceCommit": "43606fbc6472d4f35695989a7d31829c57fe48e7",
+  "sourcePushed": true,
+  "branch": "main",
+  "repository": "https://github.com/punch5545/Pleos-Connect-UI",
+  "namespace": "io.github.punch5545",
+  "namespaceVerified": true,
+  "version": "0.1.0",
+  "centralUploaded": false,
+  "centralPublished": false,
+  "pending": [
+    "code_license_choice",
+    "existing_gpg_key_unlock"
+  ],
+  "privateKeyExported": false,
+  "centralTokenCreated": false,
+  "runtimeAarsIdenticalToUiTestedBuild": true,
+  "unitTests": 16,
+  "lintErrors": 0,
+  "existingUiTests": 45,
+  "uiTestsRerunForPublishing": false
+}

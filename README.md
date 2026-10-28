@@ -39,6 +39,8 @@ dependencies {
 
 Central 배포 절차·서명·POM·bundle 검증은 [PUBLISHING.md](PUBLISHING.md)에 기록합니다.
 
+현재 Central 게시는 라이선스 확정과 GPG 서명을 기다리는 상태입니다. 게시 완료 전에는 위 Maven 의존성이 Central에서 조회되지 않습니다.
+
 ## 사용 예제
 
 아래 예제의 API 사용은 계측 테스트 소스 `PublicApiUsage.kt`에서도 컴파일합니다. 앱 모듈을 만들지 않습니다.

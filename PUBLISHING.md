@@ -2,6 +2,8 @@
 
 배포 대상은 Sonatype Central Portal이며 인증된 네임스페이스는 `io.github.punch5545`입니다. GitHub Pages 또는 GitHub Packages를 대체 저장소로 사용하지 않습니다.
 
+현재 상태: 소스의 `main` 푸시는 완료했습니다. Central 업로드·게시는 아직 실행하지 않았습니다. 코드 라이선스 선택과 기존 GPG 키의 사용자 잠금 해제를 기다리고 있습니다. 아래 좌표는 게시할 대상 좌표입니다.
+
 | 모듈 | 공개 좌표 |
 | --- | --- |
 | Tokens | `io.github.punch5545:pleos-tokens:0.1.0` |
