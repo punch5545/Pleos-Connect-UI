@@ -1,0 +1,249 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-28T06:26:33.407411+00:00",
+  "anonymous": true,
+  "artifacts": 15,
+  "signatures": 15,
+  "files": [
+    {
+      "path": "io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0.aar",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0.aar",
+      "httpStatus": 200,
+      "bytes": 2434421,
+      "sha256": "9d67d73aaddb7eee86d2c5ffe583f8d7271d963c3d33a2635a9b7c19c6f529e2",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0.pom",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0.pom",
+      "httpStatus": 200,
+      "bytes": 2745,
+      "sha256": "b26ac06926c72a8b84499bfc2d92454ff04d2b2659482b627d571be0c307d6b5",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0.module",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0.module",
+      "httpStatus": 200,
+      "bytes": 3742,
+      "sha256": "de9baddde8a08bb1945bb252afa7d599741f27bb590a5074adf93cae5ebe6ae0",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0-sources.jar",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0-sources.jar",
+      "httpStatus": 200,
+      "bytes": 110607,
+      "sha256": "84aac24344adc3023fd8097ce61be6771705d22a9d320c0350fb52ff32ce7bf5",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0-javadoc.jar",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0-javadoc.jar",
+      "httpStatus": 200,
+      "bytes": 28487,
+      "sha256": "a4020a80ec23e2a1ec9dae9cac053cd88740e483a929466f85794cc6474cb629",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0.aar",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0.aar",
+      "httpStatus": 200,
+      "bytes": 761531,
+      "sha256": "4204cf2efb5626d6780fcc79a9684ff978a7aafcda3ddbabae4f8da4472e3c9d",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0.pom",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0.pom",
+      "httpStatus": 200,
+      "bytes": 2918,
+      "sha256": "9300bf821e7208e95b6cb2c95fad4a51995d490a6a38321a560e019b67f2397e",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0.module",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0.module",
+      "httpStatus": 200,
+      "bytes": 4268,
+      "sha256": "f697da3a8afc2724902e37b1202a01fafdaa7ebf7cb5af467f9233332275c675",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0-sources.jar",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0-sources.jar",
+      "httpStatus": 200,
+      "bytes": 69823,
+      "sha256": "2e6522b469130353536d8bced63e9c97df0eff890b61a5ac2bd2f99902d3ae72",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0-javadoc.jar",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0-javadoc.jar",
+      "httpStatus": 200,
+      "bytes": 33338,
+      "sha256": "0581452bc25f30289ad17b0f677fb6419533b61e94dc5925cdfe806ad06ff03b",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0.aar",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0.aar",
+      "httpStatus": 200,
+      "bytes": 27243,
+      "sha256": "5e906da3acfe6c875eec355c7799bcfd488e891e5a6367de0db4436e166d2277",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0.pom",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0.pom",
+      "httpStatus": 200,
+      "bytes": 2541,
+      "sha256": "3bc1d020d2e4df25be3a7865f8e1c26485980b754eb5ee244206b02eb80188f1",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0.module",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0.module",
+      "httpStatus": 200,
+      "bytes": 3582,
+      "sha256": "279f5a89105b70d684538070407c934f24c9ea6e94e6e0a99d0bd985761b562f",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0-sources.jar",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0-sources.jar",
+      "httpStatus": 200,
+      "bytes": 8355,
+      "sha256": "45ad05a36125ac10554e8028b17f3192f682a2e94579933098aaa620d9786eef",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0-javadoc.jar",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0-javadoc.jar",
+      "httpStatus": 200,
+      "bytes": 27693,
+      "sha256": "58b416cb1fa4b43203c4d24bdbb82fc1fb54b101c148dd04a1e4304349f740e7",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0.aar.asc",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0.aar.asc",
+      "httpStatus": 200,
+      "bytes": 870,
+      "sha256": "2110c35b9c22a9b2df3de8873d0b4a54dac0f91a88c0261870858b9b4bffb190",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0.pom.asc",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0.pom.asc",
+      "httpStatus": 200,
+      "bytes": 870,
+      "sha256": "fae97026df623b02d8f4be3226491b08b9782959e70fa585e12b51583a22e74c",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0.module.asc",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0.module.asc",
+      "httpStatus": 200,
+      "bytes": 870,
+      "sha256": "7fbaab5442289e5d3a689aa2d3d88bbc11cda3ada5b76f37f9229bb3f8c9c72b",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0-sources.jar.asc",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0-sources.jar.asc",
+      "httpStatus": 200,
+      "bytes": 870,
+      "sha256": "5904a440b4e9144a84b312ac791fa86073d72ff41bc60d4e893a2b019103a3df",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0-javadoc.jar.asc",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-tokens/0.1.0/pleos-tokens-0.1.0-javadoc.jar.asc",
+      "httpStatus": 200,
+      "bytes": 870,
+      "sha256": "cb19380f11b22cc111fa9786b4e4d391e0b46b6a361cf926455c03cb89ee93ff",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0.aar.asc",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0.aar.asc",
+      "httpStatus": 200,
+      "bytes": 870,
+      "sha256": "8a9f108847acac0d3c1b1ec96d41297f86d48e214900ba09ff5bb8ddd48445f5",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0.pom.asc",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0.pom.asc",
+      "httpStatus": 200,
+      "bytes": 870,
+      "sha256": "f2e74a09b5d7147d7fe44f9eee5aee3fa44734f9fcda26697946109dbebdeabd",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0.module.asc",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0.module.asc",
+      "httpStatus": 200,
+      "bytes": 870,
+      "sha256": "d69dbd8f6d19a04e903594feff018686cc19937936a2c741cc285f105e1fab75",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0-sources.jar.asc",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0-sources.jar.asc",
+      "httpStatus": 200,
+      "bytes": 870,
+      "sha256": "07f2f5bbe4832ff0a63a0ad3b724814716655beaaedcaddb0d12f97897e3408e",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0-javadoc.jar.asc",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-compose/0.1.0/pleos-compose-0.1.0-javadoc.jar.asc",
+      "httpStatus": 200,
+      "bytes": 870,
+      "sha256": "d4827cc673e7a1556c694d87faff745c399a06baba7a103168b46d8abceb94e9",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0.aar.asc",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0.aar.asc",
+      "httpStatus": 200,
+      "bytes": 870,
+      "sha256": "d010a728e1f204cd86d51185c247d5387a620120f90be7a005078ebe9741f5ca",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0.pom.asc",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0.pom.asc",
+      "httpStatus": 200,
+      "bytes": 870,
+      "sha256": "7bedd199bfb5dcef2db6814054eaa584b35da9878b4dffe12db35ce09c57f861",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0.module.asc",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0.module.asc",
+      "httpStatus": 200,
+      "bytes": 870,
+      "sha256": "38336590b68b9515a99b6fb2288a3a84a0023cb36411624805534bd2d813633b",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0-sources.jar.asc",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0-sources.jar.asc",
+      "httpStatus": 200,
+      "bytes": 870,
+      "sha256": "08bbc123f389ea2a036bb8324abf07e16f09e7bd195407a4c2d5d4320e8fb791",
+      "matchesSignedBundle": true
+    },
+    {
+      "path": "io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0-javadoc.jar.asc",
+      "url": "https://repo.maven.apache.org/maven2/io/github/punch5545/pleos-aaos/0.1.0/pleos-aaos-0.1.0-javadoc.jar.asc",
+      "httpStatus": 200,
+      "bytes": 870,
+      "sha256": "c2be8f0cd39e621ddd933f4378b8f5b86c2e9ec0f05ccc71f1f7666163d31d4d",
+      "matchesSignedBundle": true
+    }
+  ]
+}

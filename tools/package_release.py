@@ -21,7 +21,7 @@ def package():
         if not source.is_file():
             raise FileNotFoundError(source)
         shutil.copyfile(source, artifacts / f"{module}-{VERSION}.aar")
-    excluded = {".gradle", ".kotlin", ".idea", ".git", "dist", "__pycache__"}
+    excluded = {".gradle", ".kotlin", ".idea", ".git", "dist", "__pycache__", "_workspace"}
     files = []
     for path in ROOT.rglob("*"):
         if not path.is_file():

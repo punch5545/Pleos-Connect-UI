@@ -1,0 +1,72 @@
+{
+  "status": "PASS",
+  "route": "light",
+  "changeRate": 0.2023,
+  "ignoreMarkupChangeRate": 0.203,
+  "grade": "B",
+  "selfCheckPassed": 6,
+  "selfCheckTotal": 6,
+  "finalizeStatus": "corrected",
+  "gate": {
+    "genre": "essay",
+    "change_rate": {
+      "rate": 0.2023,
+      "scope": "\uc804\ubb38",
+      "verdict": "OK"
+    },
+    "s1_targets": [
+      {
+        "metric": "ending_comma_rate",
+        "z_before": 6.54,
+        "z_after": -0.52,
+        "verdict": "\ub2ec\uc131"
+      }
+    ],
+    "antithesis": {
+      "before": 0,
+      "after": 0,
+      "verdict": "\uc2a4\ud0b5 (\uc6d0\ubb38 \ub300\uad6c < 5)"
+    },
+    "golden": [],
+    "sentence_touch": {
+      "rate": 0.1241,
+      "touched": 17,
+      "total": 137
+    },
+    "numbers_dropped": [],
+    "modality": {
+      "lost_pairs": [],
+      "uncertain_pairs": [],
+      "counts": {
+        "deontic": {
+          "before": 1,
+          "after": 1
+        },
+        "hedge": {
+          "before": 10,
+          "after": 10
+        }
+      },
+      "verdict": "OK"
+    },
+    "gate": {
+      "verdict": "OK \u2014 \uc218\ub834",
+      "exit_code": 0
+    }
+  },
+  "references": [
+    "https://github.com/stascorp/rdpwrap/blob/master/README.md",
+    "https://github.com/JetBrains/kotlin-wrappers/blob/master/README.md"
+  ],
+  "changes": [
+    "Maven Central and license badges",
+    "Module version links",
+    "Installation before build instructions",
+    "Removed repetitive commas and combined duplicate publishing links"
+  ],
+  "readmeSha256": "efdc299c7a3d0e08d04e2bf2554cc4db802cd22c4fdfe57366ce68a76e00752d",
+  "initialProsePassChangeRate": 0.0008,
+  "codeBlocksPreserved": true,
+  "localLinksValid": true,
+  "badgesHttpVerified": true
+}

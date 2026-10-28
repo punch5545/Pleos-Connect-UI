@@ -1,0 +1,16 @@
+[
+  {
+    "url": "https://img.shields.io/maven-central/v/io.github.punch5545/pleos-compose",
+    "httpStatus": 200,
+    "title": "maven-central: v0.1.0",
+    "expectedVersion": true,
+    "svg": true
+  },
+  {
+    "url": "https://img.shields.io/github/license/punch5545/Pleos-Connect-UI",
+    "httpStatus": 200,
+    "title": "license: Apache-2.0",
+    "expectedVersion": false,
+    "svg": true
+  }
+]

@@ -1,0 +1,12 @@
+> Task :preBuild UP-TO-DATE
+> Task :preDebugBuild UP-TO-DATE
+> Task :generateDebugResources
+> Task :packageDebugResources
+> Task :processDebugNavigationResources
+> Task :parseDebugLocalResources
+> Task :generateDebugRFile
+> Task :compileDebugKotlin
+
+BUILD SUCCESSFUL in 12s
+6 actionable tasks: 6 executed
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.6.0/userguide/configuration_cache_enabling.html

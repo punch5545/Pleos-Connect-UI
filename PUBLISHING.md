@@ -36,9 +36,19 @@ python3 tools/central_bundle.py --sign-key SIGNING_KEY_FINGERPRINT
 
 unsigned bundle은 로컬 구조 검증 전용으로 파일명에 `-unsigned`를 붙입니다. 서명 옵션은 모든 AAR·POM·module metadata·sources/API 문서 JAR에 detached ASCII signature를 생성하고 실제 검증합니다. bundle에는 Maven 경로를 따르는 파일과 MD5·SHA-1·SHA-256·SHA-512를 넣고 repository metadata는 제외합니다. 모듈 간 전이 좌표와 필수 POM 값·실제 소스/API 문서 존재도 검사합니다.
 
-최종 `dist/central-bundle-0.1.0.zip`을 로그인된 [Central Portal](https://central.sonatype.com/publishing/deployments)에 업로드하고 validation 결과를 확인한 뒤 publish합니다. 배포 완료 여부는 Portal의 `PUBLISHED` 상태와 공개 Maven 경로에서의 파일 응답으로 확인합니다. 실제 실행 상태와 증거는 `docs/verification/publishing/`에 기록합니다.
+최종 `dist/central-bundle-0.1.0.zip`을 로그인된 [Central Portal](https://central.sonatype.com/publishing/deployments)에 업로드하고 validation 결과를 확인한 뒤 publish합니다. Portal의 게시 진행 상태를 확인하며, 최종 배포는 공개 Maven 경로의 다운로드와 별도 소비 프로젝트의 의존성 해석·컴파일로 확인합니다. 실제 실행 상태와 증거는 `docs/verification/publishing/`에 기록합니다.
 
 POM과 API 소스 링크는 `v0.1.0` 태그를 사용합니다. 해당 버전의 소스·라이선스를 커밋하고 `main`과 `v0.1.0` 태그를 먼저 푸시한 뒤 Central에 게시합니다. 이미 배포한 버전의 태그나 Central 파일을 덮어쓰지 않습니다.
+
+## 0.1.0 게시 결과
+
+세 모듈을 Maven Central에 공개했습니다. Deployment ID는 `ab5ae8c3-0442-499b-8ef4-9a39dfabeca0`이며, 릴리스 소스는 [v0.1.0](https://github.com/punch5545/Pleos-Connect-UI/tree/v0.1.0)입니다.
+
+- AAR·POM·Gradle module metadata·sources/API 문서 JAR 15개와 서명 15개를 공개 저장소에서 익명으로 내려받아 서명한 bundle과 바이트가 같은지 확인했습니다. [다운로드 기록](docs/verification/publishing/public-download-check.json)에 URL과 SHA-256을 남겼습니다.
+- `google()`과 `mavenCentral()`만 사용하는 임시 Android Library에서 `pleos-aaos:0.1.0`을 참조하고 Compose UI와 rotary adapter API를 컴파일했습니다. [컴파일 로그](docs/verification/publishing/central-consumer-build.log)와 [aaos → compose → tokens 의존성 그래프](docs/verification/publishing/central-dependency-graph.log)를 확인할 수 있습니다. 앱이나 Activity는 만들지 않았습니다.
+- README의 Maven Central 배지가 `v0.1.0`, 라이선스 배지가 `Apache-2.0`을 표시하는 SVG인지 확인했습니다. [배지 확인 기록](docs/verification/publishing/badge-check.json)을 보존합니다.
+
+배포한 파일을 다시 만들 때는 `v0.1.0` 태그를 기준으로 빌드하십시오. 게시 후 main의 문서가 바뀌어도 기존 Central 파일을 덮어쓰지 않습니다.
 
 ## 사용한 공식 문서
 

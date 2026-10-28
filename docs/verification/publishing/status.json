@@ -1,16 +1,14 @@
 {
-  "sourceCommit": "43606fbc6472d4f35695989a7d31829c57fe48e7",
+  "sourceCommit": "ad714d0817f8d3f89e7512f0d62e99c2ade2bb5f",
   "sourcePushed": true,
   "branch": "main",
   "repository": "https://github.com/punch5545/Pleos-Connect-UI",
   "namespace": "io.github.punch5545",
   "namespaceVerified": true,
   "version": "0.1.0",
-  "centralUploaded": false,
-  "centralPublished": false,
-  "pending": [
-    "central_upload_and_publication"
-  ],
+  "centralUploaded": true,
+  "centralPublished": true,
+  "pending": [],
   "privateKeyExported": false,
   "centralTokenCreated": false,
   "runtimeAarsIdenticalToUiTestedBuild": false,
@@ -22,5 +20,19 @@
   "signingUnlocked": true,
   "signedBundleReady": true,
   "bundleSha256": "c846631f782ea448c7c0687d0397a41a1544345c7e10fe4cccacb43662d15398",
-  "runtimeClassesIdenticalToUiTestedBuild": true
+  "runtimeClassesIdenticalToUiTestedBuild": true,
+  "releaseTag": "v0.1.0",
+  "deploymentId": "ab5ae8c3-0442-499b-8ef4-9a39dfabeca0",
+  "deploymentState": "PUBLICLY_AVAILABLE",
+  "serverValidationComponents": 6,
+  "publiclyAvailable": true,
+  "publicationVerifiedBy": [
+    "Anonymous GET of 15 artifacts and 15 signatures",
+    "Successful external Android Library compilation",
+    "Maven Central badge reports v0.1.0"
+  ],
+  "portalLastObservedState": "PUBLISHING",
+  "verifiedAt": "2026-10-28T06:30:24.858504+00:00",
+  "consumerCompile": "PASS",
+  "consumerProjectKind": "Temporary Android Library; no app or Activity"
 }
